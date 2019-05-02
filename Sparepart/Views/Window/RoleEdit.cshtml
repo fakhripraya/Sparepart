@@ -1,0 +1,56 @@
+﻿@model Sparepart.Models.masterrole
+
+<form action="/Access/Update" method="post">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.RoleID)
+        <li>
+            @Html.Label("Nama Role")
+            @Html.Kendo().TextBoxFor(m => m.NamaRole).Name("nama").HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Role", required = "required", validationmessage = "Input Role" })
+        </li>
+
+        <li>
+            @(Html.Kendo().Grid<Sparepart.Models.hakaks>()
+                                                                    .Name("EditGrid")
+                                                                    .Columns(columns =>
+                                                                    {
+                                                                        columns.Bound(p => p.AksesID)
+                                            .HeaderTemplate("<input id='checkAllEdit' class='chkbx' type='checkbox' />")
+                                            .ClientTemplate("<input id='checkItem' class='chkbxq' type='checkbox' name='AksesIDs' value='#= AksesID #'/>")
+                                            .Sortable(false)
+                                            .Filterable(false)
+                                            .Width(30);
+                                                                        columns.Bound(p => p.NamaMenu).Width(140);
+                                                                    })
+                                                                    .ToolBar(toolbar =>
+                                                                    {
+                                                                        toolbar.Template("Pilih Akses");
+                                                                    }
+                                                                    )
+                                                                    .Sortable()
+                                                                    .Pageable(pageable => pageable
+                                                                    .Input(true)
+                                                                    .Numeric(true)
+                                                                    .Info(true)
+                                                                    .PreviousNext(true)
+                                                                    .Refresh(true)
+                                                                    .ButtonCount(5)
+                                                                    )
+                                                                    .DataSource(dataSource => dataSource
+                                                                    .Ajax()
+                                                                    .Model(model => model.Id(p => p.AksesID))
+                                                                    .Read(read => read.Action("Access_Read", "Access"))
+                                                                    )
+
+            )
+        </li>
+        <li>
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>
+<script type="text/javascript">
+    $("#checkAllEdit").click(function () {
+        $('input:checkbox').not(this).prop('checked', this.checked);
+    });
+    </script>

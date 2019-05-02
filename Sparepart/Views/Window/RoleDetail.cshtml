@@ -1,0 +1,21 @@
+﻿@model Sparepart.Models.masterrole
+    <ul class="fieldlist">
+
+        <li>
+            @Html.Label("Nama Role")
+            @Html.DisplayFor(m => m.NamaRole)
+        </li>
+
+        <li>
+            @(Html.Kendo().Grid((IEnumerable<Sparepart.Models.aks>)ViewBag.Akses) //Bind the grid to ViewBag.Products
+                 .Name("grid")
+                 .Columns(columns =>
+                 {
+                     columns.ForeignKey(p => p.AksesID, (System.Collections.IEnumerable)ViewData["Menu"], "AksesID", "NamaMenu")
+                    .Title("Menu").Width(200);
+                 })
+                 .Pageable() //Enable the paging.
+                 .Sortable() //Enable the sorting.
+            )
+        </li>
+    </ul>

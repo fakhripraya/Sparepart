@@ -1,0 +1,514 @@
+﻿@model Sparepart.Models.fpsheader
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Permintaan Sparepart
+    </h1>
+</section>
+
+<section class="content container-fluid">
+
+    <div id="modalWindow">
+        <h3 class="text-center">Delete this record?</h3>
+        <div class="pull-left">
+            <button id="yes" class="k-button">Yes</button>
+        </div>
+        <div class="pull-right">
+            <button id="no" class="k-button">No</button>
+        </div>
+    </div>
+
+    @*UPDATE*@
+    @(Html.Kendo().Window()
+                            .Name("updateMutasi")
+                            .Title("Edit Permintaan - Mutasi")
+                            .Content(
+
+                            @<text>
+
+                            </text>)
+                                                .Visible(false)
+                                                .Draggable()
+                                                .Resizable()
+                                                .Width(600)
+                                                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                                .Events(ev => ev.Close("onClose"))
+    )
+
+
+    @*CREATE - perbaikan*@
+    @(Html.Kendo().Window()
+                            .Name("windowPerbaikan")
+                            .Title("Tambah Permintaan - Perbaikan")
+                            .Content(
+
+                            @<text>
+                            <form action="/FPS/Create" method="post">
+                            <ul class="fieldlist">
+                            @Html.AntiForgeryToken()
+                            <li>
+                            @Html.Label("Nama Cabang")
+                            @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                            </li>
+                            <li>
+                            @Html.Label("Nama Pemohon")
+                            @Html.Kendo().TextBoxFor(m => m.NamaPemohon).HtmlAttributes(new { style = "width: 100%;", placeholder = "Pemohon", required = "required", validationmessage = "Input Pemohon" })
+                            </li>
+                            <li>
+                            @Html.Label("NIK Pemohon")
+                            @Html.Kendo().TextBoxFor(m => m.NIKPemohon).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+                            </li>
+                            <li>
+                            @Html.Label("Cabang")
+                            @(Html.Kendo().DropDownListFor(m => m.TokoID)
+                            .Name("cabang")
+                            .DataTextField("NamaCabang")
+                            .DataValueField("CabangID")
+                            .Filter(FilterType.Contains)
+                            .DataSource(source =>
+                            {
+                            source.Read(read =>
+                            {
+                            read.Action("GetCabang", "Cabang")
+                            .Data("cabangdata");
+                            });
+                            })
+                            )
+                            </li>
+                            <li>
+                            @Html.Label("Unit")
+                            @(Html.Kendo().DropDownListFor(m => m.UnitID)
+                            .Name("unit")
+                            .DataTextField("NamaUnit")
+                            .DataValueField("UnitID")
+                            .Filter(FilterType.Contains)
+                            .DataSource(source =>
+                            {
+                            source.Read(read =>
+                            {
+                            read.Action("GetUnit", "Unit")
+                            .Data("unitdata");
+                            });
+                            })
+                            )
+                            </li>
+                            <li>
+                            @(Html.Kendo().Grid<Sparepart.Models.mastertoko>()
+                            .Name("grid")
+                            .Columns(columns =>
+                            {
+                            columns.Bound(u => u.NamaToko).Width(100);
+                            columns.Bound(u => u.AlamatToko).Width(100);
+                            columns.Bound(u => u.UserInput).Visible(false);
+                            columns.Bound(u => u.TanggalInput).Visible(false);
+                            columns.Bound(u => u.UserUpdate).Visible(false);
+                            columns.Bound(u => u.TanggalUpdate).Visible(false);
+                            columns.Bound(u => u.IsDelete).Visible(false);
+                            columns.Command(commands =>
+                            {
+                            commands.Edit();
+                            commands.Custom("Delete").Click("openWindow");
+
+                            }).Title("Commands").Width(200);
+                            })
+                            .ToolBar(toolbar =>
+                            {
+                            toolbar.Create().Text("Tambahkan Toko");
+                            }
+                            )
+                            .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                            .Sortable()
+                            .Pageable(pageable => pageable
+                            .Input(true)
+                            .Numeric(true)
+                            .Info(true)
+                            .PreviousNext(true)
+                            .Refresh(true)
+                            .ButtonCount(5)
+                            )
+
+                            .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .Events(events => events
+                            .Error("grid_error")
+                            )
+                            .Read(read => read.Action("Toko_Read", "Toko"))
+                            .PageSize(10)
+                            .ServerOperation(false)
+                            .Model(model =>
+                            {
+                            model.Id(u => u.TokoID);
+                            model.Field(u => u.TokoID).Editable(false);
+                            })
+                            .Create(create => create.Action("Toko_Create", "Toko"))
+                            .Update(update => update.Action("Toko_Update", "Toko"))
+                            .Destroy(destroy => destroy.Action("Toko_Destroy", "Toko"))
+                            )
+
+                            )
+                            </li>
+                            </ul>
+                            </form>
+                            </text>)
+                                                .Visible(false)
+                                                .Modal(true)
+                                                .Draggable()
+                                                .Resizable()
+                                                .Width(600)
+                                                .Height(600)
+                                                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                                .Events(ev => ev.Close("onClose"))
+    )
+
+    @*CREATE - mutasi*@
+    @(Html.Kendo().Window()
+    .Name("windowMutasi")
+    .Title("Tambah Permintaan - Mutasi")
+    .Content(
+
+    @<text>
+        <form action="/FPS/Create" method="post">
+            <ul class="fieldlist">
+                @Html.AntiForgeryToken()
+                <li>
+                    @Html.Label("Nama Cabang")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </li>
+                <li>
+                    @Html.Label("Nama Pemohon")
+                    @Html.Kendo().TextBoxFor(m => m.NamaPemohon).HtmlAttributes(new { style = "width: 100%;", placeholder = "Pemohon", required = "required", validationmessage = "Input Pemohon" })
+                </li>
+                <li>
+                    @Html.Label("NIK Pemohon")
+                    @Html.Kendo().TextBoxFor(m => m.NIKPemohon).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+                </li>
+                <li>
+                    @Html.Label("Cabang")
+                    @(Html.Kendo().DropDownListFor(m => m.TokoID)
+                    .Name("cabang")
+                    .DataTextField("NamaCabang")
+                    .DataValueField("CabangID")
+                    .Filter(FilterType.Contains)
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                {
+                    read.Action("GetCabang", "Cabang")
+.Data("cabangdata");
+                });
+                    })
+                    )
+                </li>
+                <li>
+                    @Html.Label("Unit")
+                    @(Html.Kendo().DropDownListFor(m => m.UnitID)
+                    .Name("unit")
+                    .DataTextField("NamaUnit")
+                    .DataValueField("UnitID")
+                    .Filter(FilterType.Contains)
+                    .DataSource(source =>
+                    {
+                        source.Read(read =>
+                {
+                    read.Action("GetUnit", "Unit")
+.Data("unitdata");
+                });
+                    })
+                    )
+                </li>
+                <li>
+                    @(Html.Kendo().Grid<Sparepart.Models.fpsdetail>()
+                                       .Name("grid")
+                                       .Columns(columns =>
+                                       {
+                                           columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "NamaBarang")
+                                           .Title("Barang");
+                                           columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "SatuanID")
+                                           .Title("Satuan");
+                                           columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "HargaSatuan")
+                                           .Title("Harga Satuan");
+                                           columns.Command(commands =>
+                                           {
+                                               commands.Edit();
+                                               commands.Custom("Delete").Click("openWindow");
+
+                                           }).Title("Commands").Width(200);
+                                       })
+                                       .ToolBar(toolbar =>
+                                       {
+                                           toolbar.Create().Text("Tambahkan Role");
+                                       }
+                                       )
+                                       .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                                       .Sortable()
+                                       .Pageable(pageable => pageable
+                                         .Input(true)
+                                         .Numeric(true)
+                                         .Info(true)
+                                         .PreviousNext(true)
+                                         .Refresh(true)
+                                         .ButtonCount(5)
+                                         )
+
+                                       .DataSource(dataSource => dataSource
+                                           .Ajax()
+                                           .Events(events => events
+                                           .Error("grid_error")
+                                           )
+                                           .Read(read => read.Action("Detail_Read", "FPS"))
+                                           .PageSize(10)
+                                           .ServerOperation(false)
+                                           .Model(model =>
+                                           {
+                                               model.Id(u => u.SeqFPSID);
+                                               model.Field(u => u.SeqFPSID).Editable(false);
+                                           })
+                                           .Create(create => create.Action("Roles_Create", "Role"))
+                                           .Update(update => update.Action("Roles_Update", "Role"))
+                                           .Destroy(destroy => destroy.Action("Roles_Destroy", "Role"))
+                                       )
+
+                    )
+                </li>
+            </ul>
+        </form>
+    </text>)
+                        .Visible(false)
+                        .Modal(true)
+                        .Draggable()
+                        .Resizable()
+                        .Width(600)
+                        .Height(600)
+                        .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                        .Events(ev => ev.Close("onClose"))
+    )
+
+
+    @*GRID*@
+    @(Html.Kendo().Grid<Sparepart.Models.fpsheader>()
+
+                                .Name("Grid")
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(p => p.FPSID).Visible(false);
+                                    columns.Bound(p => p.NoTicket);
+                                    columns.ForeignKey(p => p.CabangID, (System.Collections.IEnumerable)ViewData["Cabang"], "CabangID", "NamaCabang")
+                                    .Title("Cabang").Width(200);
+                                    columns.ForeignKey(p => p.UnitID, (System.Collections.IEnumerable)ViewData["Unit"], "UnitID", "NamaUnit")
+                                    .Title("Unit").Width(200);
+                                    columns.ForeignKey(p => p.TokoID, (System.Collections.IEnumerable)ViewData["Toko"], "TokoID", "NamaToko")
+                                    .Title("Toko").Width(200);
+                                    columns.Bound(p => p.NamaPemohon);
+                                    columns.Bound(p => p.NIKPemohon);
+                                    columns.Bound(p => p.JenisFPS);
+                                    columns.Bound(p => p.Approval);
+                                    columns.Command(commands =>
+                        {
+                            commands.Custom("Edit").Click("Updatebtn");
+                            commands.Custom("Delete").Click("openWindow");
+                        }).Title("Commands").Width(200);
+                                })
+                                .ToolBar(toolbar =>
+                                {
+                        @*toolbar.Template(@<text>@(Html.Kendo().Button()
+                            .Name("textButton")
+                            .HtmlAttributes(new { type = "button" })
+                            .Content("Ajukan Permintaan")) </text>);*@
+                                    toolbar.Template("<a class='k-button k-button-icontext k-grid-add' href='#' id='crmutasi'>FPS - Mutasi</a><a class='k-button k-button-icontext k-grid-add' href='#' id='crperbaikan'>FPS - Perbaikan</a>");
+                                }
+                                                )
+                                                .Sortable()
+                                                .Pageable(pageable => pageable
+                                                .Input(true)
+                                                .Numeric(true)
+                                                .Info(true)
+                                                .PreviousNext(true)
+                                                .Refresh(true)
+                                                .ButtonCount(5)
+                                                )
+                                                .DataSource(dataSource => dataSource
+                                                .Ajax()
+                                                .Events(events => events
+                                                .Error("grid_error")
+                                                )
+                                                .Read(read => read.Action("Read", "FPS"))
+                                                .ServerOperation(false)
+                                                .Model(model =>
+                                                {
+                                                    model.Id(u => u.FPSID);
+                                                    model.Field(u => u.FPSID).Editable(false);
+                                                })
+                                                )
+
+    )
+
+</section>
+
+<style>
+    .fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 2em;
+        }
+
+        .fieldlist label {
+            display: block;
+            padding-bottom: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #444;
+        }
+</style>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        function grid_error(e) {
+            if (e.errors) {
+                var message = "There are some errors:\n";
+                // Create a message containing all errors.
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                // Display the message.
+                alert(message);
+                // Cancel the changes.
+                var grid = $("#Grid").data("kendoGrid");
+                grid.cancelChanges();
+            }
+        }
+
+
+        $(function () {
+            $("#windowMutasi").data("kendoWindow").close();
+            $("#windowPerbaikan").data("kendoWindow").close();
+            $("#updateMutasi").data("kendoWindow").close();
+        });
+
+        function onClose() {
+            $("#crmutasi").show();
+            $("#crperbaikan").show();
+            $("#updateMutasi").show();
+        }
+
+        $(document).ready(function () {
+            $("#crmutasi").bind("click", function () {
+                $("#windowMutasi").data("kendoWindow").open().center();
+                //$("#textButton").hide();
+            });
+            $("#crperbaikan").bind("click", function () {
+                $("#windowPerbaikan").data("kendoWindow").open().center();
+                //$("#textButton").hide();
+            });
+        });
+
+        function Updatebtn(e) {
+            e.preventDefault();
+            var row = $(e.target).closest("tr");
+            var grid = $("#Grid").data("kendoGrid");
+            var dat = grid.dataItem(row);
+            var pId = dat.FPSID;
+
+
+
+            var myWin = $("#updateMutasi").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Edit FPS",
+                content: {
+                    url: '@Url.Action("FPSEdit", "Window")',
+                    data: { FPSID: pId }
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
+        }
+
+        function tokodata() {
+            return {
+                text: $("#toko").data("kendoDropDownList").filterInput.val()
+            };
+        }
+        function unitdata() {
+            return {
+                text: $("#unit").data("kendoDropDownList").filterInput.val()
+            };
+        }
+        function cabangdata() {
+            return {
+                text: $("#cabang").data("kendoDropDownList").filterInput.val()
+            };
+        }
+
+        function onGridDataBound(e) {
+            $('#mastertoko script').appendTo(document.body);
+            $('#masterunit script').appendTo(document.body);
+            $('#mastercabang script').appendTo(document.body);
+        }
+
+        var wnd;
+        $(document).ready(function () {
+            wnd = $("#modalWindow").kendoWindow({
+                title: "confirmation",
+                modal: true,
+                visible: false,
+                resizable: false,
+                width: 300
+            }).data("kendoWindow");
+        });
+
+        function openWindow(e) {
+            e.preventDefault();
+
+            var grid = this;
+            var row = $(e.currentTarget).closest("tr");
+            wnd.center().open();
+
+            $("#yes").click(function () {
+                var selrow = $(e.target).closest("tr");
+                var selgrid = $("#Grid").data("kendoGrid");
+                var seldata = selgrid.dataItem(selrow);
+                var pId = seldata.CabangID;
+                $.ajax({
+                    url: '@Url.Action("Destroy", "FPS")',
+                    data: { CabangID: pId },
+                    type: "post"
+                });
+                grid.removeRow(row);
+                wnd.close();
+            });
+
+            $("#no").click(function () {
+                wnd.close();
+            });
+        }
+
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+
+        </div>
+    </script>
+}

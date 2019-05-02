@@ -1,0 +1,399 @@
+﻿@model Sparepart.Models.CreateBarangViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Master Barang
+    </h1>
+</section>
+
+<section class="content container-fluid">
+
+    <div id="modalWindow">
+        <h3 class="text-center">Delete this record?</h3>
+        <div class="pull-left">
+            <button id="yes" class="k-button">Yes</button>
+        </div>
+        <div class="pull-right">
+            <button id="no" class="k-button">No</button>
+        </div>
+    </div>
+
+    @(Html.Kendo().Window()
+                    .Name("update")
+                    .Title("Edit Barang")
+                    .Content(
+
+                    @<text>
+                        <form action="/Barang/Update" method="post">
+                            <ul class="fieldlist">
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m => m.KodeBarangTipe)
+                                <li>
+                                    @Html.Label("Nama Barang")
+                                    @Html.Kendo().TextBoxFor(m => m.NamaBarang).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Barang", required = "required", validationmessage = "Input Barang" })
+                                </li>
+                                <li>
+                                    @Html.Label("BufferStock")
+                                    @(Html.Kendo().NumericTextBoxFor<decimal>(m => m.BufferStock)
+                                                            .Name("bufferstock")
+                                                            .Value(0)
+                                                            .HtmlAttributes(new { style = "width: 50%", title = "BufferStock" })
+                                    )
+                                </li>
+                                <li>
+                                    @Html.Label("Harga Satuan")
+                                    @(Html.Kendo().NumericTextBoxFor<int>(m => m.HargaSatuan)
+                                                            .Name("hargasatuan")
+                                                            .Value(0)
+                                                            .HtmlAttributes(new { style = "width: 50%", title = "Harga Satuan" })
+                                    )
+                                </li>
+                                <li>
+                                    @Html.Label("Kategori")
+                                    @(Html.Kendo().DropDownListFor(m => m.KategoriID)
+                                                    .Name("kategori")
+                                                    .DataTextField("NamaKategori")
+                                                    .DataValueField("KategoriID")
+                                                    .Filter(FilterType.Contains)
+                                                    .DataSource(source =>
+                                                    {
+                                                                            source.Read(read =>
+                                                        {
+                                                                                            read.Action("GetKategori", "Kategori")
+                                                                    .Data("kategoridata");
+                                                                                        });
+                                                                        })
+                                    )
+                                </li>
+                                <li>
+                                    @Html.Label("Satuan")
+                                    @(Html.Kendo().DropDownListFor(m => m.SatuanID)
+                                                    .Name("satuan")
+                                                    .DataTextField("NamaSatuan")
+                                                    .DataValueField("SatuanID")
+                                                    .Filter(FilterType.Contains)
+                                                    .DataSource(source =>
+                                                    {
+                                                                            source.Read(read =>
+                                                        {
+                                                                                            read.Action("GetSatuan", "Satuan")
+                                                                    .Data("satuandata");
+                                                                                        });
+                                                                        })
+                                    )
+                                </li>
+                                <li>
+                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                </li>
+                            </ul>
+                        </form>
+                    </text>)
+                                .Visible(false)
+                                .Draggable()
+                                .Resizable()
+                                .Width(600)
+                                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                .Events(ev => ev.Close("onClose"))
+    )
+
+
+
+    @(Html.Kendo().Window()
+                    .Name("window")
+                    .Title("Tambahkan Barang")
+                    .Content(
+
+                    @<text>
+                        <form action="/Barang/Create" method="post">
+                            <ul class="fieldlist">
+                                @Html.AntiForgeryToken()
+                                <li>
+                                    @Html.Label("Kode Barang Tipe")
+                                    @Html.Kendo().TextBoxFor(m => m.KodeBarangTipe).HtmlAttributes(new { style = "width: 100%;", placeholder = "Kode Barang Tipe", required = "required", validationmessage = "Input Kode Barang Tipe" })
+                                </li>
+                                <li>
+                                    @Html.Label("Barang PLU")
+                                    @Html.Kendo().TextBoxFor(m => m.BarangPLU).HtmlAttributes(new { style = "width: 100%;", placeholder = "PLU", required = "required", validationmessage = "Input PLU" })
+                                </li>
+                                <li>
+                                    @Html.Label("Nama Barang")
+                                    @Html.Kendo().TextBoxFor(m => m.NamaBarang).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Barang", required = "required", validationmessage = "Input Barang" })
+                                </li>
+                                <li>
+                                    @Html.Label("BufferStock")
+                                    @(Html.Kendo().NumericTextBoxFor<decimal>(m => m.BufferStock)
+                                                    .Name("bufferstock")
+                                                    .Value(0)
+                                                    .HtmlAttributes(new { style = "width: 50%", title = "BufferStock" })
+                                    )
+                                </li>
+                                <li>
+                                    @Html.Label("Harga Satuan")
+                                    @(Html.Kendo().NumericTextBoxFor<int>(m => m.HargaSatuan)
+                                                    .Name("hargasatuan")
+                                                    .Value(0)
+                                                    .HtmlAttributes(new { style = "width: 50%", title = "Harga Satuan" })
+                                    )
+                                </li>
+                                <li>
+                                    @Html.Label("Kategori")
+                                    @(Html.Kendo().DropDownListFor(m => m.KategoriID)
+                                            .Name("kategori")
+                                            .DataTextField("NamaKategori")
+                                            .DataValueField("KategoriID")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                                    source.Read(read =>
+                                                            {
+                                                                        read.Action("GetKategori", "Kategori")
+                                                            .Data("kategoridata");
+                                                                    });
+                                                                })
+                                    )
+                                </li>
+                                <li>
+                                    @Html.Label("Satuan")
+                                    @(Html.Kendo().DropDownListFor(m => m.SatuanID)
+                                            .Name("satuan")
+                                            .DataTextField("NamaSatuan")
+                                            .DataValueField("SatuanID")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                                    source.Read(read =>
+                                                            {
+                                                                        read.Action("GetSatuan", "Satuan")
+                                                            .Data("satuandata");
+                                                                    });
+                                                                })
+                                    )
+                                </li>
+                                <li>
+                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                </li>
+                            </ul>
+                        </form>
+                    </text>)
+                                .Visible(false)
+                                .Modal(true)
+                                .Draggable()
+                                .Resizable()
+                                .Width(600)
+                                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                .Events(ev => ev.Close("onClose"))
+    )
+
+
+    @(Html.Kendo().Grid<Sparepart.Models.masterbarang>()
+
+                    .Name("Grid")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(u => u.KodeBarangTipe);
+                        columns.ForeignKey(p => p.KategoriID, (System.Collections.IEnumerable)ViewData["Kategori"], "KategoriID", "NamaKategori")
+                        .Title("Kategori").Width(200);
+                        columns.Bound(u => u.BarangPLU);
+                        columns.Bound(u => u.NamaBarang);
+                        columns.ForeignKey(p => p.SatuanID, (System.Collections.IEnumerable)ViewData["Satuan"], "SatuanID", "NamaSatuan")
+                        .Title("Satuan").Width(200);
+                        columns.Bound(u => u.HargaSatuan);
+                        columns.Bound(u => u.BufferStock);
+                        columns.Command(commands =>
+                        {
+                            commands.Custom("Edit").Click("Updatebtn");
+                            commands.Custom("Delete").Click("openWindow");
+                        }).Title("Commands").Width(200);
+                    })
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template(@<text>@(Html.Kendo().Button()
+.Name("textButton")
+.HtmlAttributes(new { type = "button" })
+.Content("Tambahkan Barang")) </text>);
+                            }
+                                )
+                                .Sortable()
+                                .Pageable(pageable => pageable
+                                .Input(true)
+                                .Numeric(true)
+                                .Info(true)
+                                .PreviousNext(true)
+                                .Refresh(true)
+                                .ButtonCount(5)
+                                )
+                                .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .Events(events => events
+                                .Error("grid_error")
+                                )
+                                .Read(read => read.Action("Read", "Barang"))
+                                .ServerOperation(false)
+                                .Model(model =>
+                                {
+                                    model.Id(u => u.KodeBarangTipe);
+                                    model.Field(u => u.KodeBarangTipe).Editable(false);
+                                })
+                                )
+
+    )
+
+</section>
+
+<style>
+    .fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 2em;
+        }
+
+        .fieldlist label {
+            display: block;
+            padding-bottom: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #444;
+        }
+</style>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+        function grid_error(e) {
+            if (e.errors) {
+                var message = "There are some errors:\n";
+                // Create a message containing all errors.
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                // Display the message.
+                alert(message);
+                // Cancel the changes.
+                var grid = $("#Grid").data("kendoGrid");
+                grid.cancelChanges();
+            }
+        }
+
+
+        $(function () {
+            $("#window").data("kendoWindow").close();
+            $("#update").data("kendoWindow").close();
+        });
+
+        function onClose() {
+            $("#textButton").show();
+            $("#update").show();
+        }
+
+        $(document).ready(function () {
+            $("#textButton").bind("click", function () {
+                $("#window").data("kendoWindow").open().center();
+                //$("#textButton").hide();
+            });
+        });
+
+        function Updatebtn(e) {
+            e.preventDefault();
+            var row = $(e.target).closest("tr");
+            var grid = $("#Grid").data("kendoGrid");
+            var datsa = grid.dataItem(row);
+            var pId = datsa.KodeBarangTipe;
+
+
+
+            var myWin = $("#update").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Edit Cabang",
+                content: {
+                    url: '@Url.Action("BarangEdit", "Window")',
+                    data: { KodeBarangTipe: pId }
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
+        }
+
+        function kategoridata() {
+            return {
+                text: $("#kategori").data("kendoDropDownList").filterInput.val()
+            };
+        }
+        function satuandata() {
+            return {
+                text: $("#satuan").data("kendoDropDownList").filterInput.val()
+            };
+        }
+
+        function onGridDataBound(e) {
+            $('#masterkategori script').appendTo(document.body);
+            $('#mastersatuan script').appendTo(document.body);
+        }
+
+        var wnd;
+        $(document).ready(function () {
+            wnd = $("#modalWindow").kendoWindow({
+                title: "confirmation",
+                modal: true,
+                visible: false,
+                resizable: false,
+                width: 300
+            }).data("kendoWindow");
+        });
+
+        function openWindow(e) {
+            e.preventDefault();
+
+            var grid = this;
+            var row = $(e.currentTarget).closest("tr");
+            wnd.center().open();
+
+            $("#yes").click(function () {
+                var selrow = $(e.target).closest("tr");
+                var selgrid = $("#Grid").data("kendoGrid");
+                var seldata = selgrid.dataItem(selrow);
+                var pId = seldata.KodeBarangTipe;
+                $.ajax({
+                    url: '@Url.Action("Destroy", "Barang")',
+                    data: { KodeBarangTipe: pId },
+                    type: "post"
+                });
+                grid.removeRow(row);
+                wnd.close();
+            });
+
+            $("#no").click(function () {
+                wnd.close();
+            });
+        }
+
+    </script>
+
+    <script type="text/x-kendo-template" id="template">
+        <div id="details-container">
+
+        </div>
+    </script>
+}

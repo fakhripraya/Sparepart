@@ -1,0 +1,287 @@
+﻿@model Sparepart.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+       Master User
+    </h1>
+</section>
+
+<section class="content container-fluid">
+    @(Html.Kendo().Window()
+     .Name("window")
+     .Title("Tambahkan User")
+     .Content(
+
+     @<text>
+     <form action="/Account/Register" method="post">
+         <ul class="fieldlist">
+             @Html.AntiForgeryToken()
+             <li>
+                 @Html.Label("Nama")
+                 @Html.Kendo().TextBoxFor(m => m.NamaUser).HtmlAttributes(new { style = "width: 100%;" })
+             </li>
+             <li>
+                 @Html.Label("Username")
+                 @Html.Kendo().TextBoxFor(m => m.UserName).Name("username").HtmlAttributes(new { style = "width: 100%;" })
+             </li>
+             <li>
+                 @Html.Label("Email")
+                 @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { style = "width: 100%;" })
+             </li>
+             <li>
+                 @Html.Label("Password")
+                 @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { style = "width: 100%;", type = "password" })
+             </li>
+             <li>
+                 @Html.Label("Confirm Password")
+                 @Html.Kendo().TextBoxFor(m => m.ConfirmPassword).HtmlAttributes(new { style = "width: 100%;", type = "password" })
+             </li>
+             <li>
+                 @Html.Label("Role")
+                 @(Html.Kendo().DropDownListFor(m => m.UserRoles)
+                                 .Name("role")
+                                 .DataTextField("NamaRole")
+                                 .DataValueField("RoleID")
+                                 .Filter(FilterType.Contains)
+                                 .DataSource(source =>
+                                 {
+                                                     source.Read(read =>
+                             {
+                                                 read.Action("GetProducts", "Account")
+                         .Data("roledata");
+                                             });
+                                                 })
+                 )
+             </li>
+             <li>
+                 @Html.Label("Cabang")
+                 @(Html.Kendo().DropDownListFor(m => m.UserCabang)
+                                 .Name("cabang")
+                                 .DataTextField("NamaCabang")
+                                 .DataValueField("CabangID")
+                                 .Filter(FilterType.Contains)
+                                 .DataSource(source =>
+                                 {
+                                                     source.Read(read =>
+                             {
+                                                 read.Action("GetCabang", "Account")
+                         .Data("cabangdata");
+                                             });
+                                                 })
+                 )
+             </li>
+             <li>
+                 <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+             </li>
+         </ul>
+     </form>
+     </text>
+
+     )
+            .Visible(false)
+            .Modal(true)
+            .Scrollable(true)
+            .Draggable()
+            .Resizable()
+            .Width(600)
+            .Height(600)
+            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+            .Events(ev => ev.Close("onClose"))
+            )
+
+        @(Html.Kendo().Grid<Sparepart.Models.masteruser>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(u => u.NamaUser);
+            columns.Bound(u => u.Username);
+            columns.Bound(u => u.Email);
+            columns.ForeignKey(p => p.RoleID, (System.Collections.IEnumerable)ViewData["Role"], "RoleID", "NamaRole")
+            .Title("Role").Width(200);
+            columns.Command(commands =>
+            {
+                commands.Custom("Edit").Click("Updatebtn");
+                commands.Destroy();
+            }).Title("Commands").Width(200);
+        })
+        .ToolBar(toolbar =>
+        {
+        toolbar.Template(@<text>@(Html.Kendo().Button()
+        .Name("textButton")
+        .HtmlAttributes(new { type = "button" })
+        .Content("Tambahkan User")) </text>);
+        }
+        )
+        .Sortable()
+        .Pageable(pageable => pageable
+        .Input(true)
+        .Numeric(true)
+        .Info(true)
+        .PreviousNext(true)
+        .Refresh(true)
+        .ButtonCount(5)
+        )
+
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Events(events => events
+        .Error("grid_error")
+        )
+        .Read(read => read.Action("Users_Read", "Account"))
+        .Destroy(update => update.Action("Users_Destroy", "Account"))
+        .PageSize(10)
+        .ServerOperation(false)
+        .Model(model =>
+        {
+        model.Id(u => u.UserID);
+        model.Field(u => u.UserID).Editable(false);
+        })
+
+        )
+
+        )
+</section>
+
+<style>
+
+    .k-window div.k-window-content {
+        overflow: scroll;
+    }
+
+    .fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 2em;
+        }
+
+        .fieldlist label {
+            display: block;
+            padding-bottom: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #444;
+        }
+</style>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#window").data("kendoWindow").close();
+    });
+
+    function onClose() {
+        $("#textButton").show();
+    }
+
+    $(document).ready(function () {
+        $("#textButton").bind("click", function () {
+            $("#window").data("kendoWindow").open().center();
+            //$("#textButton").hide();
+        });
+    });
+
+    function roledata() {
+        return {
+            text: $("#role").data("kendoDropDownList").filterInput.val()
+        };
+    }
+
+    function cabangdata() {
+        return {
+            text: $("#cabang").data("kendoDropDownList").filterInput.val()
+        };
+    }
+
+    function onGridDataBound(e) {
+        $('#masterrole script').appendTo(document.body);
+        $('#mastercabang script').appendTo(document.body);
+    }
+
+    function grid_error(e) {
+        if (e.errors) {
+            var message = "There are some errors:\n";
+            // Create a message containing all errors.
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            // Display the message.
+            alert(message);
+            // Cancel the changes.
+            var grid = $("#grid").data("kendoGrid");
+            grid.cancelChanges();
+        }
+    }
+
+    function Updatebtn(e) {
+            e.preventDefault();
+            var row = $(e.target).closest("tr");
+            var grid = $("#grid").data("kendoGrid");
+            var datsa = grid.dataItem(row);
+            var pId = datsa.UserID;
+            
+
+
+        var myWin = $("#window").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Edit User",
+                content: {
+                    url: '@Url.Action("UserEdit", "Window")',
+                    data: { UserID: pId }
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
+        }
+
+    var wnd;
+    $(document).ready(function () {
+        wnd = $("#modalWindow").kendoWindow({
+            title: "confirmation",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
+    });
+
+    function openWindow(e) {
+        e.preventDefault();
+
+        var grid = this;
+        var row = $(e.currentTarget).closest("tr");
+        wnd.center().open();
+
+        $("#yes").click(function () {
+            grid.removeRow(row);
+            wnd.close();
+        });
+
+        $("#no").click(function () {
+            wnd.close();
+        });
+    }
+
+
+</script>

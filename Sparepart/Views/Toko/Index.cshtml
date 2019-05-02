@@ -1,0 +1,139 @@
+﻿@model Sparepart.Models.mastertoko
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Master Toko
+    </h1>
+</section>
+
+<section class="content container-fluid">
+
+
+    <div id="modalWindow">
+        <h3 class="text-center">Delete this record?</h3>
+        <div class="pull-left">
+            <button id="yes" class="k-button">Yes</button>
+        </div>
+        <div class="pull-right">
+            <button id="no" class="k-button">No</button>
+        </div>
+    </div>
+
+
+    @(Html.Kendo().Grid<Sparepart.Models.mastertoko>()
+                                                .Name("grid")
+                                                .Columns(columns =>
+                                                {
+                                                    columns.Bound(u => u.NamaToko).Width(100);
+                                                    columns.Bound(u => u.AlamatToko).Width(100);
+                                                    columns.Bound(u => u.UserInput).Visible(false);
+                                                    columns.Bound(u => u.TanggalInput).Visible(false);
+                                                    columns.Bound(u => u.UserUpdate).Visible(false);
+                                                    columns.Bound(u => u.TanggalUpdate).Visible(false);
+                                                    columns.Bound(u => u.IsDelete).Visible(false);
+                                                    columns.Command(commands =>
+                                                    {
+                                                        commands.Edit();
+                                                        commands.Custom("Delete").Click("openWindow");
+
+                                                    }).Title("Commands").Width(200);
+                                                })
+                                                .ToolBar(toolbar =>
+                                                {
+                                                    toolbar.Create().Text("Tambahkan Toko");
+                                                }
+                                                )
+                                                .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                                                .Sortable()
+                                                .Pageable(pageable => pageable
+                                                  .Input(true)
+                                                  .Numeric(true)
+                                                  .Info(true)
+                                                  .PreviousNext(true)
+                                                  .Refresh(true)
+                                                  .ButtonCount(5)
+                                                  )
+
+                                                .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Events(events => events
+                                                    .Error("grid_error")
+                                                    )
+                                                    .Read(read => read.Action("Toko_Read", "Toko"))
+                                                    .PageSize(10)
+                                                    .ServerOperation(false)
+                                                    .Model(model =>
+                                                    {
+                                                        model.Id(u => u.TokoID);
+                                                        model.Field(u => u.TokoID).Editable(false);
+                                                    })
+                                                    .Create(create => create.Action("Toko_Create", "Toko"))
+                                                    .Update(update => update.Action("Toko_Update", "Toko"))
+                                                    .Destroy(destroy => destroy.Action("Toko_Destroy", "Toko"))
+                                                )
+
+    )
+
+</section>
+
+@*toolbar.Template("<a class='k-button k-button-icontext' onclick='customCommand()' href='#'></span>Cutom Command</a>");*@
+
+<script>
+
+    function grid_error(e) {
+        if (e.errors) {
+            var message = "There are some errors:\n";
+            // Create a message containing all errors.
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            // Display the message.
+            alert(message);
+            // Cancel the changes.
+            var grid = $("#grid").data("kendoGrid");
+            grid.cancelChanges();
+        }
+    }
+
+
+    var wnd;
+    $(document).ready(function () {
+        wnd = $("#modalWindow").kendoWindow({
+            title: "confirmation",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
+    });
+
+
+
+
+    function openWindow(e) {
+        e.preventDefault();
+
+        var grid = this;
+        var row = $(e.currentTarget).closest("tr");
+        wnd.center().open();
+
+        $("#yes").click(function () {
+            grid.removeRow(row);
+            wnd.close();
+        });
+
+        $("#no").click(function () {
+            wnd.close();
+        });
+    }
+
+
+</script>

@@ -1,0 +1,50 @@
+﻿@model Sparepart.Models.CreateCabangViewModel
+
+<form action="/Cabang/Update" method="post">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.CabangID)
+        <li>
+            @Html.Label("Nama Cabang")
+            @Html.Kendo().TextBoxFor(m => m.NamaCabang).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Cabang", required = "required", validationmessage = "Input Cabang" })
+        </li>
+        <li>
+            @Html.Label("Toko")
+            @(Html.Kendo().DropDownListFor(m => m.Toko)
+                                            .Name("toko")
+                                            .DataTextField("NamaToko")
+                                            .DataValueField("TokoID")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                                        {
+                                            read.Action("GetToko", "Toko")
+                                        .Data("tokodata");
+                                        });
+                                            })
+            )
+        </li>
+        <li>
+            @Html.Label("Unit")
+            @(Html.Kendo().DropDownListFor(m => m.Unit)
+                                            .Name("unit")
+                                            .DataTextField("NamaUnit")
+                                            .DataValueField("UnitID")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                                        {
+                                            read.Action("GetUnit", "Unit")
+                                        .Data("unitdata");
+                                        });
+                                            })
+            )
+        </li>
+        <li>
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>
+

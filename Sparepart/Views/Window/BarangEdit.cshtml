@@ -1,0 +1,64 @@
+﻿@model Sparepart.Models.CreateBarangViewModel
+<form action="/Barang/Update" method="post">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.KodeBarangTipe)
+        <li>
+            @Html.Label("Nama Barang")
+            @Html.Kendo().TextBoxFor(m => m.NamaBarang).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Barang", required = "required", validationmessage = "Input Barang" })
+        </li>
+        <li>
+            @Html.Label("BufferStock")
+            @(Html.Kendo().NumericTextBoxFor<decimal>(m => m.BufferStock)
+                                            .Name("bufferstock")
+                                            .Value(0)
+                                            .HtmlAttributes(new { style = "width: 50%", title = "BufferStock" })
+            )
+        </li>
+        <li>
+            @Html.Label("Harga Satuan")
+            @(Html.Kendo().NumericTextBoxFor<int>(m => m.HargaSatuan)
+                                            .Name("hargasatuan")
+                                            .Value(0)
+                                            .HtmlAttributes(new { style = "width: 50%", title = "Harga Satuan" })
+            )
+        </li>
+        <li>
+            @Html.Label("Kategori")
+            @(Html.Kendo().DropDownListFor(m => m.KategoriID)
+                                    .Name("kategori")
+                                    .DataTextField("NamaKategori")
+                                    .DataValueField("KategoriID")
+                                    .Filter(FilterType.Contains)
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read =>
+                                                    {
+                                                        read.Action("GetKategori", "Kategori")
+                                                                .Data("kategoridata");
+                                                    });
+                                    })
+            )
+        </li>
+        <li>
+            @Html.Label("Satuan")
+            @(Html.Kendo().DropDownListFor(m => m.SatuanID)
+                                    .Name("satuan")
+                                    .DataTextField("NamaSatuan")
+                                    .DataValueField("SatuanID")
+                                    .Filter(FilterType.Contains)
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read =>
+                                                    {
+                                                        read.Action("GetSatuan", "Satuan")
+                                                                .Data("satuandata");
+                                                    });
+                                    })
+            )
+        </li>
+        <li>
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>

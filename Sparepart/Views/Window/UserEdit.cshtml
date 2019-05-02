@@ -1,0 +1,65 @@
+﻿@model Sparepart.Models.UserViewModel
+
+<form action="/Account/Users_Update" method="post">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.UserID)
+        <li>
+            @Html.Label("Nama")
+            @Html.Kendo().TextBoxFor(m => m.NamaUser).HtmlAttributes(new { style = "width: 100%;" })
+        </li>
+        <li>
+            @Html.Label("Username")
+            @Html.Kendo().TextBoxFor(m => m.UserName).Name("username").HtmlAttributes(new { style = "width: 100%;" })
+        </li>
+        <li>
+            @Html.Label("Email")
+            @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { style = "width: 100%;" })
+        </li>
+        <li>
+            @Html.Label("Password")
+            @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { style = "width: 100%;", type = "password" })
+        </li>
+        <li>
+            @Html.Label("Confirm Password")
+            @Html.Kendo().TextBoxFor(m => m.ConfirmPassword).HtmlAttributes(new { style = "width: 100%;", type = "password" })
+        </li>
+        <li>
+            @Html.Label("Role")
+            @(Html.Kendo().DropDownListFor(m => m.UserRoles)
+                                            .Name("role")
+                                            .DataTextField("NamaRole")
+                                            .DataValueField("RoleID")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                         {
+                             read.Action("GetProducts", "Account")
+.Data("roledata");
+                         });
+                                            })
+            )
+        </li>
+        <li>
+            @Html.Label("Cabang")
+            @(Html.Kendo().DropDownListFor(m => m.UserCabang)
+                                            .Name("cabang")
+                                            .DataTextField("NamaCabang")
+                                            .DataValueField("CabangID")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                         {
+                             read.Action("GetCabang", "Account")
+.Data("cabangdata");
+                         });
+                                            })
+            )
+        </li>
+        <li>
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>

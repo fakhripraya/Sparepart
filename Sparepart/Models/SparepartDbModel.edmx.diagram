@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9ea13c313a144f5c95e9798bcc5aebe1" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="dbsparepartModel.aks" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="dbsparepartModel.fpsdetail" Width="1.5" PointX="10.5" PointY="3.875" />
+        <EntityTypeShape EntityType="dbsparepartModel.fpsheader" Width="1.5" PointX="8.25" PointY="2.625" />
+        <EntityTypeShape EntityType="dbsparepartModel.hakaks" Width="1.5" PointX="0.75" PointY="1.25" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterbarang" Width="1.5" PointX="8.25" PointY="10" />
+        <EntityTypeShape EntityType="dbsparepartModel.mastercabang" Width="1.5" PointX="3.75" PointY="10.25" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterkategori" Width="1.5" PointX="6" PointY="12.25" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterrole" Width="1.5" PointX="0.75" PointY="3.625" />
+        <EntityTypeShape EntityType="dbsparepartModel.mastersatuan" Width="1.5" PointX="6" PointY="9" />
+        <EntityTypeShape EntityType="dbsparepartModel.mastertoko" Width="1.5" PointX="1.5" PointY="8.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterunit" Width="1.5" PointX="1.5" PointY="12.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.masteruser" Width="1.5" PointX="6" PointY="3" />
+        <AssociationConnector Association="dbsparepartModel.FK_AKSESID_TOHAKAKSES" />
+        <AssociationConnector Association="dbsparepartModel.FK_ROLEID_TOMASTERROLE" />
+        <AssociationConnector Association="dbsparepartModel.FK_FPSID_FPSDetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_CabangID_FPSHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_TokoID_FPSHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_UnitID_FPSHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_UserID_FPSHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_KategoriID_MasterBarang" />
+        <AssociationConnector Association="dbsparepartModel.FK_SatuanID_MasterBarang" />
+        <AssociationConnector Association="dbsparepartModel.FK_CabangID_MasterUser" />
+        <AssociationConnector Association="dbsparepartModel.FK_TokoID_MasterCabang" />
+        <AssociationConnector Association="dbsparepartModel.FK_UnitID_MasterCabang" />
+        <AssociationConnector Association="dbsparepartModel.FK_RoleID_MasterUser" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

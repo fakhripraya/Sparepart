@@ -1,0 +1,1028 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbsparepartModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.7" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="akses">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="AksesID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AksesID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="NamaAkses" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="fpsdetail">
+          <Key>
+            <PropertyRef Name="SeqFPSID" />
+            <PropertyRef Name="FPSID" />
+          </Key>
+          <Property Name="SeqFPSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FPSID" Type="int" Nullable="false" />
+          <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="Keterangan" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="fpsheader">
+          <Key>
+            <PropertyRef Name="FPSID" />
+          </Key>
+          <Property Name="FPSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="128" />
+          <Property Name="TokoID" Type="int" />
+          <Property Name="CabangID" Type="int" />
+          <Property Name="UnitID" Type="int" />
+          <Property Name="NoTicket" Type="varchar" MaxLength="128" />
+          <Property Name="Approval" Type="int" />
+          <Property Name="JenisFPS" Type="tinyint" />
+          <Property Name="NamaPemohon" Type="varchar" MaxLength="200" />
+          <Property Name="NIKPemohon" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="hakakses">
+          <Key>
+            <PropertyRef Name="AksesID" />
+          </Key>
+          <Property Name="AksesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaMenu" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="masterbarang">
+          <Key>
+            <PropertyRef Name="KodeBarangTipe" />
+          </Key>
+          <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="KategoriID" Type="int" />
+          <Property Name="BarangPLU" Type="varchar" MaxLength="128" />
+          <Property Name="NamaBarang" Type="varchar" MaxLength="200" />
+          <Property Name="SatuanID" Type="int" />
+          <Property Name="HargaSatuan" Type="int" />
+          <Property Name="BufferStock" Type="decimal" Precision="19" Scale="0" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="mastercabang">
+          <Key>
+            <PropertyRef Name="CabangID" />
+          </Key>
+          <Property Name="CabangID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TokoID" Type="int" />
+          <Property Name="UnitID" Type="int" />
+          <Property Name="NamaCabang" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="masterkategori">
+          <Key>
+            <PropertyRef Name="KategoriID" />
+          </Key>
+          <Property Name="KategoriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaKategori" Type="varchar" MaxLength="200" />
+          <Property Name="Deskripsi" Type="varchar" MaxLength="1000" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="masterrole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaRole" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="mastersatuan">
+          <Key>
+            <PropertyRef Name="SatuanID" />
+          </Key>
+          <Property Name="SatuanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaSatuan" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="mastertoko">
+          <Key>
+            <PropertyRef Name="TokoID" />
+          </Key>
+          <Property Name="TokoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaToko" Type="varchar" MaxLength="200" />
+          <Property Name="AlamatToko" Type="varchar" MaxLength="1000" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="masterunit">
+          <Key>
+            <PropertyRef Name="UnitID" />
+          </Key>
+          <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaUnit" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="masteruser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="CabangID" Type="int" />
+          <Property Name="NamaUser" Type="varchar" MaxLength="200" />
+          <Property Name="Username" Type="varchar" MaxLength="200" />
+          <Property Name="Password" Type="varchar" MaxLength="200" />
+          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
+          <Property Name="IsDelete" Type="tinyint" />
+        </EntityType>
+        <Association Name="FK_AKSESID_TOHAKAKSES">
+          <End Role="hakakses" Type="Self.hakakses" Multiplicity="1" />
+          <End Role="akses" Type="Self.akses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hakakses">
+              <PropertyRef Name="AksesID" />
+            </Principal>
+            <Dependent Role="akses">
+              <PropertyRef Name="AksesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_FPSHeader">
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="0..1" />
+          <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_MasterUser">
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="0..1" />
+          <End Role="masteruser" Type="Self.masteruser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="masteruser">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FPSID_FPSDetail">
+          <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="1" />
+          <End Role="fpsdetail" Type="Self.fpsdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fpsheader">
+              <PropertyRef Name="FPSID" />
+            </Principal>
+            <Dependent Role="fpsdetail">
+              <PropertyRef Name="FPSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KategoriID_MasterBarang">
+          <End Role="masterkategori" Type="Self.masterkategori" Multiplicity="0..1" />
+          <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterkategori">
+              <PropertyRef Name="KategoriID" />
+            </Principal>
+            <Dependent Role="masterbarang">
+              <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_FPSDetail">
+          <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="0..1" />
+          <End Role="fpsdetail" Type="Self.fpsdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="fpsdetail">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleID_MasterUser">
+          <End Role="masterrole" Type="Self.masterrole" Multiplicity="0..1" />
+          <End Role="masteruser" Type="Self.masteruser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterrole">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="masteruser">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLEID_TOMASTERROLE">
+          <End Role="masterrole" Type="Self.masterrole" Multiplicity="1" />
+          <End Role="akses" Type="Self.akses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterrole">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="akses">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SatuanID_MasterBarang">
+          <End Role="mastersatuan" Type="Self.mastersatuan" Multiplicity="0..1" />
+          <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastersatuan">
+              <PropertyRef Name="SatuanID" />
+            </Principal>
+            <Dependent Role="masterbarang">
+              <PropertyRef Name="SatuanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TokoID_FPSHeader">
+          <End Role="mastertoko" Type="Self.mastertoko" Multiplicity="0..1" />
+          <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastertoko">
+              <PropertyRef Name="TokoID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="TokoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TokoID_MasterCabang">
+          <End Role="mastertoko" Type="Self.mastertoko" Multiplicity="0..1" />
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastertoko">
+              <PropertyRef Name="TokoID" />
+            </Principal>
+            <Dependent Role="mastercabang">
+              <PropertyRef Name="TokoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnitID_FPSHeader">
+          <End Role="masterunit" Type="Self.masterunit" Multiplicity="0..1" />
+          <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterunit">
+              <PropertyRef Name="UnitID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="UnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnitID_MasterCabang">
+          <End Role="masterunit" Type="Self.masterunit" Multiplicity="0..1" />
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterunit">
+              <PropertyRef Name="UnitID" />
+            </Principal>
+            <Dependent Role="mastercabang">
+              <PropertyRef Name="UnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserID_FPSHeader">
+          <End Role="masteruser" Type="Self.masteruser" Multiplicity="0..1" />
+          <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masteruser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="dbsparepartModelStoreContainer">
+          <EntitySet Name="akses" EntityType="Self.akses" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="fpsdetail" EntityType="Self.fpsdetail" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="fpsheader" EntityType="Self.fpsheader" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="hakakses" EntityType="Self.hakakses" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="masterbarang" EntityType="Self.masterbarang" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="mastercabang" EntityType="Self.mastercabang" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="masterkategori" EntityType="Self.masterkategori" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="masterrole" EntityType="Self.masterrole" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="mastersatuan" EntityType="Self.mastersatuan" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="mastertoko" EntityType="Self.mastertoko" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="masterunit" EntityType="Self.masterunit" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="masteruser" EntityType="Self.masteruser" Schema="dbsparepart" store:Type="Tables" />
+          <AssociationSet Name="FK_AKSESID_TOHAKAKSES" Association="Self.FK_AKSESID_TOHAKAKSES">
+            <End Role="hakakses" EntitySet="hakakses" />
+            <End Role="akses" EntitySet="akses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_FPSHeader" Association="Self.FK_CabangID_FPSHeader">
+            <End Role="mastercabang" EntitySet="mastercabang" />
+            <End Role="fpsheader" EntitySet="fpsheader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_MasterUser" Association="Self.FK_CabangID_MasterUser">
+            <End Role="mastercabang" EntitySet="mastercabang" />
+            <End Role="masteruser" EntitySet="masteruser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FPSID_FPSDetail" Association="Self.FK_FPSID_FPSDetail">
+            <End Role="fpsheader" EntitySet="fpsheader" />
+            <End Role="fpsdetail" EntitySet="fpsdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KategoriID_MasterBarang" Association="Self.FK_KategoriID_MasterBarang">
+            <End Role="masterkategori" EntitySet="masterkategori" />
+            <End Role="masterbarang" EntitySet="masterbarang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_FPSDetail" Association="Self.FK_KodeBarangTipe_FPSDetail">
+            <End Role="masterbarang" EntitySet="masterbarang" />
+            <End Role="fpsdetail" EntitySet="fpsdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleID_MasterUser" Association="Self.FK_RoleID_MasterUser">
+            <End Role="masterrole" EntitySet="masterrole" />
+            <End Role="masteruser" EntitySet="masteruser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLEID_TOMASTERROLE" Association="Self.FK_ROLEID_TOMASTERROLE">
+            <End Role="masterrole" EntitySet="masterrole" />
+            <End Role="akses" EntitySet="akses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SatuanID_MasterBarang" Association="Self.FK_SatuanID_MasterBarang">
+            <End Role="mastersatuan" EntitySet="mastersatuan" />
+            <End Role="masterbarang" EntitySet="masterbarang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TokoID_FPSHeader" Association="Self.FK_TokoID_FPSHeader">
+            <End Role="mastertoko" EntitySet="mastertoko" />
+            <End Role="fpsheader" EntitySet="fpsheader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TokoID_MasterCabang" Association="Self.FK_TokoID_MasterCabang">
+            <End Role="mastertoko" EntitySet="mastertoko" />
+            <End Role="mastercabang" EntitySet="mastercabang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnitID_FPSHeader" Association="Self.FK_UnitID_FPSHeader">
+            <End Role="masterunit" EntitySet="masterunit" />
+            <End Role="fpsheader" EntitySet="fpsheader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnitID_MasterCabang" Association="Self.FK_UnitID_MasterCabang">
+            <End Role="masterunit" EntitySet="masterunit" />
+            <End Role="mastercabang" EntitySet="mastercabang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserID_FPSHeader" Association="Self.FK_UserID_FPSHeader">
+            <End Role="masteruser" EntitySet="masteruser" />
+            <End Role="fpsheader" EntitySet="fpsheader" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbsparepartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="dbsparepartEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="akses" EntityType="dbsparepartModel.aks" />
+          <EntitySet Name="fpsdetails" EntityType="dbsparepartModel.fpsdetail" />
+          <EntitySet Name="fpsheaders" EntityType="dbsparepartModel.fpsheader" />
+          <EntitySet Name="hakakses" EntityType="dbsparepartModel.hakaks" />
+          <EntitySet Name="masterbarangs" EntityType="dbsparepartModel.masterbarang" />
+          <EntitySet Name="mastercabangs" EntityType="dbsparepartModel.mastercabang" />
+          <EntitySet Name="masterkategoris" EntityType="dbsparepartModel.masterkategori" />
+          <EntitySet Name="masterroles" EntityType="dbsparepartModel.masterrole" />
+          <EntitySet Name="mastersatuans" EntityType="dbsparepartModel.mastersatuan" />
+          <EntitySet Name="mastertokoes" EntityType="dbsparepartModel.mastertoko" />
+          <EntitySet Name="masterunits" EntityType="dbsparepartModel.masterunit" />
+          <EntitySet Name="masterusers" EntityType="dbsparepartModel.masteruser" />
+          <AssociationSet Name="FK_AKSESID_TOHAKAKSES" Association="dbsparepartModel.FK_AKSESID_TOHAKAKSES">
+            <End Role="hakaks" EntitySet="hakakses" />
+            <End Role="aks" EntitySet="akses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLEID_TOMASTERROLE" Association="dbsparepartModel.FK_ROLEID_TOMASTERROLE">
+            <End Role="masterrole" EntitySet="masterroles" />
+            <End Role="aks" EntitySet="akses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FPSID_FPSDetail" Association="dbsparepartModel.FK_FPSID_FPSDetail">
+            <End Role="fpsheader" EntitySet="fpsheaders" />
+            <End Role="fpsdetail" EntitySet="fpsdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_FPSDetail" Association="dbsparepartModel.FK_KodeBarangTipe_FPSDetail">
+            <End Role="masterbarang" EntitySet="masterbarangs" />
+            <End Role="fpsdetail" EntitySet="fpsdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_FPSHeader" Association="dbsparepartModel.FK_CabangID_FPSHeader">
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+            <End Role="fpsheader" EntitySet="fpsheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TokoID_FPSHeader" Association="dbsparepartModel.FK_TokoID_FPSHeader">
+            <End Role="mastertoko" EntitySet="mastertokoes" />
+            <End Role="fpsheader" EntitySet="fpsheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnitID_FPSHeader" Association="dbsparepartModel.FK_UnitID_FPSHeader">
+            <End Role="masterunit" EntitySet="masterunits" />
+            <End Role="fpsheader" EntitySet="fpsheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserID_FPSHeader" Association="dbsparepartModel.FK_UserID_FPSHeader">
+            <End Role="masteruser" EntitySet="masterusers" />
+            <End Role="fpsheader" EntitySet="fpsheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KategoriID_MasterBarang" Association="dbsparepartModel.FK_KategoriID_MasterBarang">
+            <End Role="masterkategori" EntitySet="masterkategoris" />
+            <End Role="masterbarang" EntitySet="masterbarangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SatuanID_MasterBarang" Association="dbsparepartModel.FK_SatuanID_MasterBarang">
+            <End Role="mastersatuan" EntitySet="mastersatuans" />
+            <End Role="masterbarang" EntitySet="masterbarangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_MasterUser" Association="dbsparepartModel.FK_CabangID_MasterUser">
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+            <End Role="masteruser" EntitySet="masterusers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TokoID_MasterCabang" Association="dbsparepartModel.FK_TokoID_MasterCabang">
+            <End Role="mastertoko" EntitySet="mastertokoes" />
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UnitID_MasterCabang" Association="dbsparepartModel.FK_UnitID_MasterCabang">
+            <End Role="masterunit" EntitySet="masterunits" />
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleID_MasterUser" Association="dbsparepartModel.FK_RoleID_MasterUser">
+            <End Role="masterrole" EntitySet="masterroles" />
+            <End Role="masteruser" EntitySet="masterusers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="aks">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="AksesID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AksesID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="NamaAkses" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="hakaks" Relationship="dbsparepartModel.FK_AKSESID_TOHAKAKSES" FromRole="aks" ToRole="hakaks" />
+          <NavigationProperty Name="masterrole" Relationship="dbsparepartModel.FK_ROLEID_TOMASTERROLE" FromRole="aks" ToRole="masterrole" />
+        </EntityType>
+        <EntityType Name="fpsdetail">
+          <Key>
+            <PropertyRef Name="SeqFPSID" />
+            <PropertyRef Name="FPSID" />
+          </Key>
+          <Property Name="SeqFPSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FPSID" Type="Int32" Nullable="false" />
+          <Property Name="KodeBarangTipe" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="Keterangan" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="fpsheader" Relationship="dbsparepartModel.FK_FPSID_FPSDetail" FromRole="fpsdetail" ToRole="fpsheader" />
+          <NavigationProperty Name="masterbarang" Relationship="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" FromRole="fpsdetail" ToRole="masterbarang" />
+        </EntityType>
+        <EntityType Name="fpsheader">
+          <Key>
+            <PropertyRef Name="FPSID" />
+          </Key>
+          <Property Name="FPSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="TokoID" Type="Int32" />
+          <Property Name="CabangID" Type="Int32" />
+          <Property Name="UnitID" Type="Int32" />
+          <Property Name="NoTicket" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="Approval" Type="Int32" />
+          <Property Name="JenisFPS" Type="SByte" />
+          <Property Name="NamaPemohon" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NIKPemohon" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <NavigationProperty Name="fpsdetails" Relationship="dbsparepartModel.FK_FPSID_FPSDetail" FromRole="fpsheader" ToRole="fpsdetail" />
+          <NavigationProperty Name="mastercabang" Relationship="dbsparepartModel.FK_CabangID_FPSHeader" FromRole="fpsheader" ToRole="mastercabang" />
+          <NavigationProperty Name="mastertoko" Relationship="dbsparepartModel.FK_TokoID_FPSHeader" FromRole="fpsheader" ToRole="mastertoko" />
+          <NavigationProperty Name="masterunit" Relationship="dbsparepartModel.FK_UnitID_FPSHeader" FromRole="fpsheader" ToRole="masterunit" />
+          <NavigationProperty Name="masteruser" Relationship="dbsparepartModel.FK_UserID_FPSHeader" FromRole="fpsheader" ToRole="masteruser" />
+        </EntityType>
+        <EntityType Name="hakaks">
+          <Key>
+            <PropertyRef Name="AksesID" />
+          </Key>
+          <Property Name="AksesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaMenu" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="akses" Relationship="dbsparepartModel.FK_AKSESID_TOHAKAKSES" FromRole="hakaks" ToRole="aks" />
+        </EntityType>
+        <EntityType Name="masterbarang">
+          <Key>
+            <PropertyRef Name="KodeBarangTipe" />
+          </Key>
+          <Property Name="KodeBarangTipe" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="KategoriID" Type="Int32" />
+          <Property Name="BarangPLU" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="NamaBarang" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SatuanID" Type="Int32" />
+          <Property Name="HargaSatuan" Type="Int32" />
+          <Property Name="BufferStock" Type="Decimal" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="fpsdetails" Relationship="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" FromRole="masterbarang" ToRole="fpsdetail" />
+          <NavigationProperty Name="masterkategori" Relationship="dbsparepartModel.FK_KategoriID_MasterBarang" FromRole="masterbarang" ToRole="masterkategori" />
+          <NavigationProperty Name="mastersatuan" Relationship="dbsparepartModel.FK_SatuanID_MasterBarang" FromRole="masterbarang" ToRole="mastersatuan" />
+        </EntityType>
+        <EntityType Name="mastercabang">
+          <Key>
+            <PropertyRef Name="CabangID" />
+          </Key>
+          <Property Name="CabangID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TokoID" Type="Int32" />
+          <Property Name="UnitID" Type="Int32" />
+          <Property Name="NamaCabang" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_CabangID_FPSHeader" FromRole="mastercabang" ToRole="fpsheader" />
+          <NavigationProperty Name="masterusers" Relationship="dbsparepartModel.FK_CabangID_MasterUser" FromRole="mastercabang" ToRole="masteruser" />
+          <NavigationProperty Name="mastertoko" Relationship="dbsparepartModel.FK_TokoID_MasterCabang" FromRole="mastercabang" ToRole="mastertoko" />
+          <NavigationProperty Name="masterunit" Relationship="dbsparepartModel.FK_UnitID_MasterCabang" FromRole="mastercabang" ToRole="masterunit" />
+        </EntityType>
+        <EntityType Name="masterkategori">
+          <Key>
+            <PropertyRef Name="KategoriID" />
+          </Key>
+          <Property Name="KategoriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaKategori" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Deskripsi" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="masterbarangs" Relationship="dbsparepartModel.FK_KategoriID_MasterBarang" FromRole="masterkategori" ToRole="masterbarang" />
+        </EntityType>
+        <EntityType Name="masterrole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaRole" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="akses" Relationship="dbsparepartModel.FK_ROLEID_TOMASTERROLE" FromRole="masterrole" ToRole="aks" />
+          <NavigationProperty Name="masterusers" Relationship="dbsparepartModel.FK_RoleID_MasterUser" FromRole="masterrole" ToRole="masteruser" />
+        </EntityType>
+        <EntityType Name="mastersatuan">
+          <Key>
+            <PropertyRef Name="SatuanID" />
+          </Key>
+          <Property Name="SatuanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaSatuan" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="masterbarangs" Relationship="dbsparepartModel.FK_SatuanID_MasterBarang" FromRole="mastersatuan" ToRole="masterbarang" />
+        </EntityType>
+        <EntityType Name="mastertoko">
+          <Key>
+            <PropertyRef Name="TokoID" />
+          </Key>
+          <Property Name="TokoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaToko" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AlamatToko" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_TokoID_FPSHeader" FromRole="mastertoko" ToRole="fpsheader" />
+          <NavigationProperty Name="mastercabangs" Relationship="dbsparepartModel.FK_TokoID_MasterCabang" FromRole="mastertoko" ToRole="mastercabang" />
+        </EntityType>
+        <EntityType Name="masterunit">
+          <Key>
+            <PropertyRef Name="UnitID" />
+          </Key>
+          <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaUnit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_UnitID_FPSHeader" FromRole="masterunit" ToRole="fpsheader" />
+          <NavigationProperty Name="mastercabangs" Relationship="dbsparepartModel.FK_UnitID_MasterCabang" FromRole="masterunit" ToRole="mastercabang" />
+        </EntityType>
+        <EntityType Name="masteruser">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="CabangID" Type="Int32" />
+          <Property Name="NamaUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <Property Name="IsDelete" Type="SByte" />
+          <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_UserID_FPSHeader" FromRole="masteruser" ToRole="fpsheader" />
+          <NavigationProperty Name="mastercabang" Relationship="dbsparepartModel.FK_CabangID_MasterUser" FromRole="masteruser" ToRole="mastercabang" />
+          <NavigationProperty Name="masterrole" Relationship="dbsparepartModel.FK_RoleID_MasterUser" FromRole="masteruser" ToRole="masterrole" />
+        </EntityType>
+        <Association Name="FK_AKSESID_TOHAKAKSES">
+          <End Type="dbsparepartModel.hakaks" Role="hakaks" Multiplicity="1" />
+          <End Type="dbsparepartModel.aks" Role="aks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hakaks">
+              <PropertyRef Name="AksesID" />
+            </Principal>
+            <Dependent Role="aks">
+              <PropertyRef Name="AksesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ROLEID_TOMASTERROLE">
+          <End Type="dbsparepartModel.masterrole" Role="masterrole" Multiplicity="1" />
+          <End Type="dbsparepartModel.aks" Role="aks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterrole">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="aks">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FPSID_FPSDetail">
+          <End Type="dbsparepartModel.fpsheader" Role="fpsheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.fpsdetail" Role="fpsdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fpsheader">
+              <PropertyRef Name="FPSID" />
+            </Principal>
+            <Dependent Role="fpsdetail">
+              <PropertyRef Name="FPSID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_FPSDetail">
+          <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.fpsdetail" Role="fpsdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="fpsdetail">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_FPSHeader">
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.fpsheader" Role="fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TokoID_FPSHeader">
+          <End Type="dbsparepartModel.mastertoko" Role="mastertoko" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.fpsheader" Role="fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastertoko">
+              <PropertyRef Name="TokoID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="TokoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnitID_FPSHeader">
+          <End Type="dbsparepartModel.masterunit" Role="masterunit" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.fpsheader" Role="fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterunit">
+              <PropertyRef Name="UnitID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="UnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserID_FPSHeader">
+          <End Type="dbsparepartModel.masteruser" Role="masteruser" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.fpsheader" Role="fpsheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masteruser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="fpsheader">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KategoriID_MasterBarang">
+          <End Type="dbsparepartModel.masterkategori" Role="masterkategori" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterkategori">
+              <PropertyRef Name="KategoriID" />
+            </Principal>
+            <Dependent Role="masterbarang">
+              <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SatuanID_MasterBarang">
+          <End Type="dbsparepartModel.mastersatuan" Role="mastersatuan" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastersatuan">
+              <PropertyRef Name="SatuanID" />
+            </Principal>
+            <Dependent Role="masterbarang">
+              <PropertyRef Name="SatuanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_MasterUser">
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.masteruser" Role="masteruser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="masteruser">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TokoID_MasterCabang">
+          <End Type="dbsparepartModel.mastertoko" Role="mastertoko" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastertoko">
+              <PropertyRef Name="TokoID" />
+            </Principal>
+            <Dependent Role="mastercabang">
+              <PropertyRef Name="TokoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UnitID_MasterCabang">
+          <End Type="dbsparepartModel.masterunit" Role="masterunit" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterunit">
+              <PropertyRef Name="UnitID" />
+            </Principal>
+            <Dependent Role="mastercabang">
+              <PropertyRef Name="UnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleID_MasterUser">
+          <End Type="dbsparepartModel.masterrole" Role="masterrole" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.masteruser" Role="masteruser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterrole">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="masteruser">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbsparepartModelStoreContainer" CdmEntityContainer="dbsparepartEntities">
+          <EntitySetMapping Name="akses">
+            <EntityTypeMapping TypeName="dbsparepartModel.aks">
+              <MappingFragment StoreEntitySet="akses">
+                <ScalarProperty Name="NamaAkses" ColumnName="NamaAkses" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="AksesID" ColumnName="AksesID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fpsdetails">
+            <EntityTypeMapping TypeName="dbsparepartModel.fpsdetail">
+              <MappingFragment StoreEntitySet="fpsdetail">
+                <ScalarProperty Name="Keterangan" ColumnName="Keterangan" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="KodeBarangTipe" ColumnName="KodeBarangTipe" />
+                <ScalarProperty Name="FPSID" ColumnName="FPSID" />
+                <ScalarProperty Name="SeqFPSID" ColumnName="SeqFPSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="fpsheaders">
+            <EntityTypeMapping TypeName="dbsparepartModel.fpsheader">
+              <MappingFragment StoreEntitySet="fpsheader">
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="NIKPemohon" ColumnName="NIKPemohon" />
+                <ScalarProperty Name="NamaPemohon" ColumnName="NamaPemohon" />
+                <ScalarProperty Name="JenisFPS" ColumnName="JenisFPS" />
+                <ScalarProperty Name="Approval" ColumnName="Approval" />
+                <ScalarProperty Name="NoTicket" ColumnName="NoTicket" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+                <ScalarProperty Name="TokoID" ColumnName="TokoID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FPSID" ColumnName="FPSID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hakakses">
+            <EntityTypeMapping TypeName="dbsparepartModel.hakaks">
+              <MappingFragment StoreEntitySet="hakakses">
+                <ScalarProperty Name="NamaMenu" ColumnName="NamaMenu" />
+                <ScalarProperty Name="AksesID" ColumnName="AksesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="masterbarangs">
+            <EntityTypeMapping TypeName="dbsparepartModel.masterbarang">
+              <MappingFragment StoreEntitySet="masterbarang">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="BufferStock" ColumnName="BufferStock" />
+                <ScalarProperty Name="HargaSatuan" ColumnName="HargaSatuan" />
+                <ScalarProperty Name="SatuanID" ColumnName="SatuanID" />
+                <ScalarProperty Name="NamaBarang" ColumnName="NamaBarang" />
+                <ScalarProperty Name="BarangPLU" ColumnName="BarangPLU" />
+                <ScalarProperty Name="KategoriID" ColumnName="KategoriID" />
+                <ScalarProperty Name="KodeBarangTipe" ColumnName="KodeBarangTipe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mastercabangs">
+            <EntityTypeMapping TypeName="dbsparepartModel.mastercabang">
+              <MappingFragment StoreEntitySet="mastercabang">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="NamaCabang" ColumnName="NamaCabang" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="TokoID" ColumnName="TokoID" />
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="masterkategoris">
+            <EntityTypeMapping TypeName="dbsparepartModel.masterkategori">
+              <MappingFragment StoreEntitySet="masterkategori">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="Deskripsi" ColumnName="Deskripsi" />
+                <ScalarProperty Name="NamaKategori" ColumnName="NamaKategori" />
+                <ScalarProperty Name="KategoriID" ColumnName="KategoriID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="masterroles">
+            <EntityTypeMapping TypeName="dbsparepartModel.masterrole">
+              <MappingFragment StoreEntitySet="masterrole">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="NamaRole" ColumnName="NamaRole" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mastersatuans">
+            <EntityTypeMapping TypeName="dbsparepartModel.mastersatuan">
+              <MappingFragment StoreEntitySet="mastersatuan">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="NamaSatuan" ColumnName="NamaSatuan" />
+                <ScalarProperty Name="SatuanID" ColumnName="SatuanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="mastertokoes">
+            <EntityTypeMapping TypeName="dbsparepartModel.mastertoko">
+              <MappingFragment StoreEntitySet="mastertoko">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="AlamatToko" ColumnName="AlamatToko" />
+                <ScalarProperty Name="NamaToko" ColumnName="NamaToko" />
+                <ScalarProperty Name="TokoID" ColumnName="TokoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="masterunits">
+            <EntityTypeMapping TypeName="dbsparepartModel.masterunit">
+              <MappingFragment StoreEntitySet="masterunit">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="NamaUnit" ColumnName="NamaUnit" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="masterusers">
+            <EntityTypeMapping TypeName="dbsparepartModel.masteruser">
+              <MappingFragment StoreEntitySet="masteruser">
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="NamaUser" ColumnName="NamaUser" />
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
