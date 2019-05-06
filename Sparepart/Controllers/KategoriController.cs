@@ -32,8 +32,9 @@ namespace Sparepart.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, masterkategori kat)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CreateKategoriViewModel kat)
         {
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
@@ -55,10 +56,11 @@ namespace Sparepart.Controllers
                     kat.KategoriID = entity.KategoriID;
                 }
             }
-            return Json(new[] { kat }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index");
         }
-
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, masterkategori kat)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Update(CreateKategoriViewModel kat)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +76,7 @@ namespace Sparepart.Controllers
                     northwind.SaveChanges();
                 }
             }
-            return Json(new[] { kat }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index");
         }
 
         public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, masterkategori kat)

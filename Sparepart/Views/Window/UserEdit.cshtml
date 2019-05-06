@@ -1,9 +1,8 @@
-﻿@model Sparepart.Models.UserViewModel
+﻿@model Sparepart.Models.RegisterViewModel
 
-<form action="/Account/Users_Update" method="post">
+<form action="/Account/Users_Update" method="post" id="EditFrm">
     <ul class="fieldlist">
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(m => m.UserID)
         <li>
             @Html.Label("Nama")
             @Html.Kendo().TextBoxFor(m => m.NamaUser).HtmlAttributes(new { style = "width: 100%;" })
@@ -16,46 +15,48 @@
             @Html.Label("Email")
             @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { style = "width: 100%;" })
         </li>
-        <li>
+        @*<li>
             @Html.Label("Password")
             @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { style = "width: 100%;", type = "password" })
         </li>
         <li>
             @Html.Label("Confirm Password")
             @Html.Kendo().TextBoxFor(m => m.ConfirmPassword).HtmlAttributes(new { style = "width: 100%;", type = "password" })
-        </li>
+        </li>*@
         <li>
             @Html.Label("Role")
             @(Html.Kendo().DropDownListFor(m => m.UserRoles)
-                                            .Name("role")
-                                            .DataTextField("NamaRole")
-                                            .DataValueField("RoleID")
-                                            .Filter(FilterType.Contains)
-                                            .DataSource(source =>
-                                            {
-                                                source.Read(read =>
-                         {
-                             read.Action("GetProducts", "Account")
-.Data("roledata");
-                         });
-                                            })
+                                                                    .Name("role")
+                                                                    .DataTextField("NamaRole")
+                                                                    .DataValueField("RoleID")
+                                                                    .OptionLabel("Select Role")
+                                                                    .Filter(FilterType.Contains)
+                                                                    .DataSource(source =>
+                                                                    {
+                                                                        source.Read(read =>
+                                    {
+                        read.Action("GetProducts", "Account")
+                                                .Data("roledata");
+                    });
+                                                                    })
             )
         </li>
         <li>
             @Html.Label("Cabang")
             @(Html.Kendo().DropDownListFor(m => m.UserCabang)
-                                            .Name("cabang")
-                                            .DataTextField("NamaCabang")
-                                            .DataValueField("CabangID")
-                                            .Filter(FilterType.Contains)
-                                            .DataSource(source =>
-                                            {
-                                                source.Read(read =>
-                         {
-                             read.Action("GetCabang", "Account")
-.Data("cabangdata");
-                         });
-                                            })
+                                                                    .Name("cabang")
+                                                                    .DataTextField("NamaCabang")
+                                                                    .DataValueField("CabangID")
+                                                                    .OptionLabel("Select Cabang")
+                                                                    .Filter(FilterType.Contains)
+                                                                    .DataSource(source =>
+                                                                    {
+                                                                        source.Read(read =>
+                                    {
+                        read.Action("GetCabang", "Account")
+                                                .Data("cabangdata");
+                    });
+                                                                    })
             )
         </li>
         <li>
@@ -63,3 +64,26 @@
         </li>
     </ul>
 </form>
+<script>
+    $("#EditFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+</script>

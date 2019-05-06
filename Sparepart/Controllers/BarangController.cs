@@ -109,5 +109,24 @@ namespace Sparepart.Controllers
             }
             return Json(new[] { barang }.ToDataSourceResult(request, ModelState));
         }
+
+        public JsonResult GetBarang(string text)
+        {
+            var northwind = new dbsparepartEntities();
+
+            var products = northwind.masterbarangs.Where(x => x.IsDelete == 0).Select(product => new BarangViewModel
+            {
+                KodeBarangTipe = product.KodeBarangTipe,
+                NamaBarang = product.NamaBarang,
+            });
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                products = products.Where(p => p.NamaBarang.Contains(text));
+            }
+
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

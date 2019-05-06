@@ -63,10 +63,11 @@ namespace Sparepart.Models
 
     public class RegisterViewModel
     {
-        //[Required]
+        public string UserID { get; set; }
+        [Required]
         [Display(Name = "Role")]
         public string UserRoles { get; set; }
-
+        [Required]
         [Display(Name = "Cabang")]
         public string UserCabang { get; set; }
 
@@ -88,7 +89,7 @@ namespace Sparepart.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]

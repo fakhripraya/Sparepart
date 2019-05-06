@@ -30,7 +30,7 @@ namespace Sparepart.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, mastersatuan sat)
+        public ActionResult Create(CreateSatuanViewModel sat)
         {
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
@@ -51,9 +51,9 @@ namespace Sparepart.Controllers
                     sat.SatuanID = entity.SatuanID;
                 }
             }
-            return Json(new[] { sat }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index");
         }
-        public ActionResult Update([DataSourceRequest]DataSourceRequest request, mastersatuan sat)
+        public ActionResult Update(CreateSatuanViewModel sat)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace Sparepart.Controllers
                     northwind.SaveChanges();
                 }
             }
-            return Json(new[] { sat }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index");
         }
         public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, mastersatuan sat)
         {

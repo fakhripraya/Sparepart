@@ -38,45 +38,45 @@ namespace Sparepart.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Unit_Create([DataSourceRequest]DataSourceRequest request, masterunit unit)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Unit_Create(CreateUnitViewModel model)
         {
-            string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
             if (ModelState.IsValid)
             {
-                using (var db = new dbsparepartEntities())
-                {
-                    var entity = new masterunit
-                    {
-                        UnitID = unit.UnitID,
-                        NamaUnit = unit.NamaUnit,
-                        UserInput = CurrentUser.NamaUser,
-                        TanggalInput = DateTime.Now,
-                        IsDelete = 0
-                    };
-                    db.masterunits.Add(entity);
-                    db.SaveChanges();
-                    unit.UnitID = entity.UnitID;
-                }
+                string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
+
+                masterunit unit = new masterunit();
+                unit.UnitID = model.UnitID;
+                unit.NamaUnit = model.NamaUnit;
+                unit.UserInput = CurrentUser.NamaUser;
+                unit.TanggalInput = System.DateTime.Now;
+                unit.IsDelete = 0;
+                Dbcontext.masterunits.Add(unit);
+                Dbcontext.SaveChanges();
             }
-            return Json(new[] { unit }.ToDataSourceResult(request, ModelState));
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("Index");
         }
-        public ActionResult Unit_Update([DataSourceRequest]DataSourceRequest request, masterunit unit)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Unit_Update(CreateUnitViewModel model)
         {
-            string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
             if (ModelState.IsValid)
             {
+                string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
                 using (var northwind = new dbsparepartEntities())
                 {
-                    var entity = northwind.masterunits.Where(u => u.UnitID == unit.UnitID).FirstOrDefault();
-                    entity.NamaUnit = unit.NamaUnit;
+                    var entity = northwind.masterunits.Where(u => u.UnitID == model.UnitID).FirstOrDefault();
+                    entity.NamaUnit = model.NamaUnit;
                     entity.UserUpdate = CurrentUser.NamaUser;
                     entity.TanggalUpdate = DateTime.Now;
                     northwind.SaveChanges();
                 }
             }
-            return Json(new[] { unit }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index");
         }
 
         public ActionResult Unit_Destroy([DataSourceRequest]DataSourceRequest request, masterunit unit)

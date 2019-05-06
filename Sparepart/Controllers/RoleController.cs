@@ -25,7 +25,7 @@ namespace Sparepart.Controllers
 
         public ActionResult Roles_Read([DataSourceRequest]DataSourceRequest request)
         {
-            DataSourceResult result = Dbcontext.masterroles.ToDataSourceResult(request,
+            DataSourceResult result = Dbcontext.masterroles.Where(x => x.IsDelete == 0).ToDataSourceResult(request,
                 model => new masterrole
                 {
                     RoleID = model.RoleID,

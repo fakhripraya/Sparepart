@@ -8,10 +8,10 @@ namespace Sparepart
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/admin-lte/js").Include(
-             "~/admin-lte/js/app.js",
-             "~/admin-lte/plugins/fastclick/fastclick.js",
-             "~/admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
+            bundles.Add(new ScriptBundle("~/Content/admin-lte/js").Include(
+             "~/Content/admin-lte/js/app.js",
+             "~/Content/admin-lte/plugins/fastclick/fastclick.js",
+             "~/Content/admin-lte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
              ));
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
@@ -30,8 +30,8 @@ namespace Sparepart
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                      "~/admin-lte/css/AdminLTE.css",
-                      "~/admin-lte/css/skins/skin-blue.css"
+                      "~/Content/admin-lte/css/AdminLTE.css",
+                      "~/Content/admin-lte/css/skins/skin-blue.css"
                       ));
         }
     }

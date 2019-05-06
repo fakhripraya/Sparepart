@@ -65,6 +65,8 @@ namespace Sparepart.Controllers
         {
             var role = Dbcontext.masterroles.ToList();
             ViewData["Role"] = role;
+            var cabang = Dbcontext.mastercabangs.ToList();
+            ViewData["Cabang"] = cabang;
             return View();
         }
         public JsonResult GetProducts(string text)
@@ -113,6 +115,7 @@ namespace Sparepart.Controllers
                     NamaUser = model.NamaUser,
                     Username = model.Username,
                     RoleID = model.RoleID,
+                    CabangID = model.CabangID,
                     Email = model.Email,
                     IsDelete = model.IsDelete
                 });
@@ -139,7 +142,7 @@ namespace Sparepart.Controllers
         }
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Users_Update([DataSourceRequest]DataSourceRequest request, UserViewModel model)
+        public ActionResult Users_Update([DataSourceRequest]DataSourceRequest request, UserUpdateViewModel model)
         {
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
@@ -152,8 +155,8 @@ namespace Sparepart.Controllers
                 aspuser.UserName = model.UserName;
                 aspuser.Email = model.Email;
                 UserManager.Update(aspuser);
-                UserManager.RemovePasswordAsync(aspuser.Id);
-                UserManager.AddPasswordAsync(aspuser.Id, model.Password);
+                //UserManager.RemovePasswordAsync(aspuser.Id);
+                //UserManager.AddPasswordAsync(aspuser.Id, model.Password);
 
                 foreach (var value in Dbcontext.akses.Where(x => x.RoleID == olduser.RoleID))
                 {
@@ -171,7 +174,7 @@ namespace Sparepart.Controllers
                     entity.NamaUser = model.NamaUser;
                     entity.Username = model.UserName;
                     entity.Email = model.Email;
-                    entity.Password = aspuser.PasswordHash;
+                    //entity.Password = aspuser.PasswordHash;
                     entity.RoleID = RoleID;
                     entity.CabangID = CabangID;
                     entity.UserUpdate = CurrentUser.NamaUser;

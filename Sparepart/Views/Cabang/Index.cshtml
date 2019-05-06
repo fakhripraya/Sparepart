@@ -29,7 +29,7 @@
             .Content(
 
             @<text>
-                <form action="/Cabang/Update" method="post">
+                <form action="/Cabang/Update" method="post" id="EditFrm">
                         <ul class="fieldlist">
                             @Html.AntiForgeryToken()
                             @Html.HiddenFor(m => m.CabangID)
@@ -93,7 +93,7 @@
             .Content(
 
             @<text>
-                <form action="/Cabang/Create" method="post">
+                <form action="/Cabang/Create" method="post" id="CreateFrm">
                     <ul class="fieldlist">
                         @Html.AntiForgeryToken()
                         <li>
@@ -106,14 +106,16 @@
                                     .Name("toko")
                                     .DataTextField("NamaToko")
                                     .DataValueField("TokoID")
+                                    .OptionLabel("Select Toko")
+                                    .HtmlAttributes(new { style = "width: 250px", required = "required", validationmessage = "Select Toko" })
                                     .Filter(FilterType.Contains)
                                     .DataSource(source =>
                                     {
                                         source.Read(read =>
-                                {
-                                        read.Action("GetToko", "Toko")
-                                .Data("tokodata");
-                                    });
+                                        {
+                                            read.Action("GetToko", "Toko")
+                                    .Data("tokodata");
+                                        });
                                     })
                             )
                         </li>
@@ -123,14 +125,16 @@
                                     .Name("unit")
                                     .DataTextField("NamaUnit")
                                     .DataValueField("UnitID")
+                                    .OptionLabel("Select Unit")
+                                    .HtmlAttributes(new { style = "width: 250px", required = "required", validationmessage = "Select Unit" })
                                     .Filter(FilterType.Contains)
                                     .DataSource(source =>
                                     {
                                         source.Read(read =>
-                                {
-                                        read.Action("GetUnit", "Unit")
-                                .Data("unitdata");
-                                    });
+                                        {
+                                            read.Action("GetUnit", "Unit")
+                                    .Data("unitdata");
+                                        });
                                     })
                             )
                         </li>
@@ -227,6 +231,49 @@
 @section Scripts
 {
     <script type="text/javascript">
+        $("#CreateFrm").kendoValidator({
+            messages: {
+                custom: function (input) {
+                    return $(input).parents().find('label').text();
+                }
+            },
+            rules: {
+                custom: function (input) {
+                    if (input.is("[data-role=dropdownlist]")) {
+
+                        var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                        if (ddVal !== "" && ddVal !== "label") {
+                            return true;
+                        } else {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            }
+        });
+
+        $("#EditFrm").kendoValidator({
+            messages: {
+                custom: function (input) {
+                    return $(input).parents().find('label').text();
+                }
+            },
+            rules: {
+                custom: function (input) {
+                    if (input.is("[data-role=dropdownlist]")) {
+
+                        var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                        if (ddVal !== "" && ddVal !== "label") {
+                            return true;
+                        } else {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            }
+        });
         function grid_error(e) {
             if (e.errors) {
                 var message = "There are some errors:\n";

@@ -57,5 +57,26 @@ namespace Sparepart.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Detail_Create(FPSDetailCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                fpsdetail detail = new fpsdetail();
+                detail.KodeBarangTipe = model.KodeBarangTipe;
+                detail.FPSID = model.FPSID;
+                cabang.TokoID = Int32.Parse(model.Toko);
+                cabang.UnitID = Int32.Parse(model.Unit);
+                cabang.UserInput = CurrentUser.NamaUser;
+                cabang.TanggalInput = System.DateTime.Now;
+                cabang.IsDelete = 0;
+                Dbcontext.mastercabangs.Add(cabang);
+                Dbcontext.SaveChanges();
+            }
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("Index");
+        }
     }
 }

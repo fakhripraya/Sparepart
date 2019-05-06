@@ -1,6 +1,6 @@
 ﻿@model Sparepart.Models.CreateCabangViewModel
 
-<form action="/Cabang/Update" method="post">
+<form action="/Cabang/Update" method="post" id="EditFrm">
     <ul class="fieldlist">
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.CabangID)
@@ -47,4 +47,26 @@
         </li>
     </ul>
 </form>
+<script>
+    $("#EditFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
 
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+</script>

@@ -1,0 +1,41 @@
+﻿@model Sparepart.Models.CreateKategoriViewModel
+<form action="/Kategori/Update" method="post" id="EditFrm">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.KategoriID)
+        <li>
+            @Html.Label("Nama Kategori")
+            @Html.Kendo().TextBoxFor(m => m.NamaKategori).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Kategori", required = "required", validationmessage = "Input Kategori" })
+        </li>
+        <li>
+            @Html.Label("Deskripsi")
+            @Html.Kendo().TextBoxFor(m => m.Deskripsi).HtmlAttributes(new { style = "width: 100%;", placeholder = "Deskripsi", required = "required", validationmessage = "Input Deskripsi" })
+        </li>
+        <li>
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>
+<script>
+    $("#EditFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+</script>

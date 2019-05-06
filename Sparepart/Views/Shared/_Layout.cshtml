@@ -105,19 +105,45 @@ desired effect
                     <!-- /.search form -->
                     <!-- Sidebar Menu -->
                     <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header">MENU</li>
-                        <!-- Optionally, you can add icons to the links -->
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Permintaan Sparepart", "Index", "FPS")</li>
-                        <li class="header">ADMIN MENU</li>
-                        <li>@Html.ActionLink("Master Barang", "Index", "Barang")</li>
-                        <li>@Html.ActionLink("Master Satuan", "Index", "Satuan")</li>
-                        <li>@Html.ActionLink("Master Kategori", "Index", "Kategori")</li>
-                        <li>@Html.ActionLink("Master User", "Index", "Account")</li>
-                        <li>@Html.ActionLink("Master Role", "Index", "Access")</li>
-                        <li>@Html.ActionLink("Master Cabang", "Index", "Cabang")</li>
-                        <li>@Html.ActionLink("Master Unit", "Index", "Unit")</li>
-                        <li>@Html.ActionLink("Master Toko", "Index", "Toko")</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-link"></i> <span>MENU</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Permintaan Sparepart", "Index", "FPS")</li>
+                                <li>@Html.ActionLink("Surat Jalan", "Index", "SJ")</li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-link"></i> <span>ADMIN MENU</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li>@Html.ActionLink("Master Barang", "Index", "Barang")</li>
+                                <li>@Html.ActionLink("Master Satuan", "Index", "Satuan")</li>
+                                <li>@Html.ActionLink("Master Kategori", "Index", "Kategori")</li>
+                                <li>@Html.ActionLink("Master User", "Index", "Account")</li>
+                                <li>@Html.ActionLink("Master Role", "Index", "Access")</li>
+                                <li>@Html.ActionLink("Master Cabang", "Index", "Cabang")</li>
+                                <li>@Html.ActionLink("Master Unit", "Index", "Unit")</li>
+                                <li>@Html.ActionLink("Master Toko", "Index", "Toko")</li>
+                            </ul>
+                        </li>
+                        @*<li>@Html.ActionLink("Master Barang", "Index", "Barang")</li>
+        <li>@Html.ActionLink("Master Satuan", "Index", "Satuan")</li>
+        <li>@Html.ActionLink("Master Kategori", "Index", "Kategori")</li>
+        <li>@Html.ActionLink("Master User", "Index", "Account")</li>
+        <li>@Html.ActionLink("Master Role", "Index", "Access")</li>
+        <li>@Html.ActionLink("Master Cabang", "Index", "Cabang")</li>
+        <li>@Html.ActionLink("Master Unit", "Index", "Unit")</li>
+        <li>@Html.ActionLink("Master Toko", "Index", "Toko")</li>*@
                     </ul>
                     <!-- /.sidebar-menu -->
                 </section>
@@ -218,7 +244,7 @@ desired effect
     }
     <!-- ./wrapper -->
     <!-- REQUIRED JS SCRIPTS -->
-    @Scripts.Render("~/admin-lte/js")
+    @Scripts.Render("~/Content/admin-lte/js")
     @RenderSection("scripts", required: false)
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
          Both of these plugins are recommended to enhance the

@@ -1,0 +1,44 @@
+﻿@model Sparepart.Models.CreateTokoViewModel
+
+<form action="/Toko/Toko_Update" method="post" id="EditFrm">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.TokoID)
+        <li>
+            @Html.Label("Nama Toko")
+            @Html.Kendo().TextBoxFor(m => m.NamaToko).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Toko", required = "required", validationmessage = "Input Alamat" })
+        </li>
+        <li>
+            @Html.Label("Alamat Toko")
+            @Html.Kendo().TextBoxFor(m => m.AlamatToko).HtmlAttributes(new { style = "width: 100%;", placeholder = "Alamat Toko", required = "required", validationmessage = "Input Alamat" })
+        </li>
+        <li>
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>
+<script>
+
+    $("#EditFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+</script>
+

@@ -110,8 +110,12 @@
         }).data("kendoWindow");
     });
 
-
-
+    function check(f) {
+        var e, i = 0, checked = false;
+        while (e = f.elements[i++]) { if (e.type == 'checkbox' && e.checked) checked = true };
+        if (!checked) alert('Please pick one');
+        return checked;
+    }
 
     function openWindow(e) {
         e.preventDefault();

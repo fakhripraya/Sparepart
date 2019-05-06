@@ -1,5 +1,5 @@
-﻿@model Sparepart.Models.masterkategori
-@{
+﻿@model Sparepart.Models.CreateKategoriViewModel
+    @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -23,64 +23,153 @@
         </div>
     </div>
 
+    @*EDIT*@
+    @(Html.Kendo().Window()
+    .Name("update")
+    .Title("Edit Kategori")
+    .Content(
+
+    @<text>
+        <form action="/Kategori/Update" method="post" id="EditFrm">
+            <ul class="fieldlist">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.KategoriID)
+                <li>
+                    @Html.Label("Nama Kategori")
+                    @Html.Kendo().TextBoxFor(m => m.NamaKategori).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Kategori", required = "required", validationmessage = "Input Kategori" })
+                </li>
+                <li>
+                    @Html.Label("Deskripsi")
+                    @Html.Kendo().TextBoxFor(m => m.Deskripsi).HtmlAttributes(new { style = "width: 100%;", placeholder = "Deskripsi", required = "required", validationmessage = "Input Deskripsi" })
+                </li>
+                <li>
+                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                </li>
+            </ul>
+        </form>
+    </text>)
+                            .Visible(false)
+                            .Modal(true)
+                            .Draggable()
+                            .Resizable()
+                            .Width(600)
+                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                            .Events(ev => ev.Close("onClose"))
+        )
+
+    @*CREATE*@
+    @(Html.Kendo().Window()
+                                    .Name("window")
+                                    .Title("Tambahkan Kategori")
+                                    .Content(
+
+                                    @<text>
+                                        <form action="/Kategori/Create" method="post" id="CreateFrm">
+                                            <ul class="fieldlist">
+                                                @Html.AntiForgeryToken()
+                                                <li>
+                                                    @Html.Label("Nama Kategori")
+                                                    @Html.Kendo().TextBoxFor(m => m.NamaKategori).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Kategori", required = "required", validationmessage = "Input Kategori" })
+                                                </li>
+                                                <li>
+                                                    @Html.Label("Deskripsi")
+                                                    @Html.Kendo().TextBoxFor(m => m.Deskripsi).HtmlAttributes(new { style = "width: 100%;", placeholder = "Deskripsi", required = "required", validationmessage = "Input Deskripsi" })
+                                                </li>
+                                                <li>
+                                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                                </li>
+                                            </ul>
+                                        </form>
+                                    </text>)
+                                                            .Visible(false)
+                                                            .Modal(true)
+                                                            .Draggable()
+                                                            .Resizable()
+                                                            .Width(600)
+                                                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                                            .Events(ev => ev.Close("onClose"))
+    )
+
 
     @(Html.Kendo().Grid<Sparepart.Models.masterkategori>()
-                                                        .Name("grid")
-                                                        .Columns(columns =>
-                                                        {
-                                                            columns.Bound(u => u.NamaKategori).Width(100);
-                                                            columns.Bound(u => u.Deskripsi).Width(100);
-                                                            columns.Bound(u => u.UserInput).Visible(false);
-                                                            columns.Bound(u => u.TanggalInput).Visible(false);
-                                                            columns.Bound(u => u.UserUpdate).Visible(false);
-                                                            columns.Bound(u => u.TanggalUpdate).Visible(false);
-                                                            columns.Bound(u => u.IsDelete).Visible(false);
-                                                            columns.Command(commands =>
-                                                            {
-                                                                commands.Edit();
-                                                                commands.Custom("Delete").Click("openWindow");
+                                            .Name("grid")
+                                            .Columns(columns =>
+                                            {
+                                                columns.Bound(u => u.NamaKategori).Width(100);
+                                                columns.Bound(u => u.Deskripsi).Width(100);
+                                                columns.Bound(u => u.UserInput).Visible(false);
+                                                columns.Bound(u => u.TanggalInput).Visible(false);
+                                                columns.Bound(u => u.UserUpdate).Visible(false);
+                                                columns.Bound(u => u.TanggalUpdate).Visible(false);
+                                                columns.Bound(u => u.IsDelete).Visible(false);
+                                                columns.Command(commands =>
+                                                {
+                                                    commands.Custom("Edit").Click("Updatebtn");
+                                                    commands.Custom("Delete").Click("openWindow");
 
-                                                            }).Title("Commands").Width(200);
-                                                        })
-                                                        .ToolBar(toolbar =>
-                                                        {
-                                                            toolbar.Create().Text("Tambahkan Kategori");
-                                                        }
-                                                        )
-                                                        .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
-                                                        .Sortable()
-                                                        .Pageable(pageable => pageable
-                                                          .Input(true)
-                                                          .Numeric(true)
-                                                          .Info(true)
-                                                          .PreviousNext(true)
-                                                          .Refresh(true)
-                                                          .ButtonCount(5)
-                                                          )
+                                                }).Title("Commands").Width(200);
+                                            })
+                                            .ToolBar(toolbar =>
+                                            {
+                                                toolbar.Template(@<text>@(Html.Kendo().Button()
+                                    .Name("textButton")
+                                    .HtmlAttributes(new { type = "button" })
+                                    .Content("Tambahkan Kategori")) </text>);
+                                                    }
+                                                    )
+                                                    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                                                    .Sortable()
+                                                    .Pageable(pageable => pageable
+                                                    .Input(true)
+                                                    .Numeric(true)
+                                                    .Info(true)
+                                                    .PreviousNext(true)
+                                                    .Refresh(true)
+                                                    .ButtonCount(5)
+                                                    )
 
-                                                        .DataSource(dataSource => dataSource
-                                                            .Ajax()
-                                                            .Events(events => events
-                                                            .Error("grid_error")
-                                                            )
-                                                            .Read(read => read.Action("Read", "Kategori"))
-                                                            .PageSize(10)
-                                                            .ServerOperation(false)
-                                                            .Model(model =>
-                                                            {
-                                                                model.Id(u => u.KategoriID);
-                                                                model.Field(u => u.KategoriID).Editable(false);
-                                                            })
-                                                            .Create(create => create.Action("Create", "Kategori"))
-                                                            .Update(update => update.Action("Update", "Kategori"))
-                                                            .Destroy(destroy => destroy.Action("Destroy", "Kategori"))
-                                                        )
+                                                    .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Events(events => events
+                                                    .Error("grid_error")
+                                                    )
+                                                    .Read(read => read.Action("Read", "Kategori"))
+                                                    .PageSize(10)
+                                                    .ServerOperation(false)
+                                                    .Model(model =>
+                                                    {
+                                                        model.Id(u => u.KategoriID);
+                                                        model.Field(u => u.KategoriID).Editable(false);
+                                                    })
+                                                    //.Create(create => create.Action("Create", "Kategori"))
+                                                    //.Update(update => update.Action("Update", "Kategori"))
+                                                    .Destroy(destroy => destroy.Action("Destroy", "Kategori"))
+                                                    )
 
     )
 
 </section>
 
-@*toolbar.Template("<a class='k-button k-button-icontext' onclick='customCommand()' href='#'></span>Cutom Command</a>");*@
+<style>
+    .fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 2em;
+        }
+
+        .fieldlist label {
+            display: block;
+            padding-bottom: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #444;
+        }
+</style>
 
 <script>
 
@@ -103,6 +192,67 @@
         }
     }
 
+    $(function () {
+        $("#window").data("kendoWindow").close();
+        //$("#update").data("kendoWindow").close();
+    });
+
+    function onClose() {
+        $("#textButton").show();
+        //$("#update").show();
+    }
+
+    $(document).ready(function () {
+        $("#textButton").bind("click", function () {
+            $("#window").data("kendoWindow").open().center();
+            //$("#textButton").hide();
+        });
+    });
+
+    $("#CreateFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+
+    $("#EditFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+
 
     var wnd;
     $(document).ready(function () {
@@ -114,9 +264,6 @@
             width: 300
         }).data("kendoWindow");
     });
-
-
-
 
     function openWindow(e) {
         e.preventDefault();
@@ -134,6 +281,36 @@
             wnd.close();
         });
     }
+
+    function Updatebtn(e) {
+            e.preventDefault();
+            var row = $(e.target).closest("tr");
+            var grid = $("#grid").data("kendoGrid");
+            var Data = grid.dataItem(row);
+            var pId = Data.KategoriID;
+            
+
+
+            var myWin = $("#update").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Edit Kategori",
+                content: {
+                    url: '@Url.Action("KategoriEdit", "Window")',
+                    data: { KategoriID: pId }
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
+        }
 
 
 </script>

@@ -4,6 +4,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@*<script type="text/javascript">
+    var message = '@message';
+    if(message)
+        alert(message);
+</script>*@
 <section class="content-header">
     <h1>
         Master Role
@@ -11,253 +16,234 @@
 </section>
 
 <section class="content container-fluid">
+
+    <div id="modalWindow">
+        <h3 class="text-center">Delete this record?</h3>
+        <div class="pull-left">
+            <button id="yes" class="k-button">Yes</button>
+        </div>
+        <div class="pull-right">
+            <button id="no" class="k-button">No</button>
+        </div>
+    </div>
+
     @*Edit*@
     @(Html.Kendo().Window()
-                           .Name("update")
-                           .Title("Edit Role")
-                           .Content(
+        .Name("update")
+        .Title("Edit Role")
+        .Content(
 
-                        @<text>
-                            <form action="/Access/Update" method="post">
-                                <ul class="fieldlist">
-                                    @Html.AntiForgeryToken()
-                                    @Html.HiddenFor(m => m.RoleID)
-                                    <li>
-                                        @Html.Label("Nama Role")
-                                        @Html.Kendo().TextBoxFor(m => m.NamaRole).Name("nama").HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Role", required = "required", validationmessage = "Input Role" })
-                                    </li>
+        @<text>
+            <form action="/Access/Update" method="post" id="EditFrm" onsubmit="return check (this)">
+                <ul class="fieldlist">
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.RoleID)
+                    <li>
+                        @Html.Label("Nama Role")
+                        @Html.Kendo().TextBoxFor(m => m.NamaRole).Name("nama").HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Role", required = "required", validationmessage = "Input Role" })
+                    </li>
 
-                                    <li>
-                                        @(Html.Kendo().Grid<Sparepart.Models.hakaks>()
+                    <li>
+                        @(Html.Kendo().Grid<Sparepart.Models.hakaks>()
 
-                                                                                .Name("EditGrid")
-                                                                                .Columns(columns =>
-                                                                                {
-                                                                                        columns.Bound(p => p.AksesID)
-                                                .HeaderTemplate("<input id='checkAllEdit' class='chkbx' type='checkbox' />")
-                                                .ClientTemplate("<input id='checkItem' class='chkbxq' type='checkbox' name='AksesIDs' value='#= AksesID #'/>")
-                                                .Sortable(false)
-                                                .Filterable(false)
-                                                .Width(30);
-                                                columns.Bound(p => p.NamaMenu).Width(140);
-                                            })
-                                        .ToolBar(toolbar =>
-                                        {
-                                                toolbar.Template("Pilih Akses");
-                                            }
-                                        )
-                                        .Sortable()
-                                        .Pageable(pageable => pageable
-                                        .Input(true)
-                                        .Numeric(true)
-                                        .Info(true)
-                                        .PreviousNext(true)
-                                        .Refresh(true)
-                                        .ButtonCount(5)
-                                        )
-                                        .DataSource(dataSource => dataSource
-                                        .Ajax()
-                                        .Model(model => model.Id(p => p.AksesID))
-                                        .Read(read => read.Action("Access_Read", "Access"))
-                                        )
+                            .Name("EditGrid")
+                            .Columns(columns =>
+                            {
+                                        columns.Bound(p => p.AksesID)
+                            .HeaderTemplate("<input id='checkAllEdit' class='chkbx' type='checkbox' />")
+                            .ClientTemplate("<input id='checkItem' class='chkbxq' type='checkbox' name='AksesIDs' value='#= AksesID #'/>")
+                            .Sortable(false)
+                            .Filterable(false)
+                            .Width(30);
+                                        columns.Bound(p => p.NamaMenu).Width(140);
+                                    })
+                            .ToolBar(toolbar =>
+                            {
+                                        toolbar.Template("Pilih Akses");
+                                    }
+                            )
+                            .Sortable()
+                            .Pageable(pageable => pageable
+                            .Input(true)
+                            .Numeric(true)
+                            .Info(true)
+                            .PreviousNext(true)
+                            .Refresh(true)
+                            .ButtonCount(5)
+                            )
+                            .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .Model(model => model.Id(p => p.AksesID))
+                            .Read(read => read.Action("Access_Read", "Access"))
+                            )
 
-                                        )
-                                    </li>
-                                    <li>
-                                        <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
-                                    </li>
-                                </ul>
-                            </form>
-                        </text>)
-                                       .Visible(false)
-                                       .Modal(true)
-                                       .Draggable()
-                                       .Resizable()
-                                       .Width(600)
-                                       .Actions(actions => actions.Pin().Minimize().Maximize().Close())
-                                       .Events(ev => ev.Close("onClose"))
+                        )
+                    </li>
+                    <li>
+                        <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                    </li>
+                </ul>
+            </form>
+        </text>)
+                .Visible(false)
+                .Modal(true)
+                .Draggable()
+                .Resizable()
+                .Width(600)
+                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                .Events(ev => ev.Close("onClose"))
     )
 
 
     @*DETAIL*@
     @(Html.Kendo().Window()
-                    .Name("detail")
-                    .Title("Detail Role")
-                    .Content(
+        .Name("detail")
+        .Title("Detail Role")
+        .Content(
 
-                    @<text>
-                        <ul class="fieldlist">
+        @<text>
+            <ul class="fieldlist">
 
-                            <li>
-                                @Html.Label("Nama Role")
-                                @Html.DisplayFor(m => m.NamaRole)
-                            </li>
+                <li>
+                    @Html.Label("Nama Role")
+                    @Html.DisplayFor(m => m.NamaRole)
+                </li>
 
-                            <li>
-                                @(Html.Kendo().Grid((IEnumerable<Sparepart.Models.aks>)ViewBag.Akses) //Bind the grid to ViewBag.Products
-                                                      .Name("DetailGrid")
-                                                      .Columns(columns =>
-                                                      {
-                                                                          columns.ForeignKey(p => p.AksesID, (System.Collections.IEnumerable)ViewData["Menu"], "AksesID", "NamaMenu")
-                                                             .Title("Menu").Width(200);
-                                                                      })
-                                                      .Pageable() //Enable the paging.
-                                                      .Sortable() //Enable the sorting.
-                                )
-                            </li>
-                        </ul>
-                    </text>)
-                            .Visible(false)
-                            .Modal(true)
-                            .Draggable()
-                            .Resizable()
-                            .Width(600)
-                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
-                            .Events(ev => ev.Close("onClose"))
+                <li>
+                    @(Html.Kendo().Grid((IEnumerable<Sparepart.Models.aks>)ViewBag.Akses) //Bind the grid to ViewBag.Products
+                        .Name("DetailGrid")
+                        .Columns(columns =>
+                        {
+                                    columns.ForeignKey(p => p.AksesID, (System.Collections.IEnumerable)ViewData["Menu"], "AksesID", "NamaMenu")
+                        .Title("Menu").Width(200);
+                                })
+                        .Pageable() //Enable the paging.
+                        .Sortable() //Enable the sorting.
+                    )
+                </li>
+            </ul>
+        </text>)
+                .Visible(false)
+                .Modal(true)
+                .Draggable()
+                .Resizable()
+                .Width(600)
+                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                .Events(ev => ev.Close("onClose"))
     )
 
     @*CREATE*@
     @(Html.Kendo().Window()
-                    .Name("window")
-                    .Title("Tambahkan Role")
-                    .Content(
+        .Name("window")
+        .Title("Tambahkan Role")
+        .Content(
 
-                    @<text>
-                        <form action="/Access/CreateAccess" method="post">
-                            <ul class="fieldlist">
-                                @Html.AntiForgeryToken()
-                                <li>
-                                    @Html.Label("Nama Role")
-                                    @Html.Kendo().TextBoxFor(m => m.NamaRole).Name("nama").HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Role", required = "required", validationmessage = "Input Role" })
-                                </li>
-                                <li>
-                                    @(Html.Kendo().Grid<Sparepart.Models.hakaks>()
+        @<text>
+            <form action="/Access/CreateAccess" method="post" id="CreateFrm" onsubmit="return check (this)">
+                <ul class="fieldlist">
+                    @Html.AntiForgeryToken()
+                    <li>
+                        @Html.Label("Nama Role")
+                        @Html.Kendo().TextBoxFor(m => m.NamaRole).Name("nama").HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Role", required = "required", validationmessage = "Input Role" })
+                    </li>
+                    <li>
+                        @(Html.Kendo().Grid<Sparepart.Models.hakaks>()
 
-                                                            .Name("CreateGrid")
-                                                            .Columns(columns =>
-                                                            {
-                                                                                    columns.Bound(p => p.AksesID)
-                                                        .HeaderTemplate("<input id='checkAllCreate' class='chkbx' type='checkbox'/>")
-                                                        .ClientTemplate("<input id='checkItem' class='chkbxq' type='checkbox' name='AksesIDs' value='#= AksesID #'/>")
-                                                        .Sortable(false)
-                                                        .Filterable(false)
-                                                        .Width(30);
-                                                                                    columns.Bound(p => p.NamaMenu).Width(140);
-                                                                                })
-                                                            .ToolBar(toolbar =>
-                                                            {
-                                                                                    toolbar.Template("Pilih Akses");
-                                                                                }
-                                                            )
-                                                            .Sortable()
-                                                            .Pageable(pageable => pageable
-                                                            .Input(true)
-                                                            .Numeric(true)
-                                                            .Info(true)
-                                                            .PreviousNext(true)
-                                                            .Refresh(true)
-                                                            .ButtonCount(5)
-                                                            )
-                                                            .DataSource(dataSource => dataSource
-                                                            .Ajax()
-                                                            .Model(model => model.Id(p => p.AksesID))
-                                                            .Read(read => read.Action("Access_Read", "Access"))
-                                                            )
+                            .Name("CreateGrid")
+                            .Columns(columns =>
+                            {
+                                        columns.Bound(p => p.AksesID)
+                            .HeaderTemplate("<input id='checkAllCreate' class='chkbx' type='checkbox'/>")
+                            .ClientTemplate("<input id='checkItem' class='chkbxq' type='checkbox' name='AksesIDs' value='#= AksesID #'/>")
+                            .Sortable(false)
+                            .Filterable(false)
+                            .Width(30);
+                                        columns.Bound(p => p.NamaMenu).Width(140);
+                                    })
+                            .ToolBar(toolbar =>
+                            {
+                                        toolbar.Template("Pilih Akses");
+                                    }
+                            )
+                            .Sortable()
+                            .Pageable(pageable => pageable
+                            .Input(true)
+                            .Numeric(true)
+                            .Info(true)
+                            .PreviousNext(true)
+                            .Refresh(true)
+                            .ButtonCount(5)
+                            )
+                            .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .Model(model => model.Id(p => p.AksesID))
+                            .Read(read => read.Action("Access_Read", "Access"))
+                            )
 
-                                    )
-                                </li>
-                                <li>
-                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
-                                </li>
-                            </ul>
-                        </form>
-                    </text>)
-                            .Visible(false)
-                            .Modal(true)
-                            .Draggable()
-                            .Resizable()
-                            .Width(600)
-                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
-                            .Events(ev => ev.Close("onClose"))
+                        )
+                    </li>
+                    <li>
+                        <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                    </li>
+                </ul>
+            </form>
+        </text>)
+                                            .Visible(false)
+                                            .Modal(true)
+                                            .Draggable()
+                                            .Resizable()
+                                            .Width(600)
+                                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                            .Events(ev => ev.Close("onClose"))
     )
 
     @(Html.Kendo().Grid<Sparepart.Models.masterrole>()
 
-                                                                .Name("MasterGrid")
-                                                                .Columns(columns =>
-                                                                {
-                                                                    columns.Bound(m => m.NamaRole);
-                                                                    columns.Command(commands =>
-                                                                    {
-                                                                        commands.Destroy();
-                                                                        commands.Custom("Detail").Click("ShowDetails");
-                                                                        commands.Custom("Edit").Click("EditColumn");
-                                                                    }).Title("Commands").Width(300);
-                                                                })
-                                                                .ToolBar(toolbar =>
-                                                                {
-                                                                    toolbar.Template(@<text>@(Html.Kendo().Button()
-                    .Name("textButton")
-                    .HtmlAttributes(new { type = "button" })
-                    .Content("Tambahkan Role")) </text>);
-                                                                        }
-                    )
-                    .Sortable()
-                    .Pageable(pageable => pageable
-                    .Input(true)
-                    .Numeric(true)
-                    .Info(true)
-                    .PreviousNext(true)
-                    .Refresh(true)
-                    .ButtonCount(5)
-                    )
-                    .DataSource(dataSource => dataSource
-                    .Ajax()
-                    .Model(model => model.Id(p => p.RoleID))
-                    .Read(read => read.Action("Roles_Read", "Role"))
-                    .Destroy(update => update.Action("Destroy", "Access"))
-                    )
+                                .Name("MasterGrid")
+                                .Columns(columns =>
+                                {
+                                    columns.Bound(m => m.NamaRole);
+                                    columns.Command(commands =>
+                                    {
+                                        commands.Custom("Delete").Click("openWindow");
+                                        commands.Custom("Detail").Click("ShowDetails");
+                                        commands.Custom("Edit").Click("EditColumn");
+                                    }).Title("Commands").Width(300);
+                                })
+                                .ToolBar(toolbar =>
+                                {
+                                    toolbar.Template(@<text>@(Html.Kendo().Button()
+.Name("textButton")
+.HtmlAttributes(new { type = "button" })
+.Content("Tambahkan Role")) </text>);
+                                        }
+                                    )
+                                    .Sortable()
+                                    .Pageable(pageable => pageable
+                                    .Input(true)
+                                    .Numeric(true)
+                                    .Info(true)
+                                    .PreviousNext(true)
+                                    .Refresh(true)
+                                    .ButtonCount(5)
+                                    )
+                                    .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .Model(model => model.Id(p => p.RoleID))
+                                    .Read(read => read.Action("Roles_Read", "Role"))
+                                    //.Destroy(update => update.Action("Destroy", "Access"))
+                                    )
 
     )
-    @*@(Html.Kendo().Grid<Sparepart.Models.aks>()
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.Message");
+            };
+        </script>
+    }
 
-                .Name("Grid")
-                .Columns(columns =>
-                {
-                    columns.ForeignKey(p => p.RoleID, (System.Collections.IEnumerable)ViewData["Role"], "RoleID", "NamaRole")
-            .Title("Role").Width(200);
-                    columns.ForeignKey(p => p.AksesID, (System.Collections.IEnumerable)ViewData["Akses"], "AksesID", "NamaMenu")
-           .Title("Akses").Width(200);
-                    columns.Command(commands =>
-                    {
-                        commands.Destroy();
-                    }).Title("Commands").Width(200);
-                })
-                .ToolBar(toolbar =>
-                {
-                    toolbar.Template(@<text>@(Html.Kendo().Button()
-        .Name("textButton")
-        .HtmlAttributes(new { type = "button" })
-        .Content("Tambahkan Role")) </text>);
-            }
-            )
-            .Sortable()
-            .Pageable(pageable => pageable
-            .Input(true)
-            .Numeric(true)
-            .Info(true)
-            .PreviousNext(true)
-            .Refresh(true)
-            .ButtonCount(5)
-            )
-            .DataSource(dataSource => dataSource
-            .Ajax()
-            .Model(model => model.Id(p => p.ID))
-            .Read(read => read.Action("Read", "Access"))
-            .Destroy(update => update.Action("Destroy", "Access"))
-            )
-
-        )*@
 </section>
 
 <style>
@@ -284,6 +270,56 @@
 @section Scripts
 {
     <script type="text/javascript">
+        $("#CreateFrm").kendoValidator({
+            messages: {
+                custom: function (input) {
+                    return $(input).parents().find('label').text();
+                }
+            },
+            rules: {
+                custom: function (input) {
+                    if (input.is("[data-role=dropdownlist]")) {
+
+                        var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                        if (ddVal !== "" && ddVal !== "label") {
+                            return true;
+                        } else {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            }
+        });
+
+        $("#EditFrm").kendoValidator({
+            messages: {
+                custom: function (input) {
+                    return $(input).parents().find('label').text();
+                }
+            },
+            rules: {
+                custom: function (input) {
+                    if (input.is("[data-role=dropdownlist]")) {
+
+                        var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                        if (ddVal !== "" && ddVal !== "label") {
+                            return true;
+                        } else {
+                            return false
+                        }
+                    }
+                    return true
+                }
+            }
+        });
+
+        function check(f) {
+            var e, i = 0, checked = false;
+            while (e = f.elements[i++]) { if (e.type == 'checkbox' && e.checked) checked = true };
+            if (!checked) alert('Please check one of the checkbox.');
+            return checked;
+        }
 
         $(function () {
             $("#window").data("kendoWindow").close();
@@ -376,6 +412,43 @@
             $('#masterrole script').appendTo(document.body);
             $('#masterakses script').appendTo(document.body);
         }
+
+        var wnd;
+    $(document).ready(function () {
+        wnd = $("#modalWindow").kendoWindow({
+            title: "confirmation",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
+    });
+
+    function openWindow(e) {
+            e.preventDefault();
+
+            var grid = this;
+            var row = $(e.currentTarget).closest("tr");
+            wnd.center().open();
+
+            $("#yes").click(function () {
+                var selrow = $(e.target).closest("tr");
+                var selgrid = $("#MasterGrid").data("kendoGrid");
+                var seldata = selgrid.dataItem(selrow);
+                var pId = seldata.RoleID;
+                $.ajax({
+                    url: '@Url.Action("Destroy", "Access")',
+                    data: { RoleID: pId },
+                    type: "post"
+                });
+                grid.removeRow(row);
+                wnd.close();
+            });
+
+            $("#no").click(function () {
+                wnd.close();
+            });
+        }
     </script>
     <script type="text/x-kendo-template" id="template">
         <div id="details-container">
@@ -383,5 +456,3 @@
         </div>
     </script>
 }
-     @*.HeaderTemplate("<input id='checkAllCreate' class='chkbx' type='checkbox' onclick='ToggleChkBox(this);' />")
-                                                    .ClientTemplate("<input id='checkItem' onclick='grdChkBoxClick(this);' class='chkbxq' type='checkbox' name='AksesIDs' value='#= AksesID #' />")*@

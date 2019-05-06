@@ -20,6 +20,21 @@ namespace Sparepart.Models
         }
     }
 
+    public class BarangViewModel
+    {
+        public string KodeBarangTipe
+        {
+            get;
+            set;
+        }
+
+        public string NamaBarang
+        {
+            get;
+            set;
+        }
+    }
+
     public class CabangViewModel
     {
         public int CabangID

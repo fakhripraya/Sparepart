@@ -23,6 +23,9 @@ namespace Sparepart.Controllers
             {
                 CreateCabangViewModel cab = new CreateCabangViewModel();
                 cab.CabangID = cabang.CabangID;
+                cab.NamaCabang = cabang.NamaCabang;
+                cab.Toko = cabang.TokoID.ToString();
+                cab.Unit = cabang.UnitID.ToString();
                 return PartialView(cab);
             }
             else return View();
@@ -34,14 +37,32 @@ namespace Sparepart.Controllers
 
             var role = Dbcontext.masterroles.ToList();
             ViewData["Role"] = role;
+            var cabang = Dbcontext.mastercabangs.ToList();
+            ViewData["Cabang"] = cabang;
             if (UserID != null)
             {
-                UserViewModel edituser = new UserViewModel();
+                RegisterViewModel edituser = new RegisterViewModel();
                 edituser.UserID = user.UserID;
+                edituser.NamaUser = user.NamaUser;
+                edituser.UserName = user.Username;
+                edituser.Email = user.Email;
+                edituser.UserRoles = user.RoleID.ToString();
+                edituser.UserCabang = user.CabangID.ToString();
                 return PartialView(edituser);
             }
             else return View();
         }
+
+        public ActionResult FPSDetail()
+        {
+            //var role = Dbcontext.masterroles.ToList();
+            //ViewData["Role"] = role;
+            //var cabang = Dbcontext.mastercabangs.ToList();
+            //ViewData["Cabang"] = cabang;
+
+            return PartialView();
+        }
+
         public ActionResult BarangEdit(string KodeBarangTipe)
         {
             masterbarang barang = Dbcontext.masterbarangs.Where(x => x.KodeBarangTipe == KodeBarangTipe).FirstOrDefault();
@@ -82,7 +103,67 @@ namespace Sparepart.Controllers
                 ViewBag.hakakses = Dbcontext.hakakses.ToList();
                 masterrole rol = new masterrole();
                 rol.RoleID = role.RoleID;
+                rol.NamaRole = role.NamaRole;
                 return PartialView(rol);
+            }
+            else return View();
+        }
+
+        public ActionResult TokoEdit(int? TokoID)
+        {
+            mastertoko toko = Dbcontext.mastertokoes.Where(x => x.TokoID == TokoID).FirstOrDefault();
+            
+            if (TokoID != null)
+            {
+                CreateTokoViewModel tok = new CreateTokoViewModel();
+                tok.TokoID = toko.TokoID;
+                tok.NamaToko = toko.NamaToko;
+                tok.AlamatToko = toko.AlamatToko;
+                return PartialView(tok);
+            }
+            else return View();
+        }
+        public ActionResult UnitEdit(int? UnitID)
+        {
+            masterunit unit = Dbcontext.masterunits.Where(x => x.UnitID == UnitID).FirstOrDefault();
+
+            if (UnitID != null)
+            {
+                CreateUnitViewModel uni = new CreateUnitViewModel();
+                uni.UnitID = unit.UnitID;
+                uni.NamaUnit = unit.NamaUnit;
+                return PartialView(uni);
+            }
+            else return View();
+        }
+
+        public ActionResult KategoriEdit(int? KategoriID)
+        {
+            masterkategori kategori = Dbcontext.masterkategoris.Where(x => x.KategoriID == KategoriID).FirstOrDefault();
+
+            if (KategoriID != null)
+            {
+                CreateKategoriViewModel kat = new CreateKategoriViewModel();
+                kat.KategoriID = kategori.KategoriID;
+                kat.NamaKategori = kategori.NamaKategori;
+                kat.Deskripsi = kategori.Deskripsi;
+
+                return PartialView(kat);
+            }
+            else return View();
+        }
+
+        public ActionResult SatuanEdit(int? SatuanID)
+        {
+            mastersatuan satuan = Dbcontext.mastersatuans.Where(x => x.SatuanID == SatuanID).FirstOrDefault();
+
+            if (SatuanID != null)
+            {
+                CreateSatuanViewModel sat = new CreateSatuanViewModel();
+                sat.SatuanID = satuan.SatuanID;
+                sat.NamaSatuan = satuan.NamaSatuan;
+
+                return PartialView(sat);
             }
             else return View();
         }

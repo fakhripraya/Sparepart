@@ -1,4 +1,4 @@
-﻿
+﻿@model Sparepart.Models.CreateSatuanViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,65 +23,236 @@
         </div>
     </div>
 
+    @*EDIT*@
+    @(Html.Kendo().Window()
+                    .Name("update")
+                    .Title("Edit Satuan")
+                    .Content(
+
+                    @<text>
+                        <form action="/Satuan/Update" method="post" id="EditFrm">
+                            <ul class="fieldlist">
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(m => m.SatuanID)
+                                <li>
+                                    @Html.Label("Nama Satuan")
+                                    @Html.Kendo().TextBoxFor(m => m.NamaSatuan).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Satuan", required = "required", validationmessage = "Input Satuan" })
+                                </li>
+                                <li>
+                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                </li>
+                            </ul>
+                        </form>
+                    </text>)
+                                                            .Visible(false)
+                                                            .Modal(true)
+                                                            .Draggable()
+                                                            .Resizable()
+                                                            .Width(600)
+                                                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                                            .Events(ev => ev.Close("onClose"))
+    )
+
+    @*CREATE*@
+    @(Html.Kendo().Window()
+                    .Name("window")
+                    .Title("Tambahkan Satuan")
+                    .Content(
+
+                    @<text>
+                        <form action="/Satuan/Create" method="post" id="CreateFrm">
+                            <ul class="fieldlist">
+                                @Html.AntiForgeryToken()
+                                <li>
+                                    @Html.Label("Nama Satuan")
+                                    @Html.Kendo().TextBoxFor(m => m.NamaSatuan).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Satuan", required = "required", validationmessage = "Input Satuan" })
+                                </li>
+                                <li>
+                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                </li>
+                            </ul>
+                        </form>
+                    </text>)
+                                                            .Visible(false)
+                                                            .Modal(true)
+                                                            .Draggable()
+                                                            .Resizable()
+                                                            .Width(600)
+                                                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                                            .Events(ev => ev.Close("onClose"))
+    )
 
     @(Html.Kendo().Grid<Sparepart.Models.mastersatuan>()
-                                                                .Name("grid")
-                                                                .Columns(columns =>
-                                                                {
-                                                                    columns.Bound(u => u.NamaSatuan).Width(100);
-                                                                    columns.Bound(u => u.UserInput).Visible(false);
-                                                                    columns.Bound(u => u.TanggalInput).Visible(false);
-                                                                    columns.Bound(u => u.UserUpdate).Visible(false);
-                                                                    columns.Bound(u => u.TanggalUpdate).Visible(false);
-                                                                    columns.Bound(u => u.IsDelete).Visible(false);
-                                                                    columns.Command(commands =>
-                                                                    {
-                                                                        commands.Edit();
-                                                                        commands.Custom("Delete").Click("openWindow");
+                                        .Name("grid")
+                                        .Columns(columns =>
+                                        {
+                                            columns.Bound(u => u.NamaSatuan).Width(100);
+                                            columns.Bound(u => u.UserInput).Visible(false);
+                                            columns.Bound(u => u.TanggalInput).Visible(false);
+                                            columns.Bound(u => u.UserUpdate).Visible(false);
+                                            columns.Bound(u => u.TanggalUpdate).Visible(false);
+                                            columns.Bound(u => u.IsDelete).Visible(false);
+                                            columns.Command(commands =>
+                                            {
+                                                commands.Custom("Edit").Click("Updatebtn");
+                                                commands.Custom("Delete").Click("openWindow");
 
-                                                                    }).Title("Commands").Width(200);
-                                                                })
-                                                                .ToolBar(toolbar =>
-                                                                {
-                                                                    toolbar.Create().Text("Tambahkan Satuan");
-                                                                }
-                                                                )
-                                                                .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
-                                                                .Sortable()
-                                                                .Pageable(pageable => pageable
-                                                                  .Input(true)
-                                                                  .Numeric(true)
-                                                                  .Info(true)
-                                                                  .PreviousNext(true)
-                                                                  .Refresh(true)
-                                                                  .ButtonCount(5)
-                                                                  )
+                                            }).Title("Commands").Width(200);
+                                        })
+                                        .ToolBar(toolbar =>
+                                        {
+                                        toolbar.Template(@<text>@(Html.Kendo().Button()
+                                .Name("textButton")
+                                .HtmlAttributes(new { type = "button" })
+                                .Content("Tambahkan Satuan")) </text>);
+                                                            }
+                                                                                    )
+                                                .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                                                .Sortable()
+                                                .Pageable(pageable => pageable
+                                                    .Input(true)
+                                                    .Numeric(true)
+                                                    .Info(true)
+                                                    .PreviousNext(true)
+                                                    .Refresh(true)
+                                                    .ButtonCount(5)
+                                                    )
 
-                                                                .DataSource(dataSource => dataSource
-                                                                    .Ajax()
-                                                                    .Events(events => events
-                                                                    .Error("grid_error")
-                                                                    )
-                                                                    .Read(read => read.Action("Read", "Satuan"))
-                                                                    .PageSize(10)
-                                                                    .ServerOperation(false)
-                                                                    .Model(model =>
-                                                                    {
-                                                                        model.Id(u => u.SatuanID);
-                                                                        model.Field(u => u.SatuanID).Editable(false);
-                                                                    })
-                                                                    .Create(create => create.Action("Create", "Satuan"))
-                                                                    .Update(update => update.Action("Update", "Satuan"))
-                                                                    .Destroy(destroy => destroy.Action("Destroy", "Satuan"))
-                                                                )
+                                                .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Events(events => events
+                                                    .Error("grid_error")
+                                                    )
+                                                    .Read(read => read.Action("Read", "Satuan"))
+                                                    .PageSize(10)
+                                                    .ServerOperation(false)
+                                                    .Model(model =>
+                                                    {
+                                                        model.Id(u => u.SatuanID);
+                                                        model.Field(u => u.SatuanID).Editable(false);
+                                                    })
+                                                    .Create(create => create.Action("Create", "Satuan"))
+                                                    .Update(update => update.Action("Update", "Satuan"))
+                                                    .Destroy(destroy => destroy.Action("Destroy", "Satuan"))
+                                                )
 
     )
 
 </section>
 
-@*toolbar.Template("<a class='k-button k-button-icontext' onclick='customCommand()' href='#'></span>Cutom Command</a>");*@
+<style>
+    .fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 2em;
+        }
+
+        .fieldlist label {
+            display: block;
+            padding-bottom: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #444;
+        }
+</style>
 
 <script>
+
+    $("#CreateFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+
+    $("#EditFrm").kendoValidator({
+        messages: {
+            custom: function (input) {
+                return $(input).parents().find('label').text();
+            }
+        },
+        rules: {
+            custom: function (input) {
+                if (input.is("[data-role=dropdownlist]")) {
+
+                    var ddVal = $('input[data-role=dropdownlist]').data('kendoDropDownList').value();
+                    if (ddVal !== "" && ddVal !== "label") {
+                        return true;
+                    } else {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    });
+
+     $(function () {
+        $("#window").data("kendoWindow").close();
+        //$("#update").data("kendoWindow").close();
+    });
+
+    function onClose() {
+        $("#textButton").show();
+        //$("#update").show();
+    }
+
+    $(document).ready(function () {
+        $("#textButton").bind("click", function () {
+            $("#window").data("kendoWindow").open().center();
+            //$("#textButton").hide();
+        });
+    });
+
+    function Updatebtn(e) {
+            e.preventDefault();
+            var row = $(e.target).closest("tr");
+            var grid = $("#grid").data("kendoGrid");
+            var Data = grid.dataItem(row);
+            var pId = Data.SatuanID;
+            
+
+
+            var myWin = $("#update").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Edit Satuan",
+                content: {
+                    url: '@Url.Action("SatuanEdit", "Window")',
+                    data: { SatuanID: pId }
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
+        }
 
     function grid_error(e) {
         if (e.errors) {
@@ -113,9 +284,7 @@
             width: 300
         }).data("kendoWindow");
     });
-
-
-
+    
 
     function openWindow(e) {
         e.preventDefault();

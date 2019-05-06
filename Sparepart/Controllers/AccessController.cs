@@ -57,6 +57,10 @@ namespace Sparepart.Controllers
         // GET: Access
         public ActionResult Index()
         {
+            //if (TempData.ContainsKey("flag"))
+            //{
+            //    ViewBag.Message = "aa";
+            //}
             ViewBag.hakakses = Dbcontext.hakakses.ToList();
             var menu = Dbcontext.hakakses.ToList();
             ViewData["Menu"] = menu;
@@ -197,24 +201,28 @@ namespace Sparepart.Controllers
         }
 
         [HttpPost]
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, aks akses)
+        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, masterrole role)
         {
             if (ModelState.IsValid)
             {
                 using (var db = new dbsparepartEntities())
                 {
-                    var entity = new aks
-                    {
-                        ID = akses.ID,
-                        RoleID = akses.RoleID,
-                        AksesID = akses.AksesID
-                    };
-                    db.akses.Attach(entity);
-                    db.akses.Remove(entity);
+                    //masteruser user = db.masterusers.Where(p => p.RoleID == role.RoleID).FirstOrDefault();
+                    //if(user != null)
+                    //{
+                    //    TempData["flag"] = 1;
+                    //    return RedirectToAction("Index");
+                    //}
+
+                    aks deleteakses = db.akses.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
+                    db.akses.Remove(deleteakses);
+                    db.SaveChanges();
+                    masterrole deleterole = db.masterroles.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
+                    deleterole.IsDelete = 1;
                     db.SaveChanges();
                 }
             }
-            return Json(new[] { akses}.ToDataSourceResult(request, ModelState));
+            return Json(new[] { role }.ToDataSourceResult(request, ModelState));
         }
 
     }

@@ -32,33 +32,31 @@ namespace Sparepart.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult Toko_Create([DataSourceRequest]DataSourceRequest request, mastertoko toko)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Toko_Create(CreateTokoViewModel model)
         {
-            string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
-            masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
             if (ModelState.IsValid)
             {
-                using (var db = new dbsparepartEntities())
-                {
-                    var entity = new mastertoko
-                    {
-                        TokoID = toko.TokoID,
-                        NamaToko = toko.NamaToko,
-                        AlamatToko = toko.AlamatToko,
-                        UserInput = CurrentUser.NamaUser,
-                        TanggalInput = DateTime.Now,
-                        IsDelete = 0
-                    };
-                    db.mastertokoes.Add(entity);
-                    db.SaveChanges();
-                    toko.TokoID = entity.TokoID;
-                }
-            }
-            return Json(new[] { toko }.ToDataSourceResult(request, ModelState));
-        }
+                string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
+                masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
 
-        public ActionResult Toko_Update([DataSourceRequest]DataSourceRequest request, mastertoko toko)
+                mastertoko toko = new mastertoko();
+                toko.TokoID = model.TokoID;
+                toko.NamaToko = model.NamaToko;
+                toko.AlamatToko = model.AlamatToko;
+                toko.UserInput = CurrentUser.NamaUser;
+                toko.TanggalInput = System.DateTime.Now;
+                toko.IsDelete = 0;
+                Dbcontext.mastertokoes.Add(toko);
+                Dbcontext.SaveChanges();
+            }
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Toko_Update(CreateTokoViewModel toko)
         {
             if (ModelState.IsValid)
             {
@@ -74,9 +72,9 @@ namespace Sparepart.Controllers
                     northwind.SaveChanges();
                 }
             }
-            return Json(new[] { toko }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index");
         }
-
+        [HttpPost]
         public ActionResult Toko_Destroy([DataSourceRequest]DataSourceRequest request,mastertoko toko)
         {
             if (ModelState.IsValid)
