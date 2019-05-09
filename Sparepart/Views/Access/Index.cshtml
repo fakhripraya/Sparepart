@@ -106,7 +106,7 @@
 
                 <li>
                     @Html.Label("Nama Role")
-                    @Html.DisplayFor(m => m.NamaRole)
+                    @Html.Kendo().TextBoxFor(m => m.NamaRole).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
                 </li>
 
                 <li>

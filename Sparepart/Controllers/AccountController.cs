@@ -73,7 +73,7 @@ namespace Sparepart.Controllers
         {
             var northwind = new dbsparepartEntities();
 
-            var products = northwind.masterroles.Select(product => new RoleViewModel
+            var products = northwind.masterroles.Where(x => x.IsDelete == 0).Select(product => new RoleViewModel
             {
                 RoleID = product.RoleID,
                 NamaRole = product.NamaRole
@@ -86,24 +86,7 @@ namespace Sparepart.Controllers
 
             return Json(products, JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult GetCabang(string text)
-        {
-            var northwind = new dbsparepartEntities();
-
-            var products = northwind.mastercabangs.Select(product => new CabangViewModel
-            {
-                CabangID = product.CabangID,
-                NamaCabang = product.NamaCabang
-            });
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                products = products.Where(p => p.NamaCabang.Contains(text));
-            }
-
-            return Json(products, JsonRequestBehavior.AllowGet);
-        }
+       
         [Authorize(Roles = "Admin")]
         public ActionResult Users_Read([DataSourceRequest]DataSourceRequest request)
         {
@@ -142,7 +125,7 @@ namespace Sparepart.Controllers
         }
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Users_Update([DataSourceRequest]DataSourceRequest request, UserUpdateViewModel model)
+        public ActionResult Users_Update(UserUpdateViewModel model)
         {
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
@@ -183,28 +166,28 @@ namespace Sparepart.Controllers
                 }
                 return RedirectToAction("Index", "Account");
             }
-            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+            return RedirectToAction("Index", "Account");
         }
 
         // POST: /Account/Register
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public /*async Task<ActionResult>*/ ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
+                var result = UserManager.CreateAsync(user, model.Password);
+                //if (result.Succeeded)
+                //{
                     int RoleID = Int32.Parse(Request.Form["role"]);
                     int CabangID = Int32.Parse(Request.Form["cabang"]);
                     foreach (var value in Dbcontext.akses.Where(x => x.RoleID == RoleID))
                     {
-                       await this.UserManager.AddToRoleAsync(user.Id, value.NamaAkses);
+                        this.UserManager.AddToRoleAsync(user.Id, value.NamaAkses);
                     }
 
                     //Ends Here 
@@ -221,8 +204,8 @@ namespace Sparepart.Controllers
                     u.IsDelete = 0;
                     Dbcontext.masterusers.Add(u);
                     Dbcontext.SaveChanges();
-                }
-                AddErrors(result);
+                //}
+                //AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
             return RedirectToAction("Index");

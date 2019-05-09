@@ -7,6 +7,12 @@ namespace Sparepart.Models
 {
     public class IndexViewModel
     {
+        public string UserID { get; set; }
+        public string UserRoles { get; set; }
+        public string UserCabang { get; set; }
+        public string NamaUser { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }

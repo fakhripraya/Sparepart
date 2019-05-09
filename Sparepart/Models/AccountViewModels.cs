@@ -64,10 +64,10 @@ namespace Sparepart.Models
     public class RegisterViewModel
     {
         public string UserID { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Role")]
         public string UserRoles { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Cabang")]
         public string UserCabang { get; set; }
 

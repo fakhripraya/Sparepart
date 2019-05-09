@@ -15,7 +15,7 @@ namespace Sparepart.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        dbsparepartEntities Dbcontext = new dbsparepartEntities();
         public ManageController()
         {
         }
@@ -68,8 +68,16 @@ namespace Sparepart.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var currentuser = Dbcontext.masterusers.Where(m => m.UserID == userId).FirstOrDefault();
+            var role = Dbcontext.masterroles.Where(r => r.RoleID == currentuser.RoleID).FirstOrDefault();
+            var cabang = Dbcontext.mastercabangs.Where(c => c.CabangID == currentuser.CabangID).FirstOrDefault();
             var model = new IndexViewModel
             {
+                UserName = currentuser.Username,
+                NamaUser = currentuser.NamaUser,
+                Email = currentuser.Email,
+                UserRoles = role.NamaRole,
+                UserCabang = cabang.NamaCabang,
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),

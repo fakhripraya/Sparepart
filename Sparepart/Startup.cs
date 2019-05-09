@@ -28,9 +28,21 @@ namespace Sparepart
             {
                 
                 // first we create Admin role   
-                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
-                role.Name = "Admin";
-                roleManager.Create(role);
+                string[] Roles = { "MasterCabang", "MasterRole",
+                    "MasterUser",
+                    "MasterSatuan",
+                    "MasterBarang",
+                    "MasterToko",
+                    "MasterUnit",
+                    "MasterKategori",
+                    "Admin"
+                };
+
+                for (int i = 0; i < 9; i++)
+                {
+                    //role.Name = Roles[i];
+                    roleManager.Create(new IdentityRole(Roles[i]));
+                }
 
                 //Here we create an Admin super user who will maintain the website                  
 
@@ -45,17 +57,20 @@ namespace Sparepart
                 //Add default User to Role Admin   
                 if (chkUser.Succeeded)
                 {
-                    var result1 = UserManager.AddToRole(user.Id, "Admin");
+                    for (int i = 0; i < 9; i++)
+                    {
+                        var result1 = UserManager.AddToRole(user.Id, Roles[i]);
+                    }
 
                 }
                 dbsparepartEntities Dbcontext = new dbsparepartEntities();
                 masteruser ADM = new masteruser();
                 ADM.UserID = user.Id;
-                ADM.NamaUser = "Admin";
+                ADM.NamaUser = "SuperAdmin";
                 ADM.Username = "Admin";
                 ADM.Password = userPWD;
                 ADM.Email = user.Email;
-                ADM.IsDelete = 1;
+                ADM.IsDelete = 2;
                 Dbcontext.masterusers.Add(ADM);
                 Dbcontext.SaveChanges();
             }
