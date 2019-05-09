@@ -1,0 +1,36 @@
+﻿@model Sparepart.Models.FPSDetailCreateViewModel
+<form action="/FPS/Detail_Create_Perbaikan" method="post" id="myForm">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        <li>
+            @Html.Label("Nama Barang")
+            @(Html.Kendo().DropDownListFor(m => m.KodeBarangTipe)
+                                            .Name("barang")
+                                            .OptionLabel("Select Barang")
+                                            .DataTextField("NamaBarang")
+                                            .DataValueField("KodeBarangTipe")
+                                            .Filter(FilterType.Contains)
+                                            .DataSource(source =>
+                                            {
+                                                source.Read(read =>
+                                                                        {
+                                                                            read.Action("GetBarang", "Barang")
+                                                                                                .Data("barangdata");
+                                                                        });
+                                            })
+            )
+        </li>
+        <li>
+            @Html.Label("Quantity")
+            @Html.Kendo().NumericTextBoxFor(m => m.Quantity).Name("quantity").HtmlAttributes(new { style = "width: 50%;", placeholder = "0.00", required = "required", validationmessage = "Input Quantity" })
+        </li>
+        <li>
+            @Html.Label("Keterangan")
+            @Html.Kendo().TextBoxFor(m => m.Keterangan).Name("keterangan").HtmlAttributes(new { style = "width: 100%;", placeholder = "Keterangan", required = "required", validationmessage = "Input Keterangan" })
+        </li>
+        <li>
+            <input class="k-button k-primary" style="margin-top: 2em; float: left;" value="Insert" id="submit" type="submit">
+        </li>
+    </ul>
+</form>
+

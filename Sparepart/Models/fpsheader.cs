@@ -26,8 +26,8 @@ namespace Sparepart.Models
         public Nullable<int> CabangID { get; set; }
         public Nullable<int> UnitID { get; set; }
         public string NoTicket { get; set; }
-        public Nullable<int> Approval { get; set; }
-        public Nullable<sbyte> JenisFPS { get; set; }
+        public string Approval { get; set; }
+        public string JenisFPS { get; set; }
         public string NamaPemohon { get; set; }
         public string NIKPemohon { get; set; }
         public string UserInput { get; set; }

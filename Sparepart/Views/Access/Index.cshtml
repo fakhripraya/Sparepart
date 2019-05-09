@@ -235,14 +235,14 @@
                                     )
 
     )
-    @if (ViewBag.Message != null)
+    @*@if (ViewBag.Message != null)
     {
         <script type="text/javascript">
             window.onload = function () {
                 alert("@ViewBag.Message");
             };
         </script>
-    }
+    }*@
 
 </section>
 
@@ -426,7 +426,7 @@
 
     function openWindow(e) {
             e.preventDefault();
-
+        
             var grid = this;
             var row = $(e.currentTarget).closest("tr");
             wnd.center().open();
@@ -439,7 +439,23 @@
                 $.ajax({
                     url: '@Url.Action("Destroy", "Access")',
                     data: { RoleID: pId },
-                    type: "post"
+                    type: "post",
+                    dataType: "json",
+                    //contentType: "application/json; charset=utf-8",
+
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.responseText);
+                            location.reload(true);
+                        } else {
+                            // DoSomethingElse()
+                            alert(response.responseText);
+                            location.reload(true);
+                        }
+                    },
+                    error: function (response) {
+                        alert("error!");  // 
+                    }
                 });
                 grid.removeRow(row);
                 wnd.close();
@@ -449,10 +465,5 @@
                 wnd.close();
             });
         }
-    </script>
-    <script type="text/x-kendo-template" id="template">
-        <div id="details-container">
-
-        </div>
     </script>
 }

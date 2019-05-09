@@ -37,5 +37,7 @@ namespace Sparepart.Models
         public virtual DbSet<mastertoko> mastertokoes { get; set; }
         public virtual DbSet<masterunit> masterunits { get; set; }
         public virtual DbSet<masteruser> masterusers { get; set; }
+        public virtual DbSet<sjdetail> sjdetails { get; set; }
+        public virtual DbSet<sjheader> sjheaders { get; set; }
     }
 }

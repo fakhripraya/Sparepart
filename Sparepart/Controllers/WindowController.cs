@@ -53,7 +53,82 @@ namespace Sparepart.Controllers
             else return View();
         }
 
-        public ActionResult FPSDetail()
+        public ActionResult FPSDetail(int? FPSID)
+        {
+            fpsheader fps = Dbcontext.fpsheaders.Where(x => x.FPSID == FPSID).FirstOrDefault();
+            if (FPSID != null)
+            {
+                if (fps.JenisFPS == "Mutasi")
+                {
+                    ViewBag.Detail = Dbcontext.fpsdetails.Where(x => x.FPSID == FPSID).ToList();
+                    var cabang = Dbcontext.mastercabangs.Where(c => c.CabangID == fps.CabangID).FirstOrDefault();
+                    var toko = Dbcontext.mastertokoes.Where(c => c.TokoID == fps.TokoID).FirstOrDefault();
+                    var unit = Dbcontext.masterunits.Where(c => c.UnitID == fps.UnitID).FirstOrDefault();
+                    FPSDetailViewModel head = new FPSDetailViewModel();
+                    head.NamaCabang = cabang.NamaCabang;
+                    head.NamaUnit = unit.NamaUnit;
+                    head.NoTicket = fps.NoTicket;
+                    head.NamaPemohon = fps.NamaPemohon;
+                    head.NIKPemohon = fps.NIKPemohon;
+                    head.JenisFPS = fps.JenisFPS;
+                    head.Approval = fps.Approval;
+
+                    var tokos = Dbcontext.mastertokoes.ToList();
+                    ViewData["Toko"] = tokos;
+                    var units = Dbcontext.masterunits.ToList();
+                    ViewData["Unit"] = units;
+                    var cabangs = Dbcontext.mastercabangs.ToList();
+                    ViewData["Cabang"] = cabangs;
+                    var barangs = Dbcontext.masterbarangs.ToList();
+                    ViewData["Barang"] = barangs;
+                    var satuans = Dbcontext.mastersatuans.ToList();
+                    ViewData["Satuan"] = satuans;
+
+                    return PartialView("~/Views/Window/DetailMutasi.cshtml",head);
+                }
+                else if(fps.JenisFPS == "Perbaikan")
+                {
+                    ViewBag.Detail = Dbcontext.fpsdetails.Where(x => x.FPSID == FPSID).ToList();
+                    var cabang = Dbcontext.mastercabangs.Where(c => c.CabangID == fps.CabangID).FirstOrDefault();
+                    var toko = Dbcontext.mastertokoes.Where(c => c.TokoID == fps.TokoID).FirstOrDefault();
+                    var unit = Dbcontext.masterunits.Where(c => c.UnitID == fps.UnitID).FirstOrDefault();
+                    FPSDetailViewModel head = new FPSDetailViewModel();
+                    head.NamaToko = toko.NamaToko;
+                    head.NoTicket = fps.NoTicket;
+                    head.NamaPemohon = fps.NamaPemohon;
+                    head.NIKPemohon = fps.NIKPemohon;
+                    head.JenisFPS = fps.JenisFPS;
+                    head.Approval = fps.Approval;
+
+                    var tokos = Dbcontext.mastertokoes.ToList();
+                    ViewData["Toko"] = tokos;
+                    var units = Dbcontext.masterunits.ToList();
+                    ViewData["Unit"] = units;
+                    var cabangs = Dbcontext.mastercabangs.ToList();
+                    ViewData["Cabang"] = cabangs;
+                    var barangs = Dbcontext.masterbarangs.ToList();
+                    ViewData["Barang"] = barangs;
+                    var satuans = Dbcontext.mastersatuans.ToList();
+                    ViewData["Satuan"] = satuans;
+
+                    return PartialView("~/Views/Window/DetailPerbaikan.cshtml", head);
+                }
+                else return View();
+            }
+            else return View();
+        }
+
+        public ActionResult FPSDetailMutasi()
+        {
+            //var role = Dbcontext.masterroles.ToList();
+            //ViewData["Role"] = role;
+            //var cabang = Dbcontext.mastercabangs.ToList();
+            //ViewData["Cabang"] = cabang;
+
+            return PartialView();
+        }
+
+        public ActionResult FPSDetailPerbaikan()
         {
             //var role = Dbcontext.masterroles.ToList();
             //ViewData["Role"] = role;

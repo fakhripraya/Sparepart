@@ -1,8 +1,134 @@
-﻿
+﻿@model Sparepart.Models.fpsheader
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<section class="content-header">
+    <h1>
+        Permintaan Sparepart
+    </h1>
+</section>
 
+<section class="content container-fluid">
+
+    @*<div id="modalWindow">
+            <h3 class="text-center">Delete this record?</h3>
+            <div class="pull-left">
+                <button id="yes" class="k-button">Yes</button>
+            </div>
+            <div class="pull-right">
+                <button id="no" class="k-button">No</button>
+            </div>
+        </div>*@
+
+    @*<form action="/FPS/Create_Perbaikan" method="post">
+            @Html.AntiForgeryToken()
+            <div class="float-left">
+                @Html.Label("No Ticket")
+                @Html.Kendo().TextBoxFor(m => m.JenisSJ).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+            </div>
+            <div class="float-right">
+                @Html.Label("No Ticket")
+                @Html.Kendo().TextBoxFor(m => m.FPSID).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+            </div>
+            <div class="float-right">
+                @Html.Label("No Ticket")
+                @Html.Kendo().TextBoxFor(m => m.JenisSJ).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+            </div>
+            <div class="float-right">
+                @Html.Label("No Ticket")
+                @Html.Kendo().TextBoxFor(m => m.FPSID).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+            </div>
+            <div class="pull-left">
+                <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left; padding-bottom: 5px;" value="Save" type="submit">
+            </div>
+            <div class="pull-right">
+                <a href="/FPS/Detail_Clear" class="k-button k-primary" style="margin-top: 2em; float: right; padding-bottom: 5px;">Cancel</a>
+            </div>
+        </form>*@
+
+    <fieldset class="group-border">
+        <legend class="group-border">Info</legend>
+
+        <div class="row fieldlist">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("No Ticket")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("No Ticket")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("No Ticket")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </div>
+            </div>
+        </div>
+        <div class="row fieldlist">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("No Ticket")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("No Ticket")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    @Html.Label("No Ticket")
+                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+                </div>
+            </div>
+        </div>
+
+        
+
+    </fieldset>
+
+</section>
+
+<style>
+    .fieldlist {
+        margin: 0 0 -2em;
+        padding: 0;
+    }
+
+        .fieldlist li {
+            list-style: none;
+            padding-bottom: 2em;
+        }
+
+        .fieldlist label {
+            display: block;
+            padding-bottom: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #444;
+        }
+    .textentry {
+        positions absolute;
+        top: 50px; /* I usually locate relative to top  */
+        left: 100px; /* left corner of container (screen) */
+        height: 80px; /*  often useful to keep screen orderly */
+    }
+</style>
+
+@section Scripts
+{
+    <script type="text/javascript">
+
+       
+    </script>
+    }

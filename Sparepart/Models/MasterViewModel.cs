@@ -6,13 +6,25 @@ using System.Web;
 
 namespace Sparepart.Models
 {
+
     public class FPSDetailCreateViewModel
     {
-        public int FPSID { get; set; }
         public string KodeBarangTipe { get; set; }
         public int Quantity { get; set; }
         public string Keterangan { get; set; }
     }
+    public class FPSDetailViewModel
+    {
+        public string NoTicket { get; set; }
+        public string NamaPemohon { get; set; }
+        public string NIKPemohon { get; set; }
+        public string NamaCabang { get; set; }
+        public string NamaToko { get; set; }
+        public string NamaUnit { get; set; }
+        public string JenisFPS { get; set; }
+        public string Approval { get; set; }
+    }
+
     public class CreateCabangViewModel
     {
         public int CabangID { get; set; }

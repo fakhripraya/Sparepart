@@ -59,12 +59,23 @@ namespace Sparepart.Controllers
         {
             //if (TempData.ContainsKey("flag"))
             //{
-            //    ViewBag.Message = "aa";
+            //if (TempData["flag"] != null)
+            //{
+            //    ViewBag.Message = "Cant Delete Currently Used Role!";
+            //    TempData["flag"] = null;
+            //    ViewBag.hakakses = Dbcontext.hakakses.ToList();
+            //    var menu = Dbcontext.hakakses.ToList();
+            //    ViewData["Menu"] = menu;
+            //    return View();
             //}
-            ViewBag.hakakses = Dbcontext.hakakses.ToList();
-            var menu = Dbcontext.hakakses.ToList();
-            ViewData["Menu"] = menu;
-            return View();
+            //else
+            //{
+                //}
+                ViewBag.hakakses = Dbcontext.hakakses.ToList();
+                var menu = Dbcontext.hakakses.ToList();
+                ViewData["Menu"] = menu;
+                return View();
+            //}
         }
 
         public ActionResult Access_Read([DataSourceRequest]DataSourceRequest request)
@@ -207,19 +218,23 @@ namespace Sparepart.Controllers
             {
                 using (var db = new dbsparepartEntities())
                 {
-                    //masteruser user = db.masterusers.Where(p => p.RoleID == role.RoleID).FirstOrDefault();
-                    //if(user != null)
-                    //{
-                    //    TempData["flag"] = 1;
-                    //    return RedirectToAction("Index");
-                    //}
-
-                    aks deleteakses = db.akses.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
-                    db.akses.Remove(deleteakses);
-                    db.SaveChanges();
-                    masterrole deleterole = db.masterroles.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
-                    deleterole.IsDelete = 1;
-                    db.SaveChanges();
+                    masteruser user = db.masterusers.Where(p => p.RoleID == role.RoleID).FirstOrDefault();
+                    if (user != null)
+                    {
+                        //TempData["flag"] = 1;
+                        return Json(new { success = false, responseText = "Role Was Already Assigned." }, JsonRequestBehavior.AllowGet);
+                        //return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        aks deleteakses = db.akses.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
+                        db.akses.Remove(deleteakses);
+                        db.SaveChanges();
+                        masterrole deleterole = db.masterroles.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
+                        deleterole.IsDelete = 1;
+                        db.SaveChanges();
+                        return Json(new { success = true, responseText = "Successfully Delete Role!" }, JsonRequestBehavior.AllowGet);
+                    }
                 }
             }
             return Json(new[] { role }.ToDataSourceResult(request, ModelState));

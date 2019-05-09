@@ -12,17 +12,16 @@ namespace Sparepart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class fpsdetail
+    public partial class sjheader
     {
-        public int SeqFPSID { get; set; }
+        public int SJID { get; set; }
         public Nullable<int> FPSID { get; set; }
-        public string KodeBarangTipe { get; set; }
-        public Nullable<int> Qty { get; set; }
+        public Nullable<int> CabangID { get; set; }
         public string Keterangan { get; set; }
-        public Nullable<int> SatuanID { get; set; }
-    
-        public virtual fpsheader fpsheader { get; set; }
-        public virtual masterbarang masterbarang { get; set; }
-        public virtual mastersatuan mastersatuan { get; set; }
+        public Nullable<sbyte> JenisSJ { get; set; }
+        public string UserInput { get; set; }
+        public Nullable<System.DateTime> TanggalInput { get; set; }
+        public string UserUpdate { get; set; }
+        public Nullable<System.DateTime> TanggalUpdate { get; set; }
     }
 }

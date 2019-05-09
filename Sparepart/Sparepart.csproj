@@ -245,6 +245,12 @@
       <DependentUpon>SparepartDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DropdownViewModel.cs" />
+    <Compile Include="Models\sjdetail.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sjheader.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SparepartDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -928,7 +934,13 @@
     <Content Include="Views\Window\KategoriEdit.cshtml" />
     <Content Include="Views\Window\SatuanEdit.cshtml" />
     <Content Include="Views\SJ\Index.cshtml" />
+    <Content Include="Views\Window\FPSDetailMutasi.cshtml" />
+    <Content Include="Views\FPS\AfterDetailInsertMutasi.cshtml" />
+    <Content Include="Views\Window\FPSDetailPerbaikan.cshtml" />
+    <Content Include="Views\FPS\AfterDetailInsertPerbaikan.cshtml" />
     <Content Include="Views\Window\FPSDetail.cshtml" />
+    <Content Include="Views\Window\DetailMutasi.cshtml" />
+    <Content Include="Views\Window\DetailPerbaikan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
