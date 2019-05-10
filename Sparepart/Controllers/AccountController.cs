@@ -348,9 +348,9 @@ namespace Sparepart.Controllers
                 var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(model.Email));  // replace with valid value 
-                message.From = new MailAddress("fakhri@indomaret.co.id");  // replace with valid value
+                message.From = new MailAddress("PSPTWebSystem@indomaret.co.id");  // replace with valid value
                 message.Subject = "Confirmation Email";
-                message.Body = string.Format(body, "Fakhri Prayatna Putra", "fakhri@indomaret.co.id", callbackUrl);
+                message.Body = string.Format(body, "PSPT WEB System", "PSPTWebSystem@indomaret.co.id", callbackUrl);
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
