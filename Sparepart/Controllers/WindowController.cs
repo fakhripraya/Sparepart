@@ -7,6 +7,7 @@ using Sparepart.Models;
 
 namespace Sparepart.Controllers
 {
+    [Authorize]
     public class WindowController : Controller
     {
         dbsparepartEntities Dbcontext = new dbsparepartEntities();

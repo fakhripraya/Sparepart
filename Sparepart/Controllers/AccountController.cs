@@ -18,6 +18,7 @@ using Sparepart.Models;
 
 namespace Sparepart.Controllers
 {
+    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -60,7 +61,7 @@ namespace Sparepart.Controllers
         }
 
         //GET: /Account/Index
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "MasterUser")]
         public ActionResult Index()
         {
             var role = Dbcontext.masterroles.ToList();
@@ -86,8 +87,7 @@ namespace Sparepart.Controllers
 
             return Json(products, JsonRequestBehavior.AllowGet);
         }
-       
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "MasterUser")]
         public ActionResult Users_Read([DataSourceRequest]DataSourceRequest request)
         {
 
@@ -105,7 +105,7 @@ namespace Sparepart.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "MasterUser")]
         public ActionResult Users_Destroy([DataSourceRequest]DataSourceRequest request, masteruser user)
         {
 
@@ -123,8 +123,8 @@ namespace Sparepart.Controllers
             }
             return Json(new[] { user }.ToDataSourceResult(request, ModelState));
         }
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "MasterUser")]
         public ActionResult Users_Update(UserUpdateViewModel model)
         {
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
@@ -170,8 +170,8 @@ namespace Sparepart.Controllers
         }
 
         // POST: /Account/Register
+        [Authorize(Roles = "MasterUser")]
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public /*async Task<ActionResult>*/ ActionResult Register(RegisterViewModel model)
         {
@@ -340,6 +340,8 @@ namespace Sparepart.Controllers
                 //}
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+
+
                 //Send an email with this link
                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -348,7 +350,7 @@ namespace Sparepart.Controllers
                 message.To.Add(new MailAddress(model.Email));  // replace with valid value 
                 message.From = new MailAddress("fakhri@indomaret.co.id");  // replace with valid value
                 message.Subject = "Confirmation Email";
-                message.Body = string.Format(body, CurrentUser.NamaUser, CurrentUser.Email , callbackUrl);
+                message.Body = string.Format(body, "Fakhri Prayatna Putra", "fakhri@indomaret.co.id", callbackUrl);
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
@@ -361,6 +363,8 @@ namespace Sparepart.Controllers
                     smtp.Send(message);
                     return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
+
+
                 //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
                 //return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }

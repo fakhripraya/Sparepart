@@ -10,7 +10,7 @@ using Sparepart.Models;
 
 namespace Sparepart.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "MasterKategori")]
     public class KategoriController : Controller
     {
         dbsparepartEntities Dbcontext = new dbsparepartEntities();

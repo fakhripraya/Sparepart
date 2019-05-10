@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Sparepart.Models;
 namespace Sparepart.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "MasterBarang")]
     public class BarangController : Controller
     {
         dbsparepartEntities Dbcontext = new dbsparepartEntities();

@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Sparepart.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "MasterRole")]
     public class RoleController : Controller
     {
         ApplicationDbContext Context = new ApplicationDbContext();

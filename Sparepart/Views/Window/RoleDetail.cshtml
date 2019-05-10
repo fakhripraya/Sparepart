@@ -14,8 +14,21 @@
                      columns.ForeignKey(p => p.AksesID, (System.Collections.IEnumerable)ViewData["Menu"], "AksesID", "NamaMenu")
                     .Title("Menu").Width(200);
                  })
-                 .Pageable() //Enable the paging.
-                 .Sortable() //Enable the sorting.
+                 .Sortable()
+                 .Pageable(pageable => pageable
+                 .Input(true)
+                 .Numeric(true)
+                 .PageSizes(true)
+                 .Info(true)
+                 .PreviousNext(true)
+                 .Refresh(true)
+                 .ButtonCount(5)
+                )
             )
         </li>
     </ul>
+    <script>
+        $(function () {
+            $("#detail").data("kendoWindow").center();
+        });
+    </script>

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Sparepart.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "MasterUnit")]
     public class UnitController : Controller
     {
         dbsparepartEntities Dbcontext = new dbsparepartEntities();

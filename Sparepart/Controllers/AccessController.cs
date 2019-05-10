@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace Sparepart.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "MasterRole")]
     public class AccessController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -57,25 +57,10 @@ namespace Sparepart.Controllers
         // GET: Access
         public ActionResult Index()
         {
-            //if (TempData.ContainsKey("flag"))
-            //{
-            //if (TempData["flag"] != null)
-            //{
-            //    ViewBag.Message = "Cant Delete Currently Used Role!";
-            //    TempData["flag"] = null;
-            //    ViewBag.hakakses = Dbcontext.hakakses.ToList();
-            //    var menu = Dbcontext.hakakses.ToList();
-            //    ViewData["Menu"] = menu;
-            //    return View();
-            //}
-            //else
-            //{
-                //}
                 ViewBag.hakakses = Dbcontext.hakakses.ToList();
                 var menu = Dbcontext.hakakses.ToList();
                 ViewData["Menu"] = menu;
                 return View();
-            //}
         }
 
         public ActionResult Access_Read([DataSourceRequest]DataSourceRequest request)
@@ -103,16 +88,6 @@ namespace Sparepart.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        //public ActionResult GetRoles()
-        //{
-        //    dbsparepartEntities db = new dbsparepartEntities();
-        //    return Json(db.masterroles.Select(x => new
-        //    {
-        //        RoleID = x.RoleID,
-        //        NamaRole = x.NamaRole
-        //    }).ToList(), JsonRequestBehavior.AllowGet);
-        //}
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateAccess(int[] AksesIDs,masterrole role)
@@ -124,14 +99,6 @@ namespace Sparepart.Controllers
                 string rolename = Request.Form["nama"];
                 using (var db = new dbsparepartEntities())
                 {
-                    //var entity = new masterrole
-                    //{
-                    //    RoleID = role.RoleID,
-                    //    NamaRole = rolename,
-                    //    UserInput = user.NamaUser,
-                    //    TanggalInput = DateTime.Now,
-                    //    IsDelete = 0
-                    //};
                     masterrole entity = new masterrole();
                     entity.RoleID = role.RoleID;
                     entity.NamaRole = rolename;
@@ -150,11 +117,6 @@ namespace Sparepart.Controllers
                     aksmodel.AksesID = selected.AksesID;
                     aksmodel.RoleID = role.RoleID;
                     aksmodel.NamaAkses = selected.NamaMenu;
-                    //var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-                    //IdentityRole AspRole = new IdentityRole();
-                    //AspRole.Name = selected.NamaMenu;
-                    //context.Roles.Add(AspRole);
-                    //context.SaveChanges();
 
                     Dbcontext.akses.Add(aksmodel);
                     Dbcontext.SaveChanges();
@@ -180,12 +142,9 @@ namespace Sparepart.Controllers
                     entity.TanggalUpdate = DateTime.Now;
                     db.SaveChanges();
                 }
-
-                //foreach (var value in Dbcontext.akses.Where(x => x.RoleID == role.RoleID))
-                ///*{*/
+                
                 Dbcontext.akses.RemoveRange(Dbcontext.akses.Where(x => x.RoleID == role.RoleID));
                 Dbcontext.SaveChanges();
-                //}
 
                 foreach (int akses in AksesIDs)
                 {
@@ -221,9 +180,7 @@ namespace Sparepart.Controllers
                     masteruser user = db.masterusers.Where(p => p.RoleID == role.RoleID).FirstOrDefault();
                     if (user != null)
                     {
-                        //TempData["flag"] = 1;
                         return Json(new { success = false, responseText = "Role Was Already Assigned." }, JsonRequestBehavior.AllowGet);
-                        //return RedirectToAction("Index");
                     }
                     else
                     {

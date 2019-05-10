@@ -11,7 +11,7 @@ using Sparepart.Models;
 
 namespace Sparepart.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "MasterToko")]
     public class TokoController : Controller
     {
         dbsparepartEntities Dbcontext = new dbsparepartEntities();

@@ -73,6 +73,14 @@ namespace Sparepart
                 ADM.IsDelete = 2;
                 Dbcontext.masterusers.Add(ADM);
                 Dbcontext.SaveChanges();
+
+                for (int i = 0; i < 8; i++)
+                {
+                    hakaks menu = new hakaks();
+                    menu.NamaMenu = Roles[i];
+                    Dbcontext.hakakses.Add(menu);
+                    Dbcontext.SaveChanges();
+                }
             }
 
             //// creating Creating Manager role    

@@ -29,11 +29,25 @@
             </dd>
             <dt>Role:</dt>
             <dd>
-                @Html.DisplayFor(m => m.UserRoles)
+                @if (Model.UserRoles != null)
+                {
+                    @Html.DisplayFor(m => m.UserRoles)
+                }
+                else
+                {
+                    @Html.Label("SuperAdmin")
+                }
             </dd>
             <dt>Cabang:</dt>
             <dd>
-                @Html.DisplayFor(m => m.UserCabang)
+                @if (Model.UserCabang != null)
+                {
+                    @Html.DisplayFor(m => m.UserCabang)
+                }
+                else
+                {
+                    @Html.Label("-")
+                }
             </dd>
             <dt>Password:</dt>
             <dd>
