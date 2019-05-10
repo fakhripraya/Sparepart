@@ -355,11 +355,10 @@ namespace Sparepart.Controllers
 
                 using (var smtp = new SmtpClient())
                 {
-                    
                     smtp.UseDefaultCredentials = false;
                     smtp.Host = "192.168.2.240";
                     smtp.Port = 25;
-                    smtp.EnableSsl = true;
+                    //smtp.EnableSsl = true;
                     smtp.Send(message);
                     return RedirectToAction("ForgotPasswordConfirmation", "Account");
                 }
