@@ -24,10 +24,10 @@ namespace Sparepart.Models
         public int SatuanID { get; set; }
         public string NamaSatuan { get; set; }
         public string UserInput { get; set; }
-        public Nullable<System.DateTime> TanggalInput { get; set; }
+        public System.DateTime TanggalInput { get; set; }
         public string UserUpdate { get; set; }
         public Nullable<System.DateTime> TanggalUpdate { get; set; }
-        public Nullable<sbyte> IsDelete { get; set; }
+        public sbyte IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fpsdetail> fpsdetails { get; set; }

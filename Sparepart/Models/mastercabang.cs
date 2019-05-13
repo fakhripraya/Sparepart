@@ -18,23 +18,20 @@ namespace Sparepart.Models
         public mastercabang()
         {
             this.fpsheaders = new HashSet<fpsheader>();
-            this.masterusers = new HashSet<masteruser>();
         }
     
         public int CabangID { get; set; }
-        public Nullable<int> TokoID { get; set; }
-        public Nullable<int> UnitID { get; set; }
+        public int TokoID { get; set; }
+        public int UnitID { get; set; }
         public string NamaCabang { get; set; }
         public string UserInput { get; set; }
-        public Nullable<System.DateTime> TanggalInput { get; set; }
+        public System.DateTime TanggalInput { get; set; }
         public string UserUpdate { get; set; }
         public Nullable<System.DateTime> TanggalUpdate { get; set; }
-        public Nullable<sbyte> IsDelete { get; set; }
+        public sbyte IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fpsheader> fpsheaders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<masteruser> masterusers { get; set; }
         public virtual mastertoko mastertoko { get; set; }
         public virtual masterunit masterunit { get; set; }
     }

@@ -21,17 +21,17 @@ namespace Sparepart.Models
         }
     
         public string KodeBarangTipe { get; set; }
-        public Nullable<int> KategoriID { get; set; }
+        public int KategoriID { get; set; }
         public string BarangPLU { get; set; }
         public string NamaBarang { get; set; }
-        public Nullable<int> SatuanID { get; set; }
-        public Nullable<int> HargaSatuan { get; set; }
-        public Nullable<decimal> BufferStock { get; set; }
+        public int SatuanID { get; set; }
+        public int HargaSatuan { get; set; }
+        public decimal BufferStock { get; set; }
         public string UserInput { get; set; }
-        public Nullable<System.DateTime> TanggalInput { get; set; }
+        public System.DateTime TanggalInput { get; set; }
         public string UserUpdate { get; set; }
         public Nullable<System.DateTime> TanggalUpdate { get; set; }
-        public Nullable<sbyte> IsDelete { get; set; }
+        public sbyte IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fpsdetail> fpsdetails { get; set; }

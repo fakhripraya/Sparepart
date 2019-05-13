@@ -22,6 +22,7 @@ namespace Sparepart.Models
     
         public int AksesID { get; set; }
         public string NamaMenu { get; set; }
+        public Nullable<sbyte> IsChecked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<aks> akses { get; set; }

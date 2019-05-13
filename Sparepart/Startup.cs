@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using Sparepart.Models;
+using System;
 
 [assembly: OwinStartupAttribute(typeof(Sparepart.Startup))]
 namespace Sparepart
@@ -68,8 +69,9 @@ namespace Sparepart
                 ADM.UserID = user.Id;
                 ADM.NamaUser = "SuperAdmin";
                 ADM.Username = "Admin";
-                ADM.Password = userPWD;
+                ADM.Password = user.PasswordHash;
                 ADM.Email = user.Email;
+                ADM.TanggalInput = DateTime.Now;
                 ADM.IsDelete = 2;
                 Dbcontext.masterusers.Add(ADM);
                 Dbcontext.SaveChanges();

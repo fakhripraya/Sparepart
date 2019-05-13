@@ -11,6 +11,7 @@
 </section>
 
 <section class="content container-fluid">
+
     <div id="modalWindow">
         <h3 class="text-center">Delete this record?</h3>
         <div class="pull-left">
@@ -22,191 +23,191 @@
     </div>
 
     @(Html.Kendo().Window()
-        .Name("update")
-        .Title("Edit User")
-        .Content(
+                .Name("update")
+                .Title("Edit User")
+                .Content(
 
-        @<text>
-        </text>
+                @<text>
+                </text>
 
-        )
-                .Visible(false)
-                .Modal(true)
-                .Scrollable(true)
-                .Draggable()
-                .Resizable()
-                .Width(600)
-                .Height(600)
-                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
-                .Events(ev => ev.Close("onClose"))
-        )
+                        )
+                                .Visible(false)
+                                .Modal(true)
+                                .Scrollable(true)
+                                .Draggable()
+                                .Resizable()
+                                .Width(600)
+                                .Height(600)
+                                .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                                .Events(ev => ev.Close("onClose"))
+    )
 
     @*CREATE*@
     @(Html.Kendo().Window()
-        .Name("window")
-        .Title("Tambahkan User")
-        .Content(
+                .Name("window")
+                .Title("Tambahkan User")
+                .Content(
 
-    @<text>
-    <form action="/Account/Register" method="post" id="CreateFrm">
-        @Html.AntiForgeryToken()
-        <ul class="fieldlist">
-            <li class="row fieldlist">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Nama")
-                        @Html.Kendo().TextBoxFor(m => m.NamaUser).HtmlAttributes(new { style = "width: 100%;" })
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Role")
-                        @(Html.Kendo().DropDownListFor(m => m.UserRoles)
-                                                                                .Name("role")
-                                                                                .DataTextField("NamaRole")
-                                                                                .DataValueField("RoleID")
-                                                                                .OptionLabel("Select Role")
-                                                                                .Filter(FilterType.Contains)
-                                                                                .HtmlAttributes(new { style = "width: 100%;", required = "required", validationmessage = "Input Role" })
-                                                                                .DataSource(source =>
-                                                                                {
-                                                                                                                source.Read(read =>
-                            {
-                                                                        read.Action("GetProducts", "Account")
-.Data("roledata");
-                                                                    });
-                                                                                                            })
-                        )
-                    </div>
-                </div>
-            </li>
-            <li class="row fieldlist">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Username")
-                        @Html.Kendo().TextBoxFor(m => m.UserName).Name("username").HtmlAttributes(new { style = "width: 100%;" })
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Cabang")
-                        @(Html.Kendo().DropDownListFor(m => m.UserCabang)
-                                                                        .Name("cabang")
-                                                                        .DataTextField("NamaCabang")
-                                                                        .DataValueField("CabangID")
-                                                                        .OptionLabel("Select Cabang")
-                                                                        .Filter(FilterType.Contains)
-                                                                        .HtmlAttributes(new { style = "width: 100%;", required = "required", validationmessage = "Input Cabang" })
-                                                                        .DataSource(source =>
-                                                                        {
-                                                                                                        source.Read(read =>
-                                {
-                                                                            read.Action("GetCabang", "Cabang")
-.Data("cabangdata");
-                                                                        });
-                                                                                                    })
-                        )
-                    </div>
-                </div>
-            </li>
-            <li class="row fieldlist">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Email")
-                        @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { style = "width: 100%;" })
-                    </div>
-                </div>
-            </li>
-            <li class="row fieldlist">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Password")
-                        @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { style = "width: 100%;", type = "password" })
-                    </div>
-                </div>
-            </li>
-            <li class="row fieldlist">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        @Html.Label("Confirm Password")
-                        @Html.Kendo().TextBoxFor(m => m.ConfirmPassword).HtmlAttributes(new { style = "width: 100%;", type = "password" })
-                    </div>
-                </div>
-            </li>
-            <li class="row fieldlist">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </form>
-    </text>
+            @<text>
+                <form action="/Account/Register" method="post" id="CreateFrm">
+                    @Html.AntiForgeryToken()
+                    <ul class="fieldlist">
+                        <li class="row fieldlist">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    @Html.Label("Nama")
+                                    @Html.Kendo().TextBoxFor(m => m.NamaUser).HtmlAttributes(new { style = "width: 100%;" , id = "CreateNamaUser" })
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    @Html.Label("Role")
+                                    @(Html.Kendo().DropDownListFor(m => m.UserRoles)
+                                    .Name("role")
+                                    .DataTextField("NamaRole")
+                                    .DataValueField("RoleID")
+                                    .OptionLabel("Select Role")
+                                    .Filter(FilterType.Contains)
+                                    .HtmlAttributes(new { style = "width: 100%;", required = "required", validationmessage = "Input Role", id = "role" })
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read =>
+                                        {
+                                            read.Action("GetProducts", "Account")
+                                .Data("roledata");
+                                        });
+                                    })
+                                    )
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row fieldlist">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    @Html.Label("Username")
+                                    @Html.Kendo().TextBoxFor(m => m.UserName).Name("CreateUserName").HtmlAttributes(new { style = "width: 100%;", id = "CreateUserName" })
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    @Html.Label("Cabang")
+                                    @(Html.Kendo().DropDownListFor(m => m.UserCabang)
+                                    .Name("cabang")
+                                    .DataTextField("NamaCabang")
+                                    .DataValueField("CabangID")
+                                    .OptionLabel("Select Cabang")
+                                    .Filter(FilterType.Contains)
+                                    .HtmlAttributes(new { style = "width: 100%;", required = "required", validationmessage = "Input Cabang", id = "cabang" })
+                                    .DataSource(source =>
+                                    {
+                                        source.Read(read =>
+                                        {
+                                            read.Action("GetCabang", "Cabang")
+                    .Data("cabangdata");
+                                        });
+                                    })
+)
+                                </div>
+                            </div>
+                        </li>
+                        <li class="row fieldlist">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    @Html.Label("Email")
+                                    @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { style = "width: 100%;", id = "CreateEmail" })
+                                </div>
+                            </div>
+                        </li>
+                        @*<li class="row fieldlist">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        @Html.Label("Password")
+                                        @Html.Kendo().TextBoxFor(m => m.Password).HtmlAttributes(new { style = "width: 100%;", type = "password" })
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="row fieldlist">
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        @Html.Label("Confirm Password")
+                                        @Html.Kendo().TextBoxFor(m => m.ConfirmPassword).HtmlAttributes(new { style = "width: 100%;", type = "password" })
+                                    </div>
+                                </div>
+                            </li>*@
+                        <li class="row fieldlist">
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </text>
 
-                                            )
-    .Visible(false)
-    .Modal(true)
-    .Scrollable(true)
-    .Draggable()
-    .Resizable()
-    .Width(600)
-    .Height(500)
-    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
-    .Events(ev => ev.Close("onClose"))
+                                                            )
+                    .Visible(false)
+                    .Modal(true)
+                    .Scrollable(true)
+                    .Draggable()
+                    .Resizable()
+                    .Width(600)
+                    .Height(500)
+                    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+                    .Events(ev => ev.Close("onClose"))
     )
 
     @(Html.Kendo().Grid<Sparepart.Models.masteruser>()
-                                            .Name("grid")
-                                            .Columns(columns =>
-                                            {
-                                                columns.Bound(u => u.NamaUser);
-                                                columns.Bound(u => u.Username);
-                                                columns.Bound(u => u.Email);
-                                                columns.ForeignKey(p => p.RoleID, (System.Collections.IEnumerable)ViewData["Role"], "RoleID", "NamaRole")
-                                                .Title("Role").Width(200);
-                                                columns.ForeignKey(p => p.CabangID, (System.Collections.IEnumerable)ViewData["Cabang"], "CabangID", "NamaCabang")
-                                                .Title("Cabang").Width(200);
-                                                columns.Command(commands =>
-                                                {
-                                                    commands.Custom("Edit").Click("Updatebtn");
-                                                    commands.Custom("Delete").Click("openWindow");
-                                                }).Title("Commands").Width(200);
-                                            })
-                                            .ToolBar(toolbar =>
-                                            {
-                                                toolbar.Template(@<text>@(Html.Kendo().Button()
+                                                    .Name("grid")
+                                                    .Columns(columns =>
+                                                    {
+                                                        columns.Bound(u => u.NamaUser);
+                                                        columns.Bound(u => u.Username);
+                                                        columns.Bound(u => u.Email);
+                                                        columns.ForeignKey(p => p.RoleID, (System.Collections.IEnumerable)ViewData["Role"], "RoleID", "NamaRole")
+                                                        .Title("Role").Width(200);
+                                                        columns.ForeignKey(p => p.CabangID, (System.Collections.IEnumerable)ViewData["Cabang"], "CabangID", "NamaCabang")
+                                                        .Title("Cabang").Width(200);
+                                                        columns.Command(commands =>
+                                                        {
+                                                            commands.Custom("Edit").Click("Updatebtn");
+                                                            commands.Custom("Delete").Click("openWindow");
+                                                        }).Title("Commands").Width(200);
+                                                    })
+                                                    .ToolBar(toolbar =>
+                                                    {
+                                                        toolbar.Template(@<text>@(Html.Kendo().Button()
 .Name("textButton")
 .HtmlAttributes(new { type = "button" })
 .Content("Tambahkan User")) </text>);
-                                                    }
-                                                                                )
-                                                                                .Sortable()
-                                                                                .Pageable(pageable => pageable
-                                                                                .Input(true)
-                                                                                .Numeric(true)
-                                                                                .Info(true)
-                                                                                .PreviousNext(true)
-                                                                                .Refresh(true)
-                                                                                .ButtonCount(5)
-                                                                                )
+                                                            }
+                            )
+                            .Sortable()
+                            .Pageable(pageable => pageable
+                            .Input(true)
+                            .Numeric(true)
+                            .Info(true)
+                            .PreviousNext(true)
+                            .Refresh(true)
+                            .ButtonCount(5)
+                            )
 
-                                                                                .DataSource(dataSource => dataSource
-                                                                                .Ajax()
-                                                                                .Events(events => events
-                                                                                .Error("grid_error")
-                                                                                )
-                                                                                .Read(read => read.Action("Users_Read", "Account"))
-                                                                                //.Destroy(update => update.Action("Users_Destroy", "Account"))
-                                                                                .PageSize(10)
-                                                                                .ServerOperation(false)
-                                                                                .Model(model =>
-                                                                                {
-                                                                                    model.Id(u => u.UserID);
-                                                                                    model.Field(u => u.UserID).Editable(false);
-                                                                                })
+                            .DataSource(dataSource => dataSource
+                            .Ajax()
+                            .Events(events => events
+                            .Error("grid_error")
+                            )
+                            .Read(read => read.Action("Users_Read", "Account"))
+                            //.Destroy(update => update.Action("Users_Destroy", "Account"))
+                            .PageSize(10)
+                            .ServerOperation(false)
+                            .Model(model =>
+                            {
+                                model.Id(u => u.UserID);
+                                model.Field(u => u.UserID).Editable(false);
+                            })
 
-                                                                                )
+                            )
 
     )
 </section>
@@ -281,6 +282,53 @@
                 return true
             }
         }
+    });
+
+    $(document).ready(function () {
+
+        // process the form
+        $('#CreateFrm').submit(function (event) {
+            var model = {
+                UserName: $("#CreateUserName").val(),
+                NamaUser: $("#CreateNamaUser").val(),
+                Email: $("#CreateEmail").val(),
+                UserRoles: $("#role").val(),
+                UserCabang: $("#cabang").val(),
+            };
+            var token = $('input[name=__RequestVerificationToken]').val();
+            $.ajax({
+                type: "post",
+                headers: {
+                    "__RequestVerificationToken": token
+                },
+                data: JSON.stringify(model),
+                url: '@Url.Action("Register", "Account")',
+                dataType: "json",
+                contentType: "application/json",
+        //contentType: "application/json; charset=utf-8",
+
+        success: function (response) {
+            if (response.success) {
+                alert(response.responseText);
+                location.reload(true);
+            } else {
+                // DoSomethingElse()
+                alert(response.responseText);
+                location.reload(true);
+            }
+        },
+        //error: function (response) {
+        //    alert("ersror!");  // 
+        //}
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+    });
+            
+            // stop the form from submitting the normal way and refreshing the page
+            event.preventDefault();
+        });
+
     });
 
     $(function () {
@@ -384,7 +432,7 @@
 
             $("#yes").click(function () {
                 var selrow = $(e.target).closest("tr");
-                var selgrid = $("#Grid").data("kendoGrid");
+                var selgrid = $("#grid").data("kendoGrid");
                 var seldata = selgrid.dataItem(selrow);
                 var pId = seldata.UserID;
                 $.ajax({

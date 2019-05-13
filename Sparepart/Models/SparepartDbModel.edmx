@@ -52,99 +52,100 @@
           </Key>
           <Property Name="AksesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NamaMenu" Type="varchar" MaxLength="200" />
+          <Property Name="IsChecked" Type="tinyint" />
         </EntityType>
         <EntityType Name="masterbarang">
           <Key>
             <PropertyRef Name="KodeBarangTipe" />
           </Key>
           <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" Nullable="false" />
-          <Property Name="KategoriID" Type="int" />
-          <Property Name="BarangPLU" Type="varchar" MaxLength="128" />
-          <Property Name="NamaBarang" Type="varchar" MaxLength="200" />
-          <Property Name="SatuanID" Type="int" />
-          <Property Name="HargaSatuan" Type="int" />
-          <Property Name="BufferStock" Type="decimal" Precision="19" Scale="0" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="KategoriID" Type="int" Nullable="false" />
+          <Property Name="BarangPLU" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="NamaBarang" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="SatuanID" Type="int" Nullable="false" />
+          <Property Name="HargaSatuan" Type="int" Nullable="false" />
+          <Property Name="BufferStock" Type="decimal" Precision="19" Scale="0" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="mastercabang">
           <Key>
             <PropertyRef Name="CabangID" />
           </Key>
           <Property Name="CabangID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TokoID" Type="int" />
-          <Property Name="UnitID" Type="int" />
-          <Property Name="NamaCabang" Type="varchar" MaxLength="200" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="TokoID" Type="int" Nullable="false" />
+          <Property Name="UnitID" Type="int" Nullable="false" />
+          <Property Name="NamaCabang" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="masterkategori">
           <Key>
             <PropertyRef Name="KategoriID" />
           </Key>
           <Property Name="KategoriID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NamaKategori" Type="varchar" MaxLength="200" />
-          <Property Name="Deskripsi" Type="varchar" MaxLength="1000" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="NamaKategori" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Deskripsi" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="masterrole">
           <Key>
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NamaRole" Type="varchar" MaxLength="200" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="NamaRole" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="mastersatuan">
           <Key>
             <PropertyRef Name="SatuanID" />
           </Key>
           <Property Name="SatuanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NamaSatuan" Type="varchar" MaxLength="200" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="NamaSatuan" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="mastertoko">
           <Key>
             <PropertyRef Name="TokoID" />
           </Key>
           <Property Name="TokoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NamaToko" Type="varchar" MaxLength="200" />
-          <Property Name="AlamatToko" Type="varchar" MaxLength="1000" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="NamaToko" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="AlamatToko" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="masterunit">
           <Key>
             <PropertyRef Name="UnitID" />
           </Key>
           <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NamaUnit" Type="varchar" MaxLength="200" />
-          <Property Name="UserInput" Type="varchar" MaxLength="200" />
-          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="NamaUnit" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="masteruser">
           <Key>
@@ -153,15 +154,15 @@
           <Property Name="UserID" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="RoleID" Type="int" />
           <Property Name="CabangID" Type="int" />
-          <Property Name="NamaUser" Type="varchar" MaxLength="200" />
-          <Property Name="Username" Type="varchar" MaxLength="200" />
-          <Property Name="Password" Type="varchar" MaxLength="200" />
-          <Property Name="Email" Type="varchar" MaxLength="200" />
+          <Property Name="NamaUser" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="UserInput" Type="varchar" MaxLength="200" />
           <Property Name="TanggalInput" Type="datetime" Precision="0" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
           <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
-          <Property Name="IsDelete" Type="tinyint" />
+          <Property Name="IsDelete" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="sjdetail">
           <Key>
@@ -211,18 +212,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CabangID_MasterUser">
-          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="0..1" />
-          <End Role="masteruser" Type="Self.masteruser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="mastercabang">
-              <PropertyRef Name="CabangID" />
-            </Principal>
-            <Dependent Role="masteruser">
-              <PropertyRef Name="CabangID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FPSID_FPSDetail">
           <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="0..1" />
           <End Role="fpsdetail" Type="Self.fpsdetail" Multiplicity="*" />
@@ -236,7 +225,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_KategoriID_MasterBarang">
-          <End Role="masterkategori" Type="Self.masterkategori" Multiplicity="0..1" />
+          <End Role="masterkategori" Type="Self.masterkategori" Multiplicity="1" />
           <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="masterkategori">
@@ -256,18 +245,6 @@
             </Principal>
             <Dependent Role="fpsdetail">
               <PropertyRef Name="KodeBarangTipe" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RoleID_MasterUser">
-          <End Role="masterrole" Type="Self.masterrole" Multiplicity="0..1" />
-          <End Role="masteruser" Type="Self.masteruser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="masterrole">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="masteruser">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -296,7 +273,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SatuanID_MasterBarang">
-          <End Role="mastersatuan" Type="Self.mastersatuan" Multiplicity="0..1" />
+          <End Role="mastersatuan" Type="Self.mastersatuan" Multiplicity="1" />
           <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="mastersatuan">
@@ -320,7 +297,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TokoID_MasterCabang">
-          <End Role="mastertoko" Type="Self.mastertoko" Multiplicity="0..1" />
+          <End Role="mastertoko" Type="Self.mastertoko" Multiplicity="1" />
           <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="mastertoko">
@@ -344,7 +321,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UnitID_MasterCabang">
-          <End Role="masterunit" Type="Self.masterunit" Multiplicity="0..1" />
+          <End Role="masterunit" Type="Self.masterunit" Multiplicity="1" />
           <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="masterunit">
@@ -390,10 +367,6 @@
             <End Role="mastercabang" EntitySet="mastercabang" />
             <End Role="fpsheader" EntitySet="fpsheader" />
           </AssociationSet>
-          <AssociationSet Name="FK_CabangID_MasterUser" Association="Self.FK_CabangID_MasterUser">
-            <End Role="mastercabang" EntitySet="mastercabang" />
-            <End Role="masteruser" EntitySet="masteruser" />
-          </AssociationSet>
           <AssociationSet Name="FK_FPSID_FPSDetail" Association="Self.FK_FPSID_FPSDetail">
             <End Role="fpsheader" EntitySet="fpsheader" />
             <End Role="fpsdetail" EntitySet="fpsdetail" />
@@ -405,10 +378,6 @@
           <AssociationSet Name="FK_KodeBarangTipe_FPSDetail" Association="Self.FK_KodeBarangTipe_FPSDetail">
             <End Role="masterbarang" EntitySet="masterbarang" />
             <End Role="fpsdetail" EntitySet="fpsdetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleID_MasterUser" Association="Self.FK_RoleID_MasterUser">
-            <End Role="masterrole" EntitySet="masterrole" />
-            <End Role="masteruser" EntitySet="masteruser" />
           </AssociationSet>
           <AssociationSet Name="FK_ROLEID_TOMASTERROLE" Association="Self.FK_ROLEID_TOMASTERROLE">
             <End Role="masterrole" EntitySet="masterrole" />
@@ -506,10 +475,6 @@
             <End Role="mastersatuan" EntitySet="mastersatuans" />
             <End Role="masterbarang" EntitySet="masterbarangs" />
           </AssociationSet>
-          <AssociationSet Name="FK_CabangID_MasterUser" Association="dbsparepartModel.FK_CabangID_MasterUser">
-            <End Role="mastercabang" EntitySet="mastercabangs" />
-            <End Role="masteruser" EntitySet="masterusers" />
-          </AssociationSet>
           <AssociationSet Name="FK_TokoID_MasterCabang" Association="dbsparepartModel.FK_TokoID_MasterCabang">
             <End Role="mastertoko" EntitySet="mastertokoes" />
             <End Role="mastercabang" EntitySet="mastercabangs" />
@@ -517,10 +482,6 @@
           <AssociationSet Name="FK_UnitID_MasterCabang" Association="dbsparepartModel.FK_UnitID_MasterCabang">
             <End Role="masterunit" EntitySet="masterunits" />
             <End Role="mastercabang" EntitySet="mastercabangs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleID_MasterUser" Association="dbsparepartModel.FK_RoleID_MasterUser">
-            <End Role="masterrole" EntitySet="masterroles" />
-            <End Role="masteruser" EntitySet="masterusers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="aks">
@@ -580,6 +541,7 @@
           </Key>
           <Property Name="AksesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NamaMenu" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsChecked" Type="SByte" />
           <NavigationProperty Name="akses" Relationship="dbsparepartModel.FK_AKSESID_TOHAKAKSES" FromRole="hakaks" ToRole="aks" />
         </EntityType>
         <EntityType Name="masterbarang">
@@ -587,17 +549,17 @@
             <PropertyRef Name="KodeBarangTipe" />
           </Key>
           <Property Name="KodeBarangTipe" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="KategoriID" Type="Int32" />
-          <Property Name="BarangPLU" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="NamaBarang" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="SatuanID" Type="Int32" />
-          <Property Name="HargaSatuan" Type="Int32" />
-          <Property Name="BufferStock" Type="Decimal" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="KategoriID" Type="Int32" Nullable="false" />
+          <Property Name="BarangPLU" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="NamaBarang" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SatuanID" Type="Int32" Nullable="false" />
+          <Property Name="HargaSatuan" Type="Int32" Nullable="false" />
+          <Property Name="BufferStock" Type="Decimal" Nullable="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="fpsdetails" Relationship="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" FromRole="masterbarang" ToRole="fpsdetail" />
           <NavigationProperty Name="masterkategori" Relationship="dbsparepartModel.FK_KategoriID_MasterBarang" FromRole="masterbarang" ToRole="masterkategori" />
           <NavigationProperty Name="mastersatuan" Relationship="dbsparepartModel.FK_SatuanID_MasterBarang" FromRole="masterbarang" ToRole="mastersatuan" />
@@ -607,16 +569,15 @@
             <PropertyRef Name="CabangID" />
           </Key>
           <Property Name="CabangID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TokoID" Type="Int32" />
-          <Property Name="UnitID" Type="Int32" />
-          <Property Name="NamaCabang" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="TokoID" Type="Int32" Nullable="false" />
+          <Property Name="UnitID" Type="Int32" Nullable="false" />
+          <Property Name="NamaCabang" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_CabangID_FPSHeader" FromRole="mastercabang" ToRole="fpsheader" />
-          <NavigationProperty Name="masterusers" Relationship="dbsparepartModel.FK_CabangID_MasterUser" FromRole="mastercabang" ToRole="masteruser" />
           <NavigationProperty Name="mastertoko" Relationship="dbsparepartModel.FK_TokoID_MasterCabang" FromRole="mastercabang" ToRole="mastertoko" />
           <NavigationProperty Name="masterunit" Relationship="dbsparepartModel.FK_UnitID_MasterCabang" FromRole="mastercabang" ToRole="masterunit" />
         </EntityType>
@@ -625,13 +586,13 @@
             <PropertyRef Name="KategoriID" />
           </Key>
           <Property Name="KategoriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NamaKategori" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Deskripsi" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="NamaKategori" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Deskripsi" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="masterbarangs" Relationship="dbsparepartModel.FK_KategoriID_MasterBarang" FromRole="masterkategori" ToRole="masterbarang" />
         </EntityType>
         <EntityType Name="masterrole">
@@ -639,26 +600,25 @@
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NamaRole" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="NamaRole" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="akses" Relationship="dbsparepartModel.FK_ROLEID_TOMASTERROLE" FromRole="masterrole" ToRole="aks" />
-          <NavigationProperty Name="masterusers" Relationship="dbsparepartModel.FK_RoleID_MasterUser" FromRole="masterrole" ToRole="masteruser" />
         </EntityType>
         <EntityType Name="mastersatuan">
           <Key>
             <PropertyRef Name="SatuanID" />
           </Key>
           <Property Name="SatuanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NamaSatuan" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="NamaSatuan" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="fpsdetails" Relationship="dbsparepartModel.FK_SatuanID_FPSDetail" FromRole="mastersatuan" ToRole="fpsdetail" />
           <NavigationProperty Name="masterbarangs" Relationship="dbsparepartModel.FK_SatuanID_MasterBarang" FromRole="mastersatuan" ToRole="masterbarang" />
         </EntityType>
@@ -667,13 +627,13 @@
             <PropertyRef Name="TokoID" />
           </Key>
           <Property Name="TokoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NamaToko" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="AlamatToko" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="NamaToko" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="AlamatToko" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_TokoID_FPSHeader" FromRole="mastertoko" ToRole="fpsheader" />
           <NavigationProperty Name="mastercabangs" Relationship="dbsparepartModel.FK_TokoID_MasterCabang" FromRole="mastertoko" ToRole="mastercabang" />
         </EntityType>
@@ -682,12 +642,12 @@
             <PropertyRef Name="UnitID" />
           </Key>
           <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NamaUnit" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="NamaUnit" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_UnitID_FPSHeader" FromRole="masterunit" ToRole="fpsheader" />
           <NavigationProperty Name="mastercabangs" Relationship="dbsparepartModel.FK_UnitID_MasterCabang" FromRole="masterunit" ToRole="mastercabang" />
         </EntityType>
@@ -698,18 +658,16 @@
           <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="CabangID" Type="Int32" />
-          <Property Name="NamaUser" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="NamaUser" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalInput" Type="DateTime" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
-          <Property Name="IsDelete" Type="SByte" />
+          <Property Name="IsDelete" Type="SByte" Nullable="false" />
           <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_UserID_FPSHeader" FromRole="masteruser" ToRole="fpsheader" />
-          <NavigationProperty Name="mastercabang" Relationship="dbsparepartModel.FK_CabangID_MasterUser" FromRole="masteruser" ToRole="mastercabang" />
-          <NavigationProperty Name="masterrole" Relationship="dbsparepartModel.FK_RoleID_MasterUser" FromRole="masteruser" ToRole="masterrole" />
         </EntityType>
         <EntityType Name="sjdetail">
           <Key>
@@ -844,7 +802,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_KategoriID_MasterBarang">
-          <End Type="dbsparepartModel.masterkategori" Role="masterkategori" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.masterkategori" Role="masterkategori" Multiplicity="1" />
           <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="masterkategori">
@@ -856,7 +814,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_SatuanID_MasterBarang">
-          <End Type="dbsparepartModel.mastersatuan" Role="mastersatuan" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.mastersatuan" Role="mastersatuan" Multiplicity="1" />
           <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="mastersatuan">
@@ -867,20 +825,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CabangID_MasterUser">
-          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="0..1" />
-          <End Type="dbsparepartModel.masteruser" Role="masteruser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="mastercabang">
-              <PropertyRef Name="CabangID" />
-            </Principal>
-            <Dependent Role="masteruser">
-              <PropertyRef Name="CabangID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TokoID_MasterCabang">
-          <End Type="dbsparepartModel.mastertoko" Role="mastertoko" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.mastertoko" Role="mastertoko" Multiplicity="1" />
           <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="mastertoko">
@@ -892,7 +838,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UnitID_MasterCabang">
-          <End Type="dbsparepartModel.masterunit" Role="masterunit" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.masterunit" Role="masterunit" Multiplicity="1" />
           <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="masterunit">
@@ -900,18 +846,6 @@
             </Principal>
             <Dependent Role="mastercabang">
               <PropertyRef Name="UnitID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RoleID_MasterUser">
-          <End Type="dbsparepartModel.masterrole" Role="masterrole" Multiplicity="0..1" />
-          <End Type="dbsparepartModel.masteruser" Role="masteruser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="masterrole">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="masteruser">
-              <PropertyRef Name="RoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -966,6 +900,7 @@
           <EntitySetMapping Name="hakakses">
             <EntityTypeMapping TypeName="dbsparepartModel.hakaks">
               <MappingFragment StoreEntitySet="hakakses">
+                <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="NamaMenu" ColumnName="NamaMenu" />
                 <ScalarProperty Name="AksesID" ColumnName="AksesID" />
               </MappingFragment>

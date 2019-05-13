@@ -18,20 +18,17 @@ namespace Sparepart.Models
         public masterrole()
         {
             this.akses = new HashSet<aks>();
-            this.masterusers = new HashSet<masteruser>();
         }
     
         public int RoleID { get; set; }
         public string NamaRole { get; set; }
         public string UserInput { get; set; }
-        public Nullable<System.DateTime> TanggalInput { get; set; }
+        public System.DateTime TanggalInput { get; set; }
         public string UserUpdate { get; set; }
         public Nullable<System.DateTime> TanggalUpdate { get; set; }
-        public Nullable<sbyte> IsDelete { get; set; }
+        public sbyte IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<aks> akses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<masteruser> masterusers { get; set; }
     }
 }

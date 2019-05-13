@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
@@ -18,7 +19,6 @@ using Sparepart.Models;
 
 namespace Sparepart.Controllers
 {
-    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -157,7 +157,6 @@ namespace Sparepart.Controllers
                     entity.NamaUser = model.NamaUser;
                     entity.Username = model.UserName;
                     entity.Email = model.Email;
-                    //entity.Password = aspuser.PasswordHash;
                     entity.RoleID = RoleID;
                     entity.CabangID = CabangID;
                     entity.UserUpdate = CurrentUser.NamaUser;
@@ -175,7 +174,13 @@ namespace Sparepart.Controllers
         [ValidateAntiForgeryToken]
         public /*async Task<ActionResult>*/ ActionResult Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            model.Password = "123456";
+            var sel = Dbcontext.masterusers.Where(x => x.Username == model.UserName).FirstOrDefault();
+            if (sel != null && sel.IsDelete == 0)
+            {
+                return Json(new { success = true, responseText = "User" + " " +  model.UserName + " " + "Already been registered!" }, JsonRequestBehavior.AllowGet);
+            }
+            else if (ModelState.IsValid)
             {
                 string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
                 masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
@@ -183,8 +188,8 @@ namespace Sparepart.Controllers
                 var result = UserManager.CreateAsync(user, model.Password);
                 //if (result.Succeeded)
                 //{
-                    int RoleID = Int32.Parse(Request.Form["role"]);
-                    int CabangID = Int32.Parse(Request.Form["cabang"]);
+                    int RoleID = Int32.Parse(model.UserRoles);
+                    int CabangID = Int32.Parse(model.UserCabang);
                     foreach (var value in Dbcontext.akses.Where(x => x.RoleID == RoleID))
                     {
                         this.UserManager.AddToRoleAsync(user.Id, value.NamaAkses);
@@ -204,6 +209,7 @@ namespace Sparepart.Controllers
                     u.IsDelete = 0;
                     Dbcontext.masterusers.Add(u);
                     Dbcontext.SaveChanges();
+                return Json(new { success = true, responseText = "Sucessfully create a user" }, JsonRequestBehavior.AllowGet);
                 //}
                 //AddErrors(result);
             }
@@ -333,6 +339,8 @@ namespace Sparepart.Controllers
             {
                 masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.Email == model.Email).FirstOrDefault();
                 var user = await UserManager.FindByEmailAsync(model.Email);
+
+
                 //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 //{
                 //    // Don't reveal that the user does not exist or is not confirmed
