@@ -187,7 +187,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="AntiForgeryTokenAttribute.cs" />
+    <Compile Include="AntiForgeryAttributeClass.cs" />
     <Compile Include="Controllers\AccessController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BarangController.cs" />
@@ -942,6 +942,10 @@
     <Content Include="Views\Window\FPSDetail.cshtml" />
     <Content Include="Views\Window\DetailMutasi.cshtml" />
     <Content Include="Views\Window\DetailPerbaikan.cshtml" />
+    <Content Include="Views\Window\EditMutasi.cshtml" />
+    <Content Include="Views\Window\EditPerbaikan.cshtml" />
+    <Content Include="Views\Window\FPSEditDetailMutasiCreate.cshtml" />
+    <Content Include="Views\Window\FPSEditDetailPerbaikanCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -41,7 +41,7 @@
 <body>
 
 
-    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "limiter", role = "form" }))
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "limiter", role = "form" , id ="LoginFrm"}))
     {
         @Html.AntiForgeryToken()
         <div class="limiter">
@@ -61,17 +61,17 @@
                         <br />
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-white" })
                         <div class="wrap-input100 validate-input" data-validate="Enter username">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "input100", placeholder = "Username" })
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "input100", placeholder = "Username" , id="UserName"})
                             <span class="focus-input100" data-placeholder="&#xf207;"></span>
                         </div>
 
                         <div class="wrap-input100 validate-input" data-validate="Enter password">
-                            @Html.PasswordFor(m => m.Password, new { @class = "input100", placeholder = "Password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "input100", placeholder = "Password" , id = "Password" })
                             <span class="focus-input100" data-placeholder="&#xf191;"></span>
                         </div>
 
                         <div class="contact100-form-checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "input-checkbox10" })
+                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "input-checkbox10" , id = "RememberMe" })
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
 

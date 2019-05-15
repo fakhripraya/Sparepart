@@ -26,7 +26,7 @@
         @Html.Kendo().TextBoxFor(m => m.NamaUnit).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
     </li>
     <li>
-        @(Html.Kendo().Grid((IEnumerable<Sparepart.Models.fpsdetail>)ViewBag.Detail)
+        @(Html.Kendo().Grid((IEnumerable<Sparepart.Models.DetailPermintaanBarangViewModel>)ViewBag.Detail)
                                          .Name("grid")
                                          .Columns(columns =>
                                          {
@@ -38,7 +38,8 @@
                                              .Title("Satuan");
                                              columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "HargaSatuan")
                                              .Title("Harga Satuan");
-                                             columns.Bound(p => p.Qty).Width(100);
+                                             columns.Bound(p => p.Quantity).Width(100);
+                                             columns.Bound(p => p.JumlahHarga).Width(100);
                                              columns.Bound(p => p.Keterangan).Width(100);
                                          })
                                          .Pageable() //Enable the paging.

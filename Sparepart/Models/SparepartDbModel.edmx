@@ -26,6 +26,7 @@
           <Property Name="Qty" Type="int" />
           <Property Name="Keterangan" Type="varchar" MaxLength="1000" />
           <Property Name="SatuanID" Type="int" />
+          <Property Name="DeleteCheck" Type="tinyint" />
         </EntityType>
         <EntityType Name="fpsheader">
           <Key>
@@ -507,6 +508,7 @@
           <Property Name="Qty" Type="Int32" />
           <Property Name="Keterangan" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
           <Property Name="SatuanID" Type="Int32" />
+          <Property Name="DeleteCheck" Type="SByte" />
           <NavigationProperty Name="fpsheader" Relationship="dbsparepartModel.FK_FPSID_FPSDetail" FromRole="fpsdetail" ToRole="fpsheader" />
           <NavigationProperty Name="masterbarang" Relationship="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" FromRole="fpsdetail" ToRole="masterbarang" />
           <NavigationProperty Name="mastersatuan" Relationship="dbsparepartModel.FK_SatuanID_FPSDetail" FromRole="fpsdetail" ToRole="mastersatuan" />
@@ -868,6 +870,7 @@
           <EntitySetMapping Name="fpsdetails">
             <EntityTypeMapping TypeName="dbsparepartModel.fpsdetail">
               <MappingFragment StoreEntitySet="fpsdetail">
+                <ScalarProperty Name="DeleteCheck" ColumnName="DeleteCheck" />
                 <ScalarProperty Name="SatuanID" ColumnName="SatuanID" />
                 <ScalarProperty Name="Keterangan" ColumnName="Keterangan" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />

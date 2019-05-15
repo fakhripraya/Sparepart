@@ -137,15 +137,57 @@ namespace Sparepart.Controllers
 
         public ActionResult Detail_Read([DataSourceRequest]DataSourceRequest request)
         {
-            DataSourceResult result = Dbcontext.fpsdetails.Where(p => p.FPSID == null).ToDataSourceResult(request,
-                fps => new fpsdetail
+            var DetailFPS = (from det in Dbcontext.fpsdetails
+                              join bar in Dbcontext.masterbarangs on det.KodeBarangTipe equals bar.KodeBarangTipe
+                              where det.FPSID == null
+                              select new DetailPermintaanBarangViewModel
+                              {
+                                  SeqFPSID = det.SeqFPSID,
+                                  KodeBarangTipe = det.KodeBarangTipe,
+                                  SatuanID = det.SatuanID,
+                                  Keterangan = det.Keterangan,
+                                  Quantity = det.Qty,
+                                  JumlahHarga = det.Qty * bar.HargaSatuan,
+                              }).ToList();
+
+            DataSourceResult result = DetailFPS.ToDataSourceResult(request,
+                fps => new DetailPermintaanBarangViewModel
                 {
-                    FPSID = fps.FPSID,
                     SeqFPSID = fps.SeqFPSID,
                     SatuanID = fps.SatuanID,
                     KodeBarangTipe = fps.KodeBarangTipe,
-                    Qty = fps.Qty,
-                    Keterangan = fps.Keterangan
+                    Quantity = fps.Quantity,
+                    Keterangan = fps.Keterangan,
+                    JumlahHarga = fps.JumlahHarga
+                });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Detail_Read_Mutasi_Perbaikan([DataSourceRequest]DataSourceRequest request,int? FPSID)
+        {
+            var DetailFPS = (from det in Dbcontext.fpsdetails
+                             join bar in Dbcontext.masterbarangs on det.KodeBarangTipe equals bar.KodeBarangTipe
+                             where det.FPSID == FPSID
+                             select new DetailPermintaanBarangViewModel
+                             {
+                                 SeqFPSID = det.SeqFPSID,
+                                 KodeBarangTipe = det.KodeBarangTipe,
+                                 SatuanID = det.SatuanID,
+                                 Keterangan = det.Keterangan,
+                                 Quantity = det.Qty,
+                                 JumlahHarga = det.Qty * bar.HargaSatuan,
+                             }).ToList();
+
+            DataSourceResult result = DetailFPS.ToDataSourceResult(request,
+                fps => new DetailPermintaanBarangViewModel
+                {
+                    SeqFPSID = fps.SeqFPSID,
+                    SatuanID = fps.SatuanID,
+                    KodeBarangTipe = fps.KodeBarangTipe,
+                    Quantity = fps.Quantity,
+                    Keterangan = fps.Keterangan,
+                    JumlahHarga = fps.JumlahHarga
                 });
 
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -239,6 +281,68 @@ namespace Sparepart.Controllers
             Dbcontext.SaveChanges();
             //// If we got this far, something failed, redisplay form
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FPSEdit_Detail_Mutasi_Create([DataSourceRequest]DataSourceRequest request, FPSDetailCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string KodeBarangTipe = Request.Form["barang"];
+                var barang = Dbcontext.masterbarangs.Where(k => k.KodeBarangTipe == KodeBarangTipe).FirstOrDefault();
+                fpsdetail detail = new fpsdetail();
+                detail.KodeBarangTipe = KodeBarangTipe;
+                detail.SatuanID = barang.SatuanID;
+                detail.Qty = model.Quantity;
+                detail.Keterangan = model.Keterangan;
+                Dbcontext.fpsdetails.Add(detail);
+                Dbcontext.SaveChanges();
+                var toko = Dbcontext.mastertokoes.ToList();
+                ViewData["Toko"] = toko;
+                var unit = Dbcontext.masterunits.ToList();
+                ViewData["Unit"] = unit;
+                var cabang = Dbcontext.mastercabangs.ToList();
+                ViewData["Cabang"] = cabang;
+                var barangS = Dbcontext.masterbarangs.ToList();
+                ViewData["Barang"] = barangS;
+                var satuan = Dbcontext.mastersatuans.ToList();
+                ViewData["Satuan"] = satuan;
+                return PartialView("~/Views/FPS/AfterDetailEditInsertMutasi.cshtml");
+            }
+            // If we got this far, something failed, redisplay form
+            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FPSEdit_Detail_Perbaikan_Create([DataSourceRequest]DataSourceRequest request, FPSDetailCreateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string KodeBarangTipe = Request.Form["barang"];
+                var barang = Dbcontext.masterbarangs.Where(k => k.KodeBarangTipe == KodeBarangTipe).FirstOrDefault();
+                fpsdetail detail = new fpsdetail();
+                detail.KodeBarangTipe = KodeBarangTipe;
+                detail.SatuanID = barang.SatuanID;
+                detail.Qty = model.Quantity;
+                detail.Keterangan = model.Keterangan;
+                Dbcontext.fpsdetails.Add(detail);
+                Dbcontext.SaveChanges();
+                var toko = Dbcontext.mastertokoes.ToList();
+                ViewData["Toko"] = toko;
+                var unit = Dbcontext.masterunits.ToList();
+                ViewData["Unit"] = unit;
+                var cabang = Dbcontext.mastercabangs.ToList();
+                ViewData["Cabang"] = cabang;
+                var barangS = Dbcontext.masterbarangs.ToList();
+                ViewData["Barang"] = barangS;
+                var satuan = Dbcontext.mastersatuans.ToList();
+                ViewData["Satuan"] = satuan;
+                return PartialView("~/Views/FPS/AfterDetailEditInsertPerbaikan.cshtml");
+            }
+            // If we got this far, something failed, redisplay form
+            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
         }
     }
 }

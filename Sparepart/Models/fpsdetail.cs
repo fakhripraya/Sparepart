@@ -20,6 +20,7 @@ namespace Sparepart.Models
         public Nullable<int> Qty { get; set; }
         public string Keterangan { get; set; }
         public Nullable<int> SatuanID { get; set; }
+        public Nullable<sbyte> DeleteCheck { get; set; }
     
         public virtual fpsheader fpsheader { get; set; }
         public virtual masterbarang masterbarang { get; set; }

@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Sparepart.Models;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Net;
+using System.Web.Helpers;
 
 namespace Sparepart.Controllers
 {
@@ -90,13 +92,19 @@ namespace Sparepart.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAccess(int[] AksesIDs,masterrole role)
+        public ActionResult CreateAccess(int[] AksesIDs,CreateRoleViewModel role)
         {
+            string rolename = Request.Form["rolename"];
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             masteruser user = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
-            if (ModelState.IsValid)
+            var sel = Dbcontext.masterroles.Where(x => x.NamaRole == rolename).FirstOrDefault();
+            if (sel != null)
             {
-                string rolename = Request.Form["nama"];
+                return RedirectToAction("Index");
+                //return Json(new { success = true, responseText = "Role" + " " + rolename + " " + "Already been registered!" }, JsonRequestBehavior.AllowGet);
+            }
+            else 
+            {
                 using (var db = new dbsparepartEntities())
                 {
                     masterrole entity = new masterrole();
@@ -121,8 +129,11 @@ namespace Sparepart.Controllers
                     Dbcontext.akses.Add(aksmodel);
                     Dbcontext.SaveChanges();
                 }
+                return RedirectToAction("Index");
+                //return Json(new { success = true, responseText = "Sucessfully create a role." }, JsonRequestBehavior.AllowGet);
             }
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            //return Json(JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -180,7 +191,7 @@ namespace Sparepart.Controllers
                     masteruser user = db.masterusers.Where(p => p.RoleID == role.RoleID).FirstOrDefault();
                     if (user != null)
                     {
-                        return Json(new { success = false, responseText = "Role Was Already Assigned." }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = false, responseText = "Tidak dapat menghapus Role yang sedang dipakai." }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
@@ -190,7 +201,7 @@ namespace Sparepart.Controllers
                         masterrole deleterole = db.masterroles.Where(a => a.RoleID == role.RoleID).FirstOrDefault();
                         deleterole.IsDelete = 1;
                         db.SaveChanges();
-                        return Json(new { success = true, responseText = "Successfully Delete Role!" }, JsonRequestBehavior.AllowGet);
+                        return Json(new { success = true, responseText = "Berhasil Menghapus Role!" }, JsonRequestBehavior.AllowGet);
                     }
                 }
             }

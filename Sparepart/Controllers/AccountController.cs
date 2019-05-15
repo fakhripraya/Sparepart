@@ -172,7 +172,7 @@ namespace Sparepart.Controllers
         [Authorize(Roles = "MasterUser")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public /*async Task<ActionResult>*/ ActionResult Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             model.Password = "123456";
             var sel = Dbcontext.masterusers.Where(x => x.Username == model.UserName).FirstOrDefault();
@@ -186,16 +186,14 @@ namespace Sparepart.Controllers
                 masteruser CurrentUser = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = UserManager.CreateAsync(user, model.Password);
-                //if (result.Succeeded)
-                //{
+
                     int RoleID = Int32.Parse(model.UserRoles);
                     int CabangID = Int32.Parse(model.UserCabang);
                     foreach (var value in Dbcontext.akses.Where(x => x.RoleID == RoleID))
                     {
                         this.UserManager.AddToRoleAsync(user.Id, value.NamaAkses);
                     }
-
-                    //Ends Here 
+                    
                     masteruser u = new masteruser();
                     u.UserID = user.Id;
                     u.NamaUser = model.NamaUser;
@@ -209,11 +207,9 @@ namespace Sparepart.Controllers
                     u.IsDelete = 0;
                     Dbcontext.masterusers.Add(u);
                     Dbcontext.SaveChanges();
-                return Json(new { success = true, responseText = "Sucessfully create a user" }, JsonRequestBehavior.AllowGet);
-                //}
-                //AddErrors(result);
+                return Json(new { success = true, responseText = "Sucessfully create a user." }, JsonRequestBehavior.AllowGet);
+                
             }
-            // If we got this far, something failed, redisplay form
             return RedirectToAction("Index");
         }
 

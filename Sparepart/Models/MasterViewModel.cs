@@ -13,6 +13,18 @@ namespace Sparepart.Models
         public int Quantity { get; set; }
         public string Keterangan { get; set; }
     }
+
+    public class DetailPermintaanBarangViewModel
+    {
+        public int SeqFPSID { get; set; }
+        public Nullable<int> FPSID { get; set; }
+        public int? JumlahHarga { get; set; }
+        public int? SatuanID { get; set; }
+        public string KodeBarangTipe { get; set; }
+        public int? Quantity { get; set; }
+        public string Keterangan { get; set; }
+    }
+
     public class FPSDetailViewModel
     {
         public string NoTicket { get; set; }
@@ -38,7 +50,7 @@ namespace Sparepart.Models
     }
     public class CreateTokoViewModel
     {
-        [Required]
+        
         public int TokoID { get; set; }
         [Required]
         public string NamaToko { get; set; }
@@ -51,6 +63,12 @@ namespace Sparepart.Models
         public int UnitID { get; set; }
         [Required]
         public string NamaUnit { get; set; }
+    }
+
+    public class CreateRoleViewModel
+    {
+        public int RoleID { get; set; }
+        public string NamaRole { get; set; }
     }
 
     public class CreateKategoriViewModel

@@ -68,14 +68,14 @@
                                         @Html.AntiForgeryToken()
                                         <li>
                                             @Html.Label("Nama Toko")
-                                            @Html.Kendo().TextBoxFor(m => m.NamaToko).HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Toko", required = "required", validationmessage = "Input Alamat" })
+                                            @Html.Kendo().TextBoxFor(m => m.NamaToko).Name("NamaToko").HtmlAttributes(new { style = "width: 100%;", placeholder = "Nama Toko", required = "required", validationmessage = "Input Alamat" , id="CreateNamaToko"})
                                         </li>
                                         <li>
                                             @Html.Label("Alamat Toko")
-                                            @Html.Kendo().TextBoxFor(m => m.AlamatToko).HtmlAttributes(new { style = "width: 100%;", placeholder = "Alamat Toko", required = "required", validationmessage = "Input Alamat" })
+                                            @Html.Kendo().TextBoxFor(m => m.AlamatToko).Name("AlamatToko").HtmlAttributes(new { style = "width: 100%;", placeholder = "Alamat Toko", required = "required", validationmessage = "Input Alamat", id = "CreateAlamatToko" })
                                         </li>
                                         <li>
-                                            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left;" value="Save" type="submit">
+                                            <input class="k-button k-primary" style="margin-top: 2em; float: left;" value="Save" type="submit">
                                         </li>
                                     </ul>
                                 </form>

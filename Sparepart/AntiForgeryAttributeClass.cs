@@ -29,9 +29,11 @@ namespace Sparepart
                 }
                 else
                 {
-                    new ValidateAntiForgeryTokenAttribute().OnAuthorization(filterContext);
+                    //new ValidateAntiForgeryTokenAttribute().OnAuthorization(filterContext);
+                    base.OnAuthorization(filterContext);
                 }
             }
         }
+
     }
 }
