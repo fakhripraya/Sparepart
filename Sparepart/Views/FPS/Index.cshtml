@@ -283,7 +283,6 @@ read.Action("GetToko", "Toko")
 
     columns.Command(commands =>
     {
-        //commands.Edit();
         commands.Destroy();
 
     }).Title("Commands");
@@ -293,7 +292,6 @@ read.Action("GetToko", "Toko")
                                         toolbar.Template("<a class='k-button k-button-icontext' onclick='DetailWindowMutasi()' href='#'></span>Add Item</a>");
                                     }
                                 )
-                                    .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
                                     .Sortable()
                                     .Pageable(pageable => pageable
                                     .Input(true)
@@ -324,9 +322,6 @@ read.Action("GetToko", "Toko")
 <li class="pull-left">
 <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left; padding-bottom: 5px;" value="Save" type="submit">
 </li>
-<li class="pull-right">
-<a href="/FPS/Detail_Clear" class="k-button k-primary" style="margin-top: 2em; float: right; padding-bottom: 5px;">Cancel</a>
-</li>
 </ul>
 </form>
 </text>)
@@ -336,7 +331,7 @@ read.Action("GetToko", "Toko")
                                             .Resizable()
                                             .Width(700)
                                             .Height(600)
-                                            .Actions(actions => actions.Pin().Minimize().Maximize())
+                                            .Actions(actions => actions.Pin().Minimize().Maximize().Close())
                                             .Events(ev => ev.Close("onClose"))
     )
 
@@ -419,14 +414,11 @@ read.Action("GetToko", "Toko")
         }
 </style>
 
-@section Scripts
-{
     <script type="text/javascript">
 
         function grid_error(e) {
             if (e.errors) {
                 var message = "There are some errors:\n";
-                // Create a message containing all errors.
                 $.each(e.errors, function (key, value) {
                     if ('errors' in value) {
                         $.each(value.errors, function () {
@@ -434,14 +426,11 @@ read.Action("GetToko", "Toko")
                         });
                     }
                 });
-                // Display the message.
                 alert(message);
-                // Cancel the changes.
                 var grid = $("#Grid").data("kendoGrid");
                 grid.cancelChanges();
             }
         }
-
 
         function DetailWindowMutasi() {
 
@@ -463,7 +452,47 @@ read.Action("GetToko", "Toko")
             });
             myWin.data("kendoWindow").open().center();
             return false;
-    }
+        }
+
+         $(document).ready(function () {
+        
+            $('#myFPSDetailform').submit(function (event) {
+            var model = {
+                KodeBarangTipe: $("#barang").val(),
+                Quantity: $("#InputQuantity").val(),
+                Keterangan: $("#InputKeterangan").val(),
+            };
+            var token = $('input[name=__RequestVerificationToken]').val();
+            $.ajax({
+                type: "post",
+                headers: {
+                    "__RequestVerificationToken": token
+                },
+                data: JSON.stringify(model),
+                url: '@Url.Action("Detail_Create_Mutasi", "FPS")',
+                dataType: "json",
+                contentType: "application/json",
+
+        success: function (response) {
+            if (response.success) {
+                alert(response.responseText);
+                $("#detailMutasi").data("kendoWindow").close();
+                $('#detailgridMutasi').data("kendoGrid").dataSource.read();
+                $('#detailgridMutasi').data("kendoGrid").refresh();
+            } else {
+                alert(response.responseText);
+                location.reload(true);
+            }
+        },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+    });
+            
+            event.preventDefault();
+        });
+
+    });
 
     function DetailWindowPerbaikan() {
 
@@ -504,14 +533,32 @@ read.Action("GetToko", "Toko")
 
         $(document).ready(function () {
             $("#crmutasi").bind("click", function () {
-                $("#windowMutasi").data("kendoWindow").open().center();
-                //$("#textButton").hide();
+                //$("#windowMutasi").data("kendoWindow").open().center();
+                var myWin = $("#windowMutasi").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Permintaan Sparepart - Mutasi",
+                content: {
+                    url: '@Url.Action("FPSCreateMutasi", "Window")'
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
             });
             $("#crperbaikan").bind("click", function () {
                 $("#windowPerbaikan").data("kendoWindow").open().center();
-                //$("#textButton").hide();
             });
     });
+
+
 
         function Updatebtn(e) {
             e.preventDefault();
@@ -638,4 +685,3 @@ read.Action("GetToko", "Toko")
         }
 
     </script>
-}

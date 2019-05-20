@@ -1,0 +1,34 @@
+﻿@model Sparepart.Models.FPSViewModel
+
+@*@(Html.Kendo().DropDownListFor(m => m.TokoID)
+                                                .Name("toko")
+                                                .DataTextField("NamaToko")
+                                                .DataValueField("TokoID")
+                                                .Filter(FilterType.Contains)
+                                                .DataSource(source =>
+                                                {
+                                                    source.Read(read =>
+                                            {
+                                                read.Action("GetToko", "Toko")
+                            .Data("tokodata");
+                                            });
+                                                })
+    )*@
+
+@(Html.Kendo().DropDownListFor(m => m.FPSID)
+            .DataValueField("FPSID")
+            .DataTextField("FPSID")
+            .BindTo((System.Collections.IEnumerable)ViewData["FPS"])
+            .HtmlAttributes(new { data_value_primitive = "true" })
+)
+
+<script>
+    function tokodata() {
+        return {
+            text: $("#toko").data("kendoDropDownList").filterInput.val()
+        };
+    }
+    function onGridDataBound(e) {
+        $('#fpsheader script').appendTo(document.body);
+    }
+</script>

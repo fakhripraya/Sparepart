@@ -7,6 +7,21 @@ using System.Web;
 namespace Sparepart.Models
 {
 
+    public class SJCreateViewModel
+    {
+        public int SJID { get; set; }
+        public int? FPSID { get; set; }
+        public int CabangID { get; set; }
+        public string JenisSJ { get; set; }
+        public string Keterangan { get; set; }
+        [UIHint("ClientFPS")]
+        public FPSViewModel FPS
+        {
+            get;
+            set;
+        }
+    }
+
     public class FPSDetailCreateViewModel
     {
         public string KodeBarangTipe { get; set; }
@@ -23,6 +38,12 @@ namespace Sparepart.Models
         public string KodeBarangTipe { get; set; }
         public int? Quantity { get; set; }
         public string Keterangan { get; set; }
+    }
+
+    public class FPSViewModel
+    {
+        public int? FPSID { get; set; }
+
     }
 
     public class FPSDetailViewModel

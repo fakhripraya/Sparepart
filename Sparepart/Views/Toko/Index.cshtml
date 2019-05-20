@@ -125,7 +125,7 @@
         .Refresh(true)
         .ButtonCount(5)
         )
-
+        .Filterable()
     .DataSource(dataSource => dataSource
         .Ajax()
         .Events(events => events
@@ -139,8 +139,6 @@
             model.Id(u => u.TokoID);
             model.Field(u => u.TokoID).Editable(false);
         })
-        //.Create(create => create.Action("Toko_Create", "Toko"))
-        //.Update(update => update.Action("Toko_Update", "Toko"))
         .Destroy(destroy => destroy.Action("Toko_Destroy", "Toko"))
     )
 

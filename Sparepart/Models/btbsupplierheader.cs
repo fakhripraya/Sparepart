@@ -12,28 +12,22 @@ namespace Sparepart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sjheader
+    public partial class btbsupplierheader
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public sjheader()
+        public btbsupplierheader()
         {
-            this.btbmutasidetails = new HashSet<btbmutasidetail>();
-            this.btbmutasiheaders = new HashSet<btbmutasiheader>();
+            this.btbsupplierdetails = new HashSet<btbsupplierdetail>();
         }
     
-        public int SJID { get; set; }
-        public Nullable<int> FPSID { get; set; }
-        public Nullable<int> CabangID { get; set; }
-        public string Keterangan { get; set; }
-        public string JenisSJ { get; set; }
+        public int BTBID { get; set; }
+        public string KodeBTBeProc { get; set; }
         public string UserInput { get; set; }
-        public Nullable<System.DateTime> TanggalInput { get; set; }
+        public System.DateTime TanggalInput { get; set; }
         public string UserUpdate { get; set; }
-        public Nullable<System.DateTime> TanggalUpdate { get; set; }
+        public System.DateTime TanggalUpdate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<btbmutasidetail> btbmutasidetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<btbmutasiheader> btbmutasiheaders { get; set; }
+        public virtual ICollection<btbsupplierdetail> btbsupplierdetails { get; set; }
     }
 }

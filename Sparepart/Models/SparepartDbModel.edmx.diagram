@@ -5,22 +5,44 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9ea13c313a144f5c95e9798bcc5aebe1" Name="Diagram1" ZoomLevel="34">
-        <EntityTypeShape EntityType="dbsparepartModel.aks" Width="1.5" PointX="11" PointY="10.75" />
-        <EntityTypeShape EntityType="dbsparepartModel.fpsdetail" Width="1.5" PointX="8.25" PointY="5.75" />
-        <EntityTypeShape EntityType="dbsparepartModel.fpsheader" Width="1.5" PointX="3" PointY="4.875" />
-        <EntityTypeShape EntityType="dbsparepartModel.hakaks" Width="1.5" PointX="8.75" PointY="14" />
-        <EntityTypeShape EntityType="dbsparepartModel.masterbarang" Width="1.5" PointX="6" PointY="12.25" />
-        <EntityTypeShape EntityType="dbsparepartModel.mastercabang" Width="1.5" PointX="6" PointY="5.625" />
-        <EntityTypeShape EntityType="dbsparepartModel.masterkategori" Width="1.5" PointX="3.75" PointY="11.125" />
-        <EntityTypeShape EntityType="dbsparepartModel.masterrole" Width="1.5" PointX="8.75" PointY="10.625" />
-        <EntityTypeShape EntityType="dbsparepartModel.mastersatuan" Width="1.5" PointX="3.75" PointY="14.625" />
-        <EntityTypeShape EntityType="dbsparepartModel.mastertoko" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="dbsparepartModel.masterunit" Width="1.5" PointX="3.75" PointY="0.875" />
-        <EntityTypeShape EntityType="dbsparepartModel.masteruser" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="dbsparepartModel.sjdetail" Width="1.5" PointX="5.75" PointY="2.375" />
-        <EntityTypeShape EntityType="dbsparepartModel.sjheader" Width="1.5" PointX="0.75" PointY="10.375" />
+        <EntityTypeShape EntityType="dbsparepartModel.aks" Width="1.5" PointX="13" PointY="9.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.badetail" Width="1.5" PointX="10.5" PointY="19.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.baheader" Width="1.5" PointX="5.25" PointY="19.125" />
+        <EntityTypeShape EntityType="dbsparepartModel.bkbdetail" Width="1.5" PointX="7.5" PointY="18" />
+        <EntityTypeShape EntityType="dbsparepartModel.bkbheader" Width="1.5" PointX="7.5" PointY="24.25" />
+        <EntityTypeShape EntityType="dbsparepartModel.btbmutasidetail" Width="1.5" PointX="13" PointY="2.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.btbmutasiheader" Width="1.5" PointX="13" PointY="5.375" />
+        <EntityTypeShape EntityType="dbsparepartModel.btbsupplierdetail" Width="1.5" PointX="8.25" PointY="8.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.btbsupplierheader" Width="1.5" PointX="6" PointY="27.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.fpsdetail" Width="1.5" PointX="7.5" PointY="12.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.fpsheader" Width="1.5" PointX="5.25" PointY="11.625" />
+        <EntityTypeShape EntityType="dbsparepartModel.hakaks" Width="1.5" PointX="10.75" PointY="9.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.inventory" Width="1.5" PointX="5.25" PointY="7.625" />
+        <EntityTypeShape EntityType="dbsparepartModel.inventorytransaction" Width="1.5" PointX="7.5" PointY="4.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.jeni" Width="1.5" PointX="3" PointY="16.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterbarang" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="dbsparepartModel.mastercabang" Width="1.5" PointX="3" PointY="12" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterkategori" Width="1.5" PointX="3" PointY="23.375" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterrole" Width="1.5" PointX="10.75" PointY="12.375" />
+        <EntityTypeShape EntityType="dbsparepartModel.mastersatuan" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="dbsparepartModel.mastertoko" Width="1.5" PointX="0.75" PointY="12.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.masterunit" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="dbsparepartModel.masteruser" Width="1.5" PointX="3" PointY="7.5" />
+        <EntityTypeShape EntityType="dbsparepartModel.sjdetail" Width="1.5" PointX="12.75" PointY="13.375" />
+        <EntityTypeShape EntityType="dbsparepartModel.sjheader" Width="1.5" PointX="10.75" PointY="3.75" />
         <AssociationConnector Association="dbsparepartModel.FK_AKSESID_TOHAKAKSES" />
         <AssociationConnector Association="dbsparepartModel.FK_ROLEID_TOMASTERROLE" />
+        <AssociationConnector Association="dbsparepartModel.FK_BAID_BADetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_KodeBarangTipe_BADetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_SatuanID_BADetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_BAID_BKBDetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_BAID_BKBHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_CabangID_BAHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_SJID_BTBMutasiDetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_SJID_BTBMutasiHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_BTBID_BTBSupplierDetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_CabangID_BTBSupplierDetail" />
+        <AssociationConnector Association="dbsparepartModel.FK_KodeBarangTipe_BTBSupplierDetail" />
         <AssociationConnector Association="dbsparepartModel.FK_FPSID_FPSDetail" />
         <AssociationConnector Association="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" />
         <AssociationConnector Association="dbsparepartModel.FK_SatuanID_FPSDetail" />
@@ -28,6 +50,10 @@
         <AssociationConnector Association="dbsparepartModel.FK_TokoID_FPSHeader" />
         <AssociationConnector Association="dbsparepartModel.FK_UnitID_FPSHeader" />
         <AssociationConnector Association="dbsparepartModel.FK_UserID_FPSHeader" />
+        <AssociationConnector Association="dbsparepartModel.FK_CabangID_Inventory" />
+        <AssociationConnector Association="dbsparepartModel.FK_JenisID_Inventory" />
+        <AssociationConnector Association="dbsparepartModel.FK_KodeBarangTipe_Inventory" />
+        <AssociationConnector Association="dbsparepartModel.FK_KodeBarangTipe_InventoryTransction" />
         <AssociationConnector Association="dbsparepartModel.FK_KategoriID_MasterBarang" />
         <AssociationConnector Association="dbsparepartModel.FK_SatuanID_MasterBarang" />
         <AssociationConnector Association="dbsparepartModel.FK_TokoID_MasterCabang" />

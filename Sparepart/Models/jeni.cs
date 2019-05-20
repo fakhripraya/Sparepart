@@ -12,28 +12,22 @@ namespace Sparepart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sjheader
+    public partial class jeni
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public sjheader()
+        public jeni()
         {
-            this.btbmutasidetails = new HashSet<btbmutasidetail>();
-            this.btbmutasiheaders = new HashSet<btbmutasiheader>();
+            this.inventories = new HashSet<inventory>();
         }
     
-        public int SJID { get; set; }
-        public Nullable<int> FPSID { get; set; }
-        public Nullable<int> CabangID { get; set; }
-        public string Keterangan { get; set; }
-        public string JenisSJ { get; set; }
+        public int JenisID { get; set; }
+        public string NamaJenis { get; set; }
         public string UserInput { get; set; }
         public Nullable<System.DateTime> TanggalInput { get; set; }
         public string UserUpdate { get; set; }
         public Nullable<System.DateTime> TanggalUpdate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<btbmutasidetail> btbmutasidetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<btbmutasiheader> btbmutasiheaders { get; set; }
+        public virtual ICollection<inventory> inventories { get; set; }
     }
 }

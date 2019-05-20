@@ -26,9 +26,20 @@ namespace Sparepart.Models
         }
     
         public virtual DbSet<aks> akses { get; set; }
+        public virtual DbSet<badetail> badetails { get; set; }
+        public virtual DbSet<baheader> baheaders { get; set; }
+        public virtual DbSet<bkbdetail> bkbdetails { get; set; }
+        public virtual DbSet<bkbheader> bkbheaders { get; set; }
+        public virtual DbSet<btbmutasidetail> btbmutasidetails { get; set; }
+        public virtual DbSet<btbmutasiheader> btbmutasiheaders { get; set; }
+        public virtual DbSet<btbsupplierdetail> btbsupplierdetails { get; set; }
+        public virtual DbSet<btbsupplierheader> btbsupplierheaders { get; set; }
         public virtual DbSet<fpsdetail> fpsdetails { get; set; }
         public virtual DbSet<fpsheader> fpsheaders { get; set; }
         public virtual DbSet<hakaks> hakakses { get; set; }
+        public virtual DbSet<inventory> inventories { get; set; }
+        public virtual DbSet<inventorytransaction> inventorytransactions { get; set; }
+        public virtual DbSet<jeni> jenis { get; set; }
         public virtual DbSet<masterbarang> masterbarangs { get; set; }
         public virtual DbSet<mastercabang> mastercabangs { get; set; }
         public virtual DbSet<masterkategori> masterkategoris { get; set; }

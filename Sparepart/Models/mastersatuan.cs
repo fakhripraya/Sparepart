@@ -17,6 +17,7 @@ namespace Sparepart.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public mastersatuan()
         {
+            this.badetails = new HashSet<badetail>();
             this.fpsdetails = new HashSet<fpsdetail>();
             this.masterbarangs = new HashSet<masterbarang>();
         }
@@ -29,6 +30,8 @@ namespace Sparepart.Models
         public Nullable<System.DateTime> TanggalUpdate { get; set; }
         public sbyte IsDelete { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<badetail> badetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fpsdetail> fpsdetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

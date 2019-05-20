@@ -17,6 +17,8 @@ namespace Sparepart.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public masterbarang()
         {
+            this.badetails = new HashSet<badetail>();
+            this.btbsupplierdetails = new HashSet<btbsupplierdetail>();
             this.fpsdetails = new HashSet<fpsdetail>();
         }
     
@@ -34,7 +36,12 @@ namespace Sparepart.Models
         public sbyte IsDelete { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<badetail> badetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<btbsupplierdetail> btbsupplierdetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<fpsdetail> fpsdetails { get; set; }
+        public virtual inventory inventory { get; set; }
         public virtual masterkategori masterkategori { get; set; }
         public virtual mastersatuan mastersatuan { get; set; }
     }

@@ -1,5 +1,5 @@
 ﻿@model Sparepart.Models.FPSDetailCreateViewModel
-<form action="/FPS/Detail_Create_Mutasi" method="post" id="myForm">
+<form action="/FPS/Detail_Create_Mutasi" method="post" id="myFPSDetailform">
     <ul class="fieldlist">
         @Html.AntiForgeryToken()
         <li>
@@ -9,24 +9,25 @@
                                     .OptionLabel("Select Barang")
                                     .DataTextField("NamaBarang")
                                     .DataValueField("KodeBarangTipe")
+                                    .HtmlAttributes(new { id = "barang" })
                                     .Filter(FilterType.Contains)
                                     .DataSource(source =>
                                     {
                                         source.Read(read =>
-                                                                {
-                                                                    read.Action("GetBarang", "Barang")
-                                                                                        .Data("barangdata");
-                                                                });
+                                        {
+                                            read.Action("GetBarang", "Barang")
+                                                                .Data("barangdata");
+                                        });
                                     })
             )
         </li>
         <li>
             @Html.Label("Quantity")
-            @Html.Kendo().NumericTextBoxFor(m => m.Quantity).Name("quantity").HtmlAttributes(new { style = "width: 50%;", placeholder = "0.00", required = "required", validationmessage = "Input Quantity" })
+            @Html.Kendo().NumericTextBoxFor(m => m.Quantity).Name("quantity").HtmlAttributes(new { style = "width: 50%;", placeholder = "0.00", required = "required", validationmessage = "Input Quantity" , id = "InputQuantity" })
         </li>
         <li>
             @Html.Label("Keterangan")
-            @Html.Kendo().TextBoxFor(m => m.Keterangan).Name("keterangan").HtmlAttributes(new { style = "width: 100%;", placeholder = "Keterangan", required = "required", validationmessage = "Input Keterangan" })
+            @Html.Kendo().TextBoxFor(m => m.Keterangan).Name("keterangan").HtmlAttributes(new { style = "width: 100%;", placeholder = "Keterangan", required = "required", validationmessage = "Input Keterangan" , id = "InputKeterangan" })
         </li>
         <li>
             <input class="k-button k-primary" style="margin-top: 2em; float: left;" value="Insert" id="submit" type="submit">

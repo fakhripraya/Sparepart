@@ -195,7 +195,7 @@ namespace Sparepart.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Detail_Create_Mutasi([DataSourceRequest]DataSourceRequest request,FPSDetailCreateViewModel model)
+        public ActionResult Detail_Create_Mutasi(/*[DataSourceRequest]DataSourceRequest request,*/FPSDetailCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -218,10 +218,12 @@ namespace Sparepart.Controllers
                 ViewData["Barang"] = barangS;
                 var satuan = Dbcontext.mastersatuans.ToList();
                 ViewData["Satuan"] = satuan;
-                return PartialView("~/Views/FPS/AfterDetailInsertMutasi.cshtml");
+                return Json(new { success = true, responseText = "Sucessfully create a Permintaan Sparepart." }, JsonRequestBehavior.AllowGet);
+                //return PartialView("~/Views/FPS/AfterDetailInsertMutasi.cshtml");
             }
             // If we got this far, something failed, redisplay form
-            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+            //return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+            return Json(new { success = true, responseText = "Fail." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

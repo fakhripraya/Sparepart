@@ -16,6 +16,96 @@
           <Property Name="RoleID" Type="int" Nullable="false" />
           <Property Name="NamaAkses" Type="varchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="badetail">
+          <Key>
+            <PropertyRef Name="BAID" />
+            <PropertyRef Name="SeqBAID" />
+          </Key>
+          <Property Name="BAID" Type="int" Nullable="false" />
+          <Property Name="SeqBAID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="SatuanID" Type="int" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="baheader">
+          <Key>
+            <PropertyRef Name="BAID" />
+          </Key>
+          <Property Name="BAID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CabangID" Type="int" Nullable="false" />
+          <Property Name="Tanggal" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Approval" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bkbdetail">
+          <Key>
+            <PropertyRef Name="SeqBKBID" />
+            <PropertyRef Name="BKBID" />
+          </Key>
+          <Property Name="SeqBKBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BKBID" Type="int" Nullable="false" />
+          <Property Name="BAID" Type="int" Nullable="false" />
+          <Property Name="SeqBAID" Type="int" Nullable="false" />
+          <Property Name="Keterangan" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="bkbheader">
+          <Key>
+            <PropertyRef Name="BKBID" />
+          </Key>
+          <Property Name="BKBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BAID" Type="int" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="Approval" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="btbmutasidetail">
+          <Key>
+            <PropertyRef Name="SeqBTBID" />
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="SeqBTBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BTBID" Type="int" Nullable="false" />
+          <Property Name="SJID" Type="int" Nullable="false" />
+          <Property Name="SeqSJID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="btbmutasiheader">
+          <Key>
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="BTBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SJID" Type="int" Nullable="false" />
+          <Property Name="Keterangan" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="btbsupplierdetail">
+          <Key>
+            <PropertyRef Name="SeqBTBID" />
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="SeqBTBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BTBID" Type="int" Nullable="false" />
+          <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CabangID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="btbsupplierheader">
+          <Key>
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="BTBID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KodeBTBeProc" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="fpsdetail">
           <Key>
             <PropertyRef Name="SeqFPSID" />
@@ -54,6 +144,41 @@
           <Property Name="AksesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NamaMenu" Type="varchar" MaxLength="200" />
           <Property Name="IsChecked" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="KodeBarangTipe" />
+          </Key>
+          <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="CabangID" Type="int" Nullable="false" />
+          <Property Name="JenisID" Type="int" Nullable="false" />
+          <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="ACost" Type="decimal" Precision="19" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inventorytransaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CabangID" Type="int" />
+          <Property Name="JenisID" Type="int" />
+          <Property Name="KodeBarangTipe" Type="varchar" MaxLength="128" />
+          <Property Name="SaldoIN" Type="int" />
+          <Property Name="SaldoOUT" Type="int" />
+          <Property Name="Harga" Type="decimal" Precision="19" Scale="0" />
+          <Property Name="TanggalTransaksi" Type="datetime" Precision="0" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="jenis">
+          <Key>
+            <PropertyRef Name="JenisID" />
+          </Key>
+          <Property Name="JenisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamaJenis" Type="varchar" MaxLength="200" />
+          <Property Name="UserInput" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalInput" Type="datetime" Precision="0" />
+          <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
+          <Property Name="TanggalUpdate" Type="datetime" Precision="0" />
         </EntityType>
         <EntityType Name="masterbarang">
           <Key>
@@ -183,7 +308,7 @@
           <Property Name="FPSID" Type="int" />
           <Property Name="CabangID" Type="int" />
           <Property Name="Keterangan" Type="varchar" MaxLength="500" />
-          <Property Name="JenisSJ" Type="tinyint" />
+          <Property Name="JenisSJ" Type="varchar" MaxLength="20" />
           <Property Name="UserInput" Type="varchar" MaxLength="200" />
           <Property Name="TanggalInput" Type="datetime" Precision="0" />
           <Property Name="UserUpdate" Type="varchar" MaxLength="200" />
@@ -201,6 +326,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BAID_BADetail">
+          <End Role="baheader" Type="Self.baheader" Multiplicity="1" />
+          <End Role="badetail" Type="Self.badetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="baheader">
+              <PropertyRef Name="BAID" />
+            </Principal>
+            <Dependent Role="badetail">
+              <PropertyRef Name="BAID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BAID_BKBDetail">
+          <End Role="baheader" Type="Self.baheader" Multiplicity="1" />
+          <End Role="bkbdetail" Type="Self.bkbdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="baheader">
+              <PropertyRef Name="BAID" />
+            </Principal>
+            <Dependent Role="bkbdetail">
+              <PropertyRef Name="BAID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BAID_BKBHeader">
+          <End Role="baheader" Type="Self.baheader" Multiplicity="1" />
+          <End Role="bkbheader" Type="Self.bkbheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="baheader">
+              <PropertyRef Name="BAID" />
+            </Principal>
+            <Dependent Role="bkbheader">
+              <PropertyRef Name="BAID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BTBID_BTBSupplierDetail">
+          <End Role="btbsupplierheader" Type="Self.btbsupplierheader" Multiplicity="1" />
+          <End Role="btbsupplierdetail" Type="Self.btbsupplierdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="btbsupplierheader">
+              <PropertyRef Name="BTBID" />
+            </Principal>
+            <Dependent Role="btbsupplierdetail">
+              <PropertyRef Name="BTBID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_BAHeader">
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="1" />
+          <End Role="baheader" Type="Self.baheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="baheader">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_BTBSupplierDetail">
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="1" />
+          <End Role="btbsupplierdetail" Type="Self.btbsupplierdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="btbsupplierdetail">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CabangID_FPSHeader">
           <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="0..1" />
           <End Role="fpsheader" Type="Self.fpsheader" Multiplicity="*" />
@@ -209,6 +406,18 @@
               <PropertyRef Name="CabangID" />
             </Principal>
             <Dependent Role="fpsheader">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_Inventory">
+          <End Role="mastercabang" Type="Self.mastercabang" Multiplicity="1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="inventory">
               <PropertyRef Name="CabangID" />
             </Dependent>
           </ReferentialConstraint>
@@ -225,6 +434,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_JenisID_Inventory">
+          <End Role="jenis" Type="Self.jenis" Multiplicity="1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jenis">
+              <PropertyRef Name="JenisID" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="JenisID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_KategoriID_MasterBarang">
           <End Role="masterkategori" Type="Self.masterkategori" Multiplicity="1" />
           <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="*" />
@@ -234,6 +455,30 @@
             </Principal>
             <Dependent Role="masterbarang">
               <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_BADetail">
+          <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="1" />
+          <End Role="badetail" Type="Self.badetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="badetail">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_BTBSupplierDetail">
+          <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="1" />
+          <End Role="btbsupplierdetail" Type="Self.btbsupplierdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="btbsupplierdetail">
+              <PropertyRef Name="KodeBarangTipe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -249,6 +494,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KodeBarangTipe_Inventory">
+          <End Role="masterbarang" Type="Self.masterbarang" Multiplicity="1" />
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_InventoryTransction">
+          <End Role="inventory" Type="Self.inventory" Multiplicity="0..1" />
+          <End Role="inventorytransaction" Type="Self.inventorytransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="inventorytransaction">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ROLEID_TOMASTERROLE">
           <End Role="masterrole" Type="Self.masterrole" Multiplicity="1" />
           <End Role="akses" Type="Self.akses" Multiplicity="*" />
@@ -258,6 +527,18 @@
             </Principal>
             <Dependent Role="akses">
               <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SatuanID_BADetail">
+          <End Role="mastersatuan" Type="Self.mastersatuan" Multiplicity="1" />
+          <End Role="badetail" Type="Self.badetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastersatuan">
+              <PropertyRef Name="SatuanID" />
+            </Principal>
+            <Dependent Role="badetail">
+              <PropertyRef Name="SatuanID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -282,6 +563,36 @@
             </Principal>
             <Dependent Role="masterbarang">
               <PropertyRef Name="SatuanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_SeqBAID_BKBDetail' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_SeqBAID_BKBDetail" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_SeqSJID_BTBMutasiDetail' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_SeqSJID_BTBMutasiDetail" />-->
+        <Association Name="FK_SJID_BTBMutasiDetail">
+          <End Role="sjheader" Type="Self.sjheader" Multiplicity="1" />
+          <End Role="btbmutasidetail" Type="Self.btbmutasidetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sjheader">
+              <PropertyRef Name="SJID" />
+            </Principal>
+            <Dependent Role="btbmutasidetail">
+              <PropertyRef Name="SJID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SJID_BTBMutasiHeader">
+          <End Role="sjheader" Type="Self.sjheader" Multiplicity="1" />
+          <End Role="btbmutasiheader" Type="Self.btbmutasiheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sjheader">
+              <PropertyRef Name="SJID" />
+            </Principal>
+            <Dependent Role="btbmutasiheader">
+              <PropertyRef Name="SJID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -347,9 +658,20 @@
         </Association>
         <EntityContainer Name="dbsparepartModelStoreContainer">
           <EntitySet Name="akses" EntityType="Self.akses" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="badetail" EntityType="Self.badetail" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="baheader" EntityType="Self.baheader" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="bkbdetail" EntityType="Self.bkbdetail" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="bkbheader" EntityType="Self.bkbheader" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="btbmutasidetail" EntityType="Self.btbmutasidetail" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="btbmutasiheader" EntityType="Self.btbmutasiheader" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="btbsupplierdetail" EntityType="Self.btbsupplierdetail" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="btbsupplierheader" EntityType="Self.btbsupplierheader" Schema="dbsparepart" store:Type="Tables" />
           <EntitySet Name="fpsdetail" EntityType="Self.fpsdetail" Schema="dbsparepart" store:Type="Tables" />
           <EntitySet Name="fpsheader" EntityType="Self.fpsheader" Schema="dbsparepart" store:Type="Tables" />
           <EntitySet Name="hakakses" EntityType="Self.hakakses" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="inventory" EntityType="Self.inventory" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="inventorytransaction" EntityType="Self.inventorytransaction" Schema="dbsparepart" store:Type="Tables" />
+          <EntitySet Name="jenis" EntityType="Self.jenis" Schema="dbsparepart" store:Type="Tables" />
           <EntitySet Name="masterbarang" EntityType="Self.masterbarang" Schema="dbsparepart" store:Type="Tables" />
           <EntitySet Name="mastercabang" EntityType="Self.mastercabang" Schema="dbsparepart" store:Type="Tables" />
           <EntitySet Name="masterkategori" EntityType="Self.masterkategori" Schema="dbsparepart" store:Type="Tables" />
@@ -364,25 +686,77 @@
             <End Role="hakakses" EntitySet="hakakses" />
             <End Role="akses" EntitySet="akses" />
           </AssociationSet>
+          <AssociationSet Name="FK_BAID_BADetail" Association="Self.FK_BAID_BADetail">
+            <End Role="baheader" EntitySet="baheader" />
+            <End Role="badetail" EntitySet="badetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BAID_BKBDetail" Association="Self.FK_BAID_BKBDetail">
+            <End Role="baheader" EntitySet="baheader" />
+            <End Role="bkbdetail" EntitySet="bkbdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BAID_BKBHeader" Association="Self.FK_BAID_BKBHeader">
+            <End Role="baheader" EntitySet="baheader" />
+            <End Role="bkbheader" EntitySet="bkbheader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BTBID_BTBSupplierDetail" Association="Self.FK_BTBID_BTBSupplierDetail">
+            <End Role="btbsupplierheader" EntitySet="btbsupplierheader" />
+            <End Role="btbsupplierdetail" EntitySet="btbsupplierdetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_BAHeader" Association="Self.FK_CabangID_BAHeader">
+            <End Role="mastercabang" EntitySet="mastercabang" />
+            <End Role="baheader" EntitySet="baheader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_BTBSupplierDetail" Association="Self.FK_CabangID_BTBSupplierDetail">
+            <End Role="mastercabang" EntitySet="mastercabang" />
+            <End Role="btbsupplierdetail" EntitySet="btbsupplierdetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_CabangID_FPSHeader" Association="Self.FK_CabangID_FPSHeader">
             <End Role="mastercabang" EntitySet="mastercabang" />
             <End Role="fpsheader" EntitySet="fpsheader" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_Inventory" Association="Self.FK_CabangID_Inventory">
+            <End Role="mastercabang" EntitySet="mastercabang" />
+            <End Role="inventory" EntitySet="inventory" />
           </AssociationSet>
           <AssociationSet Name="FK_FPSID_FPSDetail" Association="Self.FK_FPSID_FPSDetail">
             <End Role="fpsheader" EntitySet="fpsheader" />
             <End Role="fpsdetail" EntitySet="fpsdetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_JenisID_Inventory" Association="Self.FK_JenisID_Inventory">
+            <End Role="jenis" EntitySet="jenis" />
+            <End Role="inventory" EntitySet="inventory" />
+          </AssociationSet>
           <AssociationSet Name="FK_KategoriID_MasterBarang" Association="Self.FK_KategoriID_MasterBarang">
             <End Role="masterkategori" EntitySet="masterkategori" />
             <End Role="masterbarang" EntitySet="masterbarang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_BADetail" Association="Self.FK_KodeBarangTipe_BADetail">
+            <End Role="masterbarang" EntitySet="masterbarang" />
+            <End Role="badetail" EntitySet="badetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_BTBSupplierDetail" Association="Self.FK_KodeBarangTipe_BTBSupplierDetail">
+            <End Role="masterbarang" EntitySet="masterbarang" />
+            <End Role="btbsupplierdetail" EntitySet="btbsupplierdetail" />
           </AssociationSet>
           <AssociationSet Name="FK_KodeBarangTipe_FPSDetail" Association="Self.FK_KodeBarangTipe_FPSDetail">
             <End Role="masterbarang" EntitySet="masterbarang" />
             <End Role="fpsdetail" EntitySet="fpsdetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_Inventory" Association="Self.FK_KodeBarangTipe_Inventory">
+            <End Role="masterbarang" EntitySet="masterbarang" />
+            <End Role="inventory" EntitySet="inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_InventoryTransction" Association="Self.FK_KodeBarangTipe_InventoryTransction">
+            <End Role="inventory" EntitySet="inventory" />
+            <End Role="inventorytransaction" EntitySet="inventorytransaction" />
+          </AssociationSet>
           <AssociationSet Name="FK_ROLEID_TOMASTERROLE" Association="Self.FK_ROLEID_TOMASTERROLE">
             <End Role="masterrole" EntitySet="masterrole" />
             <End Role="akses" EntitySet="akses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SatuanID_BADetail" Association="Self.FK_SatuanID_BADetail">
+            <End Role="mastersatuan" EntitySet="mastersatuan" />
+            <End Role="badetail" EntitySet="badetail" />
           </AssociationSet>
           <AssociationSet Name="FK_SatuanID_FPSDetail" Association="Self.FK_SatuanID_FPSDetail">
             <End Role="mastersatuan" EntitySet="mastersatuan" />
@@ -391,6 +765,14 @@
           <AssociationSet Name="FK_SatuanID_MasterBarang" Association="Self.FK_SatuanID_MasterBarang">
             <End Role="mastersatuan" EntitySet="mastersatuan" />
             <End Role="masterbarang" EntitySet="masterbarang" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SJID_BTBMutasiDetail" Association="Self.FK_SJID_BTBMutasiDetail">
+            <End Role="sjheader" EntitySet="sjheader" />
+            <End Role="btbmutasidetail" EntitySet="btbmutasidetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SJID_BTBMutasiHeader" Association="Self.FK_SJID_BTBMutasiHeader">
+            <End Role="sjheader" EntitySet="sjheader" />
+            <End Role="btbmutasiheader" EntitySet="btbmutasiheader" />
           </AssociationSet>
           <AssociationSet Name="FK_TokoID_FPSHeader" Association="Self.FK_TokoID_FPSHeader">
             <End Role="mastertoko" EntitySet="mastertoko" />
@@ -419,9 +801,20 @@
       <Schema Namespace="dbsparepartModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="dbsparepartEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="akses" EntityType="dbsparepartModel.aks" />
+          <EntitySet Name="badetails" EntityType="dbsparepartModel.badetail" />
+          <EntitySet Name="baheaders" EntityType="dbsparepartModel.baheader" />
+          <EntitySet Name="bkbdetails" EntityType="dbsparepartModel.bkbdetail" />
+          <EntitySet Name="bkbheaders" EntityType="dbsparepartModel.bkbheader" />
+          <EntitySet Name="btbmutasidetails" EntityType="dbsparepartModel.btbmutasidetail" />
+          <EntitySet Name="btbmutasiheaders" EntityType="dbsparepartModel.btbmutasiheader" />
+          <EntitySet Name="btbsupplierdetails" EntityType="dbsparepartModel.btbsupplierdetail" />
+          <EntitySet Name="btbsupplierheaders" EntityType="dbsparepartModel.btbsupplierheader" />
           <EntitySet Name="fpsdetails" EntityType="dbsparepartModel.fpsdetail" />
           <EntitySet Name="fpsheaders" EntityType="dbsparepartModel.fpsheader" />
           <EntitySet Name="hakakses" EntityType="dbsparepartModel.hakaks" />
+          <EntitySet Name="inventories" EntityType="dbsparepartModel.inventory" />
+          <EntitySet Name="inventorytransactions" EntityType="dbsparepartModel.inventorytransaction" />
+          <EntitySet Name="jenis" EntityType="dbsparepartModel.jeni" />
           <EntitySet Name="masterbarangs" EntityType="dbsparepartModel.masterbarang" />
           <EntitySet Name="mastercabangs" EntityType="dbsparepartModel.mastercabang" />
           <EntitySet Name="masterkategoris" EntityType="dbsparepartModel.masterkategori" />
@@ -439,6 +832,50 @@
           <AssociationSet Name="FK_ROLEID_TOMASTERROLE" Association="dbsparepartModel.FK_ROLEID_TOMASTERROLE">
             <End Role="masterrole" EntitySet="masterroles" />
             <End Role="aks" EntitySet="akses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BAID_BADetail" Association="dbsparepartModel.FK_BAID_BADetail">
+            <End Role="baheader" EntitySet="baheaders" />
+            <End Role="badetail" EntitySet="badetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_BADetail" Association="dbsparepartModel.FK_KodeBarangTipe_BADetail">
+            <End Role="masterbarang" EntitySet="masterbarangs" />
+            <End Role="badetail" EntitySet="badetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SatuanID_BADetail" Association="dbsparepartModel.FK_SatuanID_BADetail">
+            <End Role="mastersatuan" EntitySet="mastersatuans" />
+            <End Role="badetail" EntitySet="badetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BAID_BKBDetail" Association="dbsparepartModel.FK_BAID_BKBDetail">
+            <End Role="baheader" EntitySet="baheaders" />
+            <End Role="bkbdetail" EntitySet="bkbdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BAID_BKBHeader" Association="dbsparepartModel.FK_BAID_BKBHeader">
+            <End Role="baheader" EntitySet="baheaders" />
+            <End Role="bkbheader" EntitySet="bkbheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_BAHeader" Association="dbsparepartModel.FK_CabangID_BAHeader">
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+            <End Role="baheader" EntitySet="baheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SJID_BTBMutasiDetail" Association="dbsparepartModel.FK_SJID_BTBMutasiDetail">
+            <End Role="sjheader" EntitySet="sjheaders" />
+            <End Role="btbmutasidetail" EntitySet="btbmutasidetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SJID_BTBMutasiHeader" Association="dbsparepartModel.FK_SJID_BTBMutasiHeader">
+            <End Role="sjheader" EntitySet="sjheaders" />
+            <End Role="btbmutasiheader" EntitySet="btbmutasiheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BTBID_BTBSupplierDetail" Association="dbsparepartModel.FK_BTBID_BTBSupplierDetail">
+            <End Role="btbsupplierheader" EntitySet="btbsupplierheaders" />
+            <End Role="btbsupplierdetail" EntitySet="btbsupplierdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_BTBSupplierDetail" Association="dbsparepartModel.FK_CabangID_BTBSupplierDetail">
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+            <End Role="btbsupplierdetail" EntitySet="btbsupplierdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_BTBSupplierDetail" Association="dbsparepartModel.FK_KodeBarangTipe_BTBSupplierDetail">
+            <End Role="masterbarang" EntitySet="masterbarangs" />
+            <End Role="btbsupplierdetail" EntitySet="btbsupplierdetails" />
           </AssociationSet>
           <AssociationSet Name="FK_FPSID_FPSDetail" Association="dbsparepartModel.FK_FPSID_FPSDetail">
             <End Role="fpsheader" EntitySet="fpsheaders" />
@@ -467,6 +904,22 @@
           <AssociationSet Name="FK_UserID_FPSHeader" Association="dbsparepartModel.FK_UserID_FPSHeader">
             <End Role="masteruser" EntitySet="masterusers" />
             <End Role="fpsheader" EntitySet="fpsheaders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabangID_Inventory" Association="dbsparepartModel.FK_CabangID_Inventory">
+            <End Role="mastercabang" EntitySet="mastercabangs" />
+            <End Role="inventory" EntitySet="inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_JenisID_Inventory" Association="dbsparepartModel.FK_JenisID_Inventory">
+            <End Role="jeni" EntitySet="jenis" />
+            <End Role="inventory" EntitySet="inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_Inventory" Association="dbsparepartModel.FK_KodeBarangTipe_Inventory">
+            <End Role="masterbarang" EntitySet="masterbarangs" />
+            <End Role="inventory" EntitySet="inventories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KodeBarangTipe_InventoryTransction" Association="dbsparepartModel.FK_KodeBarangTipe_InventoryTransction">
+            <End Role="inventory" EntitySet="inventories" />
+            <End Role="inventorytransaction" EntitySet="inventorytransactions" />
           </AssociationSet>
           <AssociationSet Name="FK_KategoriID_MasterBarang" Association="dbsparepartModel.FK_KategoriID_MasterBarang">
             <End Role="masterkategori" EntitySet="masterkategoris" />
@@ -497,6 +950,111 @@
           <Property Name="NamaAkses" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="hakaks" Relationship="dbsparepartModel.FK_AKSESID_TOHAKAKSES" FromRole="aks" ToRole="hakaks" />
           <NavigationProperty Name="masterrole" Relationship="dbsparepartModel.FK_ROLEID_TOMASTERROLE" FromRole="aks" ToRole="masterrole" />
+        </EntityType>
+        <EntityType Name="badetail">
+          <Key>
+            <PropertyRef Name="BAID" />
+            <PropertyRef Name="SeqBAID" />
+          </Key>
+          <Property Name="BAID" Type="Int32" Nullable="false" />
+          <Property Name="SeqBAID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KodeBarangTipe" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="SatuanID" Type="Int32" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="baheader" Relationship="dbsparepartModel.FK_BAID_BADetail" FromRole="badetail" ToRole="baheader" />
+          <NavigationProperty Name="masterbarang" Relationship="dbsparepartModel.FK_KodeBarangTipe_BADetail" FromRole="badetail" ToRole="masterbarang" />
+          <NavigationProperty Name="mastersatuan" Relationship="dbsparepartModel.FK_SatuanID_BADetail" FromRole="badetail" ToRole="mastersatuan" />
+        </EntityType>
+        <EntityType Name="baheader">
+          <Key>
+            <PropertyRef Name="BAID" />
+          </Key>
+          <Property Name="BAID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CabangID" Type="Int32" Nullable="false" />
+          <Property Name="Tanggal" Type="DateTime" Nullable="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
+          <Property Name="UserUpdate" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" Nullable="false" />
+          <Property Name="Approval" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="badetails" Relationship="dbsparepartModel.FK_BAID_BADetail" FromRole="baheader" ToRole="badetail" />
+          <NavigationProperty Name="bkbdetails" Relationship="dbsparepartModel.FK_BAID_BKBDetail" FromRole="baheader" ToRole="bkbdetail" />
+          <NavigationProperty Name="bkbheaders" Relationship="dbsparepartModel.FK_BAID_BKBHeader" FromRole="baheader" ToRole="bkbheader" />
+          <NavigationProperty Name="mastercabang" Relationship="dbsparepartModel.FK_CabangID_BAHeader" FromRole="baheader" ToRole="mastercabang" />
+        </EntityType>
+        <EntityType Name="bkbdetail">
+          <Key>
+            <PropertyRef Name="SeqBKBID" />
+            <PropertyRef Name="BKBID" />
+          </Key>
+          <Property Name="SeqBKBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BKBID" Type="Int32" Nullable="false" />
+          <Property Name="BAID" Type="Int32" Nullable="false" />
+          <Property Name="SeqBAID" Type="Int32" Nullable="false" />
+          <Property Name="Keterangan" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="baheader" Relationship="dbsparepartModel.FK_BAID_BKBDetail" FromRole="bkbdetail" ToRole="baheader" />
+        </EntityType>
+        <EntityType Name="bkbheader">
+          <Key>
+            <PropertyRef Name="BKBID" />
+          </Key>
+          <Property Name="BKBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BAID" Type="Int32" Nullable="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
+          <Property Name="UserUpdate" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" Nullable="false" />
+          <Property Name="Approval" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="baheader" Relationship="dbsparepartModel.FK_BAID_BKBHeader" FromRole="bkbheader" ToRole="baheader" />
+        </EntityType>
+        <EntityType Name="btbmutasidetail">
+          <Key>
+            <PropertyRef Name="SeqBTBID" />
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="SeqBTBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BTBID" Type="Int32" Nullable="false" />
+          <Property Name="SJID" Type="Int32" Nullable="false" />
+          <Property Name="SeqSJID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="sjheader" Relationship="dbsparepartModel.FK_SJID_BTBMutasiDetail" FromRole="btbmutasidetail" ToRole="sjheader" />
+        </EntityType>
+        <EntityType Name="btbmutasiheader">
+          <Key>
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="BTBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SJID" Type="Int32" Nullable="false" />
+          <Property Name="Keterangan" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
+          <Property Name="UserUpdate" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="sjheader" Relationship="dbsparepartModel.FK_SJID_BTBMutasiHeader" FromRole="btbmutasiheader" ToRole="sjheader" />
+        </EntityType>
+        <EntityType Name="btbsupplierdetail">
+          <Key>
+            <PropertyRef Name="SeqBTBID" />
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="SeqBTBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BTBID" Type="Int32" Nullable="false" />
+          <Property Name="KodeBarangTipe" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CabangID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="btbsupplierheader" Relationship="dbsparepartModel.FK_BTBID_BTBSupplierDetail" FromRole="btbsupplierdetail" ToRole="btbsupplierheader" />
+          <NavigationProperty Name="mastercabang" Relationship="dbsparepartModel.FK_CabangID_BTBSupplierDetail" FromRole="btbsupplierdetail" ToRole="mastercabang" />
+          <NavigationProperty Name="masterbarang" Relationship="dbsparepartModel.FK_KodeBarangTipe_BTBSupplierDetail" FromRole="btbsupplierdetail" ToRole="masterbarang" />
+        </EntityType>
+        <EntityType Name="btbsupplierheader">
+          <Key>
+            <PropertyRef Name="BTBID" />
+          </Key>
+          <Property Name="BTBID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KodeBTBeProc" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" Nullable="false" />
+          <Property Name="UserUpdate" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="btbsupplierdetails" Relationship="dbsparepartModel.FK_BTBID_BTBSupplierDetail" FromRole="btbsupplierheader" ToRole="btbsupplierdetail" />
         </EntityType>
         <EntityType Name="fpsdetail">
           <Key>
@@ -546,6 +1104,47 @@
           <Property Name="IsChecked" Type="SByte" />
           <NavigationProperty Name="akses" Relationship="dbsparepartModel.FK_AKSESID_TOHAKAKSES" FromRole="hakaks" ToRole="aks" />
         </EntityType>
+        <EntityType Name="inventory">
+          <Key>
+            <PropertyRef Name="KodeBarangTipe" />
+          </Key>
+          <Property Name="KodeBarangTipe" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="CabangID" Type="Int32" Nullable="false" />
+          <Property Name="JenisID" Type="Int32" Nullable="false" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="ACost" Type="Decimal" Nullable="false" />
+          <NavigationProperty Name="mastercabang" Relationship="dbsparepartModel.FK_CabangID_Inventory" FromRole="inventory" ToRole="mastercabang" />
+          <NavigationProperty Name="jeni" Relationship="dbsparepartModel.FK_JenisID_Inventory" FromRole="inventory" ToRole="jeni" />
+          <NavigationProperty Name="masterbarang" Relationship="dbsparepartModel.FK_KodeBarangTipe_Inventory" FromRole="inventory" ToRole="masterbarang" />
+          <NavigationProperty Name="inventorytransactions" Relationship="dbsparepartModel.FK_KodeBarangTipe_InventoryTransction" FromRole="inventory" ToRole="inventorytransaction" />
+        </EntityType>
+        <EntityType Name="inventorytransaction">
+          <Key>
+            <PropertyRef Name="TransactionID" />
+          </Key>
+          <Property Name="TransactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CabangID" Type="Int32" />
+          <Property Name="JenisID" Type="Int32" />
+          <Property Name="KodeBarangTipe" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="SaldoIN" Type="Int32" />
+          <Property Name="SaldoOUT" Type="Int32" />
+          <Property Name="Harga" Type="Decimal" />
+          <Property Name="TanggalTransaksi" Type="DateTime" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="inventory" Relationship="dbsparepartModel.FK_KodeBarangTipe_InventoryTransction" FromRole="inventorytransaction" ToRole="inventory" />
+        </EntityType>
+        <EntityType Name="jeni">
+          <Key>
+            <PropertyRef Name="JenisID" />
+          </Key>
+          <Property Name="JenisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamaJenis" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalInput" Type="DateTime" />
+          <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TanggalUpdate" Type="DateTime" />
+          <NavigationProperty Name="inventories" Relationship="dbsparepartModel.FK_JenisID_Inventory" FromRole="jeni" ToRole="inventory" />
+        </EntityType>
         <EntityType Name="masterbarang">
           <Key>
             <PropertyRef Name="KodeBarangTipe" />
@@ -562,7 +1161,10 @@
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
           <Property Name="IsDelete" Type="SByte" Nullable="false" />
+          <NavigationProperty Name="badetails" Relationship="dbsparepartModel.FK_KodeBarangTipe_BADetail" FromRole="masterbarang" ToRole="badetail" />
+          <NavigationProperty Name="btbsupplierdetails" Relationship="dbsparepartModel.FK_KodeBarangTipe_BTBSupplierDetail" FromRole="masterbarang" ToRole="btbsupplierdetail" />
           <NavigationProperty Name="fpsdetails" Relationship="dbsparepartModel.FK_KodeBarangTipe_FPSDetail" FromRole="masterbarang" ToRole="fpsdetail" />
+          <NavigationProperty Name="inventory" Relationship="dbsparepartModel.FK_KodeBarangTipe_Inventory" FromRole="masterbarang" ToRole="inventory" />
           <NavigationProperty Name="masterkategori" Relationship="dbsparepartModel.FK_KategoriID_MasterBarang" FromRole="masterbarang" ToRole="masterkategori" />
           <NavigationProperty Name="mastersatuan" Relationship="dbsparepartModel.FK_SatuanID_MasterBarang" FromRole="masterbarang" ToRole="mastersatuan" />
         </EntityType>
@@ -579,7 +1181,10 @@
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
           <Property Name="IsDelete" Type="SByte" Nullable="false" />
+          <NavigationProperty Name="baheaders" Relationship="dbsparepartModel.FK_CabangID_BAHeader" FromRole="mastercabang" ToRole="baheader" />
+          <NavigationProperty Name="btbsupplierdetails" Relationship="dbsparepartModel.FK_CabangID_BTBSupplierDetail" FromRole="mastercabang" ToRole="btbsupplierdetail" />
           <NavigationProperty Name="fpsheaders" Relationship="dbsparepartModel.FK_CabangID_FPSHeader" FromRole="mastercabang" ToRole="fpsheader" />
+          <NavigationProperty Name="inventories" Relationship="dbsparepartModel.FK_CabangID_Inventory" FromRole="mastercabang" ToRole="inventory" />
           <NavigationProperty Name="mastertoko" Relationship="dbsparepartModel.FK_TokoID_MasterCabang" FromRole="mastercabang" ToRole="mastertoko" />
           <NavigationProperty Name="masterunit" Relationship="dbsparepartModel.FK_UnitID_MasterCabang" FromRole="mastercabang" ToRole="masterunit" />
         </EntityType>
@@ -621,6 +1226,7 @@
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
           <Property Name="IsDelete" Type="SByte" Nullable="false" />
+          <NavigationProperty Name="badetails" Relationship="dbsparepartModel.FK_SatuanID_BADetail" FromRole="mastersatuan" ToRole="badetail" />
           <NavigationProperty Name="fpsdetails" Relationship="dbsparepartModel.FK_SatuanID_FPSDetail" FromRole="mastersatuan" ToRole="fpsdetail" />
           <NavigationProperty Name="masterbarangs" Relationship="dbsparepartModel.FK_SatuanID_MasterBarang" FromRole="mastersatuan" ToRole="masterbarang" />
         </EntityType>
@@ -689,11 +1295,13 @@
           <Property Name="FPSID" Type="Int32" />
           <Property Name="CabangID" Type="Int32" />
           <Property Name="Keterangan" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="JenisSJ" Type="SByte" />
+          <Property Name="JenisSJ" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="UserInput" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalInput" Type="DateTime" />
           <Property Name="UserUpdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="TanggalUpdate" Type="DateTime" />
+          <NavigationProperty Name="btbmutasidetails" Relationship="dbsparepartModel.FK_SJID_BTBMutasiDetail" FromRole="sjheader" ToRole="btbmutasidetail" />
+          <NavigationProperty Name="btbmutasiheaders" Relationship="dbsparepartModel.FK_SJID_BTBMutasiHeader" FromRole="sjheader" ToRole="btbmutasiheader" />
         </EntityType>
         <Association Name="FK_AKSESID_TOHAKAKSES">
           <End Type="dbsparepartModel.hakaks" Role="hakaks" Multiplicity="1" />
@@ -716,6 +1324,138 @@
             </Principal>
             <Dependent Role="aks">
               <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BAID_BADetail">
+          <End Type="dbsparepartModel.baheader" Role="baheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.badetail" Role="badetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="baheader">
+              <PropertyRef Name="BAID" />
+            </Principal>
+            <Dependent Role="badetail">
+              <PropertyRef Name="BAID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_BADetail">
+          <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="1" />
+          <End Type="dbsparepartModel.badetail" Role="badetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="badetail">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SatuanID_BADetail">
+          <End Type="dbsparepartModel.mastersatuan" Role="mastersatuan" Multiplicity="1" />
+          <End Type="dbsparepartModel.badetail" Role="badetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastersatuan">
+              <PropertyRef Name="SatuanID" />
+            </Principal>
+            <Dependent Role="badetail">
+              <PropertyRef Name="SatuanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BAID_BKBDetail">
+          <End Type="dbsparepartModel.baheader" Role="baheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.bkbdetail" Role="bkbdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="baheader">
+              <PropertyRef Name="BAID" />
+            </Principal>
+            <Dependent Role="bkbdetail">
+              <PropertyRef Name="BAID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BAID_BKBHeader">
+          <End Type="dbsparepartModel.baheader" Role="baheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.bkbheader" Role="bkbheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="baheader">
+              <PropertyRef Name="BAID" />
+            </Principal>
+            <Dependent Role="bkbheader">
+              <PropertyRef Name="BAID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_BAHeader">
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="1" />
+          <End Type="dbsparepartModel.baheader" Role="baheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="baheader">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SJID_BTBMutasiDetail">
+          <End Type="dbsparepartModel.sjheader" Role="sjheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.btbmutasidetail" Role="btbmutasidetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sjheader">
+              <PropertyRef Name="SJID" />
+            </Principal>
+            <Dependent Role="btbmutasidetail">
+              <PropertyRef Name="SJID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SJID_BTBMutasiHeader">
+          <End Type="dbsparepartModel.sjheader" Role="sjheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.btbmutasiheader" Role="btbmutasiheader" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sjheader">
+              <PropertyRef Name="SJID" />
+            </Principal>
+            <Dependent Role="btbmutasiheader">
+              <PropertyRef Name="SJID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BTBID_BTBSupplierDetail">
+          <End Type="dbsparepartModel.btbsupplierheader" Role="btbsupplierheader" Multiplicity="1" />
+          <End Type="dbsparepartModel.btbsupplierdetail" Role="btbsupplierdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="btbsupplierheader">
+              <PropertyRef Name="BTBID" />
+            </Principal>
+            <Dependent Role="btbsupplierdetail">
+              <PropertyRef Name="BTBID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabangID_BTBSupplierDetail">
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="1" />
+          <End Type="dbsparepartModel.btbsupplierdetail" Role="btbsupplierdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="btbsupplierdetail">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_BTBSupplierDetail">
+          <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="1" />
+          <End Type="dbsparepartModel.btbsupplierdetail" Role="btbsupplierdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="btbsupplierdetail">
+              <PropertyRef Name="KodeBarangTipe" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -803,6 +1543,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CabangID_Inventory">
+          <End Type="dbsparepartModel.mastercabang" Role="mastercabang" Multiplicity="1" />
+          <End Type="dbsparepartModel.inventory" Role="inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="mastercabang">
+              <PropertyRef Name="CabangID" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="CabangID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_JenisID_Inventory">
+          <End Type="dbsparepartModel.jeni" Role="jeni" Multiplicity="1" />
+          <End Type="dbsparepartModel.inventory" Role="inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jeni">
+              <PropertyRef Name="JenisID" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="JenisID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_Inventory">
+          <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="1" />
+          <End Type="dbsparepartModel.inventory" Role="inventory" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="masterbarang">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="inventory">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KodeBarangTipe_InventoryTransction">
+          <End Type="dbsparepartModel.inventory" Role="inventory" Multiplicity="0..1" />
+          <End Type="dbsparepartModel.inventorytransaction" Role="inventorytransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inventory">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Principal>
+            <Dependent Role="inventorytransaction">
+              <PropertyRef Name="KodeBarangTipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_KategoriID_MasterBarang">
           <End Type="dbsparepartModel.masterkategori" Role="masterkategori" Multiplicity="1" />
           <End Type="dbsparepartModel.masterbarang" Role="masterbarang" Multiplicity="*" />
@@ -867,6 +1655,100 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="badetails">
+            <EntityTypeMapping TypeName="dbsparepartModel.badetail">
+              <MappingFragment StoreEntitySet="badetail">
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="SatuanID" ColumnName="SatuanID" />
+                <ScalarProperty Name="KodeBarangTipe" ColumnName="KodeBarangTipe" />
+                <ScalarProperty Name="SeqBAID" ColumnName="SeqBAID" />
+                <ScalarProperty Name="BAID" ColumnName="BAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="baheaders">
+            <EntityTypeMapping TypeName="dbsparepartModel.baheader">
+              <MappingFragment StoreEntitySet="baheader">
+                <ScalarProperty Name="Approval" ColumnName="Approval" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="Tanggal" ColumnName="Tanggal" />
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+                <ScalarProperty Name="BAID" ColumnName="BAID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bkbdetails">
+            <EntityTypeMapping TypeName="dbsparepartModel.bkbdetail">
+              <MappingFragment StoreEntitySet="bkbdetail">
+                <ScalarProperty Name="Keterangan" ColumnName="Keterangan" />
+                <ScalarProperty Name="SeqBAID" ColumnName="SeqBAID" />
+                <ScalarProperty Name="BAID" ColumnName="BAID" />
+                <ScalarProperty Name="BKBID" ColumnName="BKBID" />
+                <ScalarProperty Name="SeqBKBID" ColumnName="SeqBKBID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="bkbheaders">
+            <EntityTypeMapping TypeName="dbsparepartModel.bkbheader">
+              <MappingFragment StoreEntitySet="bkbheader">
+                <ScalarProperty Name="Approval" ColumnName="Approval" />
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="BAID" ColumnName="BAID" />
+                <ScalarProperty Name="BKBID" ColumnName="BKBID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="btbmutasidetails">
+            <EntityTypeMapping TypeName="dbsparepartModel.btbmutasidetail">
+              <MappingFragment StoreEntitySet="btbmutasidetail">
+                <ScalarProperty Name="SeqSJID" ColumnName="SeqSJID" />
+                <ScalarProperty Name="SJID" ColumnName="SJID" />
+                <ScalarProperty Name="BTBID" ColumnName="BTBID" />
+                <ScalarProperty Name="SeqBTBID" ColumnName="SeqBTBID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="btbmutasiheaders">
+            <EntityTypeMapping TypeName="dbsparepartModel.btbmutasiheader">
+              <MappingFragment StoreEntitySet="btbmutasiheader">
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="Keterangan" ColumnName="Keterangan" />
+                <ScalarProperty Name="SJID" ColumnName="SJID" />
+                <ScalarProperty Name="BTBID" ColumnName="BTBID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="btbsupplierdetails">
+            <EntityTypeMapping TypeName="dbsparepartModel.btbsupplierdetail">
+              <MappingFragment StoreEntitySet="btbsupplierdetail">
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+                <ScalarProperty Name="KodeBarangTipe" ColumnName="KodeBarangTipe" />
+                <ScalarProperty Name="BTBID" ColumnName="BTBID" />
+                <ScalarProperty Name="SeqBTBID" ColumnName="SeqBTBID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="btbsupplierheaders">
+            <EntityTypeMapping TypeName="dbsparepartModel.btbsupplierheader">
+              <MappingFragment StoreEntitySet="btbsupplierheader">
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="KodeBTBeProc" ColumnName="KodeBTBeProc" />
+                <ScalarProperty Name="BTBID" ColumnName="BTBID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="fpsdetails">
             <EntityTypeMapping TypeName="dbsparepartModel.fpsdetail">
               <MappingFragment StoreEntitySet="fpsdetail">
@@ -906,6 +1788,44 @@
                 <ScalarProperty Name="IsChecked" ColumnName="IsChecked" />
                 <ScalarProperty Name="NamaMenu" ColumnName="NamaMenu" />
                 <ScalarProperty Name="AksesID" ColumnName="AksesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventories">
+            <EntityTypeMapping TypeName="dbsparepartModel.inventory">
+              <MappingFragment StoreEntitySet="inventory">
+                <ScalarProperty Name="ACost" ColumnName="ACost" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="JenisID" ColumnName="JenisID" />
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+                <ScalarProperty Name="KodeBarangTipe" ColumnName="KodeBarangTipe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inventorytransactions">
+            <EntityTypeMapping TypeName="dbsparepartModel.inventorytransaction">
+              <MappingFragment StoreEntitySet="inventorytransaction">
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="TanggalTransaksi" ColumnName="TanggalTransaksi" />
+                <ScalarProperty Name="Harga" ColumnName="Harga" />
+                <ScalarProperty Name="SaldoOUT" ColumnName="SaldoOUT" />
+                <ScalarProperty Name="SaldoIN" ColumnName="SaldoIN" />
+                <ScalarProperty Name="KodeBarangTipe" ColumnName="KodeBarangTipe" />
+                <ScalarProperty Name="JenisID" ColumnName="JenisID" />
+                <ScalarProperty Name="CabangID" ColumnName="CabangID" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="jenis">
+            <EntityTypeMapping TypeName="dbsparepartModel.jeni">
+              <MappingFragment StoreEntitySet="jenis">
+                <ScalarProperty Name="TanggalUpdate" ColumnName="TanggalUpdate" />
+                <ScalarProperty Name="UserUpdate" ColumnName="UserUpdate" />
+                <ScalarProperty Name="TanggalInput" ColumnName="TanggalInput" />
+                <ScalarProperty Name="UserInput" ColumnName="UserInput" />
+                <ScalarProperty Name="NamaJenis" ColumnName="NamaJenis" />
+                <ScalarProperty Name="JenisID" ColumnName="JenisID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

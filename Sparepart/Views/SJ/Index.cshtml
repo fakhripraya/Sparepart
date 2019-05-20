@@ -1,4 +1,4 @@
-﻿@model Sparepart.Models.fpsheader
+﻿@model Sparepart.Models.SJCreateViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,198 +6,108 @@
 
 <section class="content-header">
     <h1>
-        Permintaan Sparepart
+        Surat Jalan
     </h1>
 </section>
 
 <section class="content container-fluid">
-
-    @*<div id="modalWindow">
-            <h3 class="text-center">Delete this record?</h3>
-            <div class="pull-left">
-                <button id="yes" class="k-button">Yes</button>
-            </div>
-            <div class="pull-right">
-                <button id="no" class="k-button">No</button>
-            </div>
-        </div>*@
-
-                @*CREATE - perbaikan*@
-                @(Html.Kendo().Window()
-                .Name("windowPerbaikan")
-                .Title("Tambah Permintaan - Perbaikan")
-                .Content(
-
-                @<text>
-                <form action="/SJ/Create_Perbaikan" method="post">
-                <ul class="fieldlist">
-                @Html.AntiForgeryToken()
-                <li>
-                @Html.Label("FPS")
-                @(Html.Kendo().DropDownListFor(m => m.TokoID)
-                .Name("fps")
-                .DataTextField("FPSID")
-                .DataValueField("FPSID")
-                .Filter(FilterType.Contains)
-                .DataSource(source =>
-                {
-                source.Read(read =>
-                {
-                read.Action("GetFPS", "FPS")
-                .Data("fpsdata");
-                });
-                })
-                )
-                </li>
-                <li>
-                @(Html.Kendo().Grid<Sparepart.Models.fpsdetail>()
-                .Name("detailgridPerbaikan")
-                .Columns(columns =>
-                {
-                columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "BarangPLU")
-                .Title("PLU");
-                columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "NamaBarang")
-                .Title("Barang");
-                columns.ForeignKey(p => p.SatuanID, (System.Collections.IEnumerable)ViewData["Satuan"], "SatuanID", "NamaSatuan")
-                .Title("Satuan");
-                columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "HargaSatuan")
-                .Title("Harga Satuan");
-                columns.Bound(p => p.Qty).Width(100);
-                columns.Bound(p => p.Keterangan).Width(100);
-
-                columns.Command(commands =>
-                {
-                //commands.Edit();
-                commands.Destroy();
-
-                }).Title("Commands").Width(200);
-                })
-                .ToolBar(toolbar =>
-                {
-                toolbar.Template("<a class='k-button k-button-icontext' onclick='DetailWindowPerbaikan()' href='#'></span>Add Item</a>");
-                }
-                )
-                .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
-                .Sortable()
-                .Pageable(pageable => pageable
-                .Input(true)
-                .Numeric(true)
-                .Info(true)
-                .PreviousNext(true)
-                .Refresh(true)
-                .ButtonCount(5)
-                )
-
-                .DataSource(dataSource => dataSource
+    @(Html.Kendo().Grid<Sparepart.Models.SJCreateViewModel>()
+            .Name("grid")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.SJID);
+                columns.Bound(p => p.FPSID).Hidden(true);
+                columns.Bound(p => p.FPS).ClientTemplate("#=FPS.FPSID#").Sortable(false).Title("FPSID");
+                columns.Bound(p => p.JenisSJ).Hidden(true);
+                columns.Bound(p => p.Keterangan);
+                columns.Command(command => command.Destroy());
+            })
+            .ToolBar(toolBar =>
+            {
+                toolBar.Create();
+                toolBar.Save();
+            })
+            .Editable(editable => editable.Mode(GridEditMode.InCell))
+            .Sortable()
+            .Pageable(pageable => pageable
+            .Input(true)
+            .Numeric(true)
+            .Info(true)
+            .PreviousNext(true)
+            .Refresh(true)
+            .ButtonCount(5)
+            )
+            .Filterable()
+            .Scrollable()
+            .ClientDetailTemplateId("template")
+            .HtmlAttributes(new { style = "height:550px;" })
+            .DataSource(dataSource => dataSource
                 .Ajax()
-                .Events(events => events
-                .Error("grid_error")
-                )
-                .Read(read => read.Action("Detail_Read", "FPS"))
+                .Batch(true)
                 .PageSize(10)
                 .ServerOperation(false)
+                .Events(events => events.Error("error_handler"))
                 .Model(model =>
                 {
-                model.Id(P => P.SeqFPSID);
-                model.Field(P => P.SeqFPSID).Editable(false);
+                    model.Id(p => p.SJID);
+                    model.Field(p => p.SJID).Editable(false);
+                    model.Field(p => p.JenisSJ).Editable(false);
+                    model.Field(p => p.FPSID).Editable(false);
+                    model.Field(p => p.FPS).DefaultValue(
+                        ViewData["defaultFPS"] as Sparepart.Models.FPSViewModel);
                 })
-                //.Create(create => create.Action("Toko_Create", "Toko"))
-                //.Update(update => update.Action("Toko_Update", "Toko"))
-                .Destroy(destroy => destroy.Action("Detail_Destroy", "FPS"))
-                )
-
-                )
-                </li>
-                <li class="pull-left">
-                <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left; padding-bottom: 5px;" value="Save" type="submit">
-                </li>
-                <li class="pull-right">
-                @*<input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: right; padding-bottom: 5px;" value="Cancel" type="button">*@
-                <a href="/SJ/Detail_Clear" class="k-button k-primary" style="margin-top: 2em; float: right; padding-bottom: 5px;">Cancel</a>
-                </li>
-                </ul>
-                </form>
-                </text>)
-                .Visible(false)
-                .Modal(true)
-                .Draggable()
-                .Resizable()
-                .Width(600)
-                .Height(600)
-                .Actions(actions => actions.Pin().Minimize().Maximize()/*.Close()*/)
-                .Events(ev => ev.Close("onClose"))
-                )
-
-
-
-    <fieldset class="group-border">
-        <legend class="group-border">Info</legend>
-
-        <div class="row fieldlist">
-            <div class="col-sm-5">
-                <div class="form-group">
-                    @Html.Label("No Ticket")
-                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
-                </div>
-            </div>
-            <div class="col-sm-5">
-                <div class="form-group">
-                    @Html.Label("No Ticket")
-                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
-                </div>
-            </div>
-        </div>
-        <div class="row fieldlist">
-            <div class="col-sm-5">
-                <div class="form-group">
-                    @Html.Label("No Ticket")
-                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
-                </div>
-            </div>
-            <div class="col-sm-5">
-                <div class="form-group">
-                    @Html.Label("No Ticket")
-                    @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
-                </div>
-            </div>
-        </div>
-
-
-    </fieldset>
-
+                .Read(read => read.Action("Read", "SJ"))
+                .Create(create => create.Action("Create", "SJ"))
+                .Update(update => update.Action("Update", "SJ"))
+                .Destroy(destroy => destroy.Action("Destroy", "SJ"))
+            )
+            .Events(events => events.DataBound("dataBound"))
+    )
 </section>
 
-<style>
-    .fieldlist {
-        margin: 0 0 -2em;
-        padding: 0;
-    }
-
-        .fieldlist li {
-            list-style: none;
-            padding-bottom: 2em;
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
         }
-
-        .fieldlist label {
-            display: block;
-            padding-bottom: 1em;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 12px;
-            color: #444;
-        }
-    .textentry {
-        positions absolute;
-        top: 50px; /* I usually locate relative to top  */
-        left: 100px; /* left corner of container (screen) */
-        height: 80px; /*  often useful to keep screen orderly */
     }
-</style>
-
-@section Scripts
-{
-    <script type="text/javascript">
-
-       
-    </script>
+    function dataBound() {
+        this.expandRow(this.tbody.find("tr.k-master-row").first());
     }
+
+</script>
+<script id="template" type="text/kendo-tmpl">
+    @(Html.Kendo().Grid<Sparepart.Models.DetailPermintaanBarangViewModel>()
+                    .Name("Detailgrid_#=FPSID#" + DateTime.Now.Ticks) // template expression, to be evaluated in the master context
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.Quantity);
+                        columns.Bound(p => p.JumlahHarga);
+                        columns.Bound(p => p.Keterangan);
+                    })
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .PageSize(10)
+                        .Read(read => read.Action("HierarchyBinding_FPS", "SJ", new { FPSID = "#=FPSID#" }))
+                    )
+                    .Pageable(pageable => pageable
+                    .Input(true)
+                    .Numeric(true)
+                    .Info(true)
+                    .PreviousNext(true)
+                    .Refresh(true)
+                    .ButtonCount(5)
+                    )
+                    .Sortable()
+                    .Filterable()
+                    .ToClientTemplate()
+    )
+</script>

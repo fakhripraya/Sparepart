@@ -57,6 +57,7 @@
                             )
                             .Sortable()
                             .Scrollable()
+                            .Filterable()
                             .DataSource(dataSource => dataSource
                             .Ajax()
                             .Model(model => model.Id(p => p.AksesID))
@@ -162,6 +163,7 @@
                                             )
                                             .Sortable()
                                             .Scrollable()
+                                            .Filterable()
                                             .DataSource(dataSource => dataSource
                                             .Ajax()
                                             .Model(model => model.Id(p => p.AksesID))
@@ -217,6 +219,7 @@
                                     .Refresh(true)
                                     .ButtonCount(5)
                                     )
+                                    .Filterable()
                                     .DataSource(dataSource => dataSource
                                     .Ajax()
                                     .PageSize(10)

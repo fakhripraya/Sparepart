@@ -225,6 +225,33 @@ namespace Sparepart.Controllers
         {
             return PartialView();
         }
+        public ActionResult FPSCreateMutasi()
+        {
+            foreach (var detail in Dbcontext.fpsdetails.Where(p => p.FPSID == null))
+            {
+                if (detail != null)
+                {
+                    Dbcontext.fpsdetails.Remove(detail);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            Dbcontext.SaveChanges();
+            var toko = Dbcontext.mastertokoes.ToList();
+            ViewData["Toko"] = toko;
+            var unit = Dbcontext.masterunits.ToList();
+            ViewData["Unit"] = unit;
+            var cabang = Dbcontext.mastercabangs.ToList();
+            ViewData["Cabang"] = cabang;
+            var barang = Dbcontext.masterbarangs.ToList();
+            ViewData["Barang"] = barang;
+            var satuan = Dbcontext.mastersatuans.ToList();
+            ViewData["Satuan"] = satuan;
+            return PartialView();
+        }
 
         public ActionResult BarangEdit(string KodeBarangTipe)
         {

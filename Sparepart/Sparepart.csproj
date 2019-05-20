@@ -190,6 +190,7 @@
     <Compile Include="AntiForgeryAttributeClass.cs" />
     <Compile Include="Controllers\AccessController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApprovalController.cs" />
     <Compile Include="Controllers\BarangController.cs" />
     <Compile Include="Controllers\CabangController.cs" />
     <Compile Include="Controllers\FPSController.cs" />
@@ -209,10 +210,43 @@
     <Compile Include="Models\aks.cs">
       <DependentUpon>SparepartDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\badetail.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\baheader.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\bkbdetail.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\bkbheader.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\btbmutasidetail.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\btbmutasiheader.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\btbsupplierdetail.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\btbsupplierheader.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\fpsdetail.cs">
       <DependentUpon>SparepartDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\fpsheader.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\inventory.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\inventorytransaction.cs">
+      <DependentUpon>SparepartDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\jeni.cs">
       <DependentUpon>SparepartDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\masterbarang.cs">
@@ -270,6 +304,7 @@
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Models\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin-lte\css\AdminLTE.css" />
@@ -524,7 +559,6 @@
     <Content Include="Content\tether\tether-theme-basic.min.css" />
     <Content Include="Content\tether\tether.css" />
     <Content Include="Content\tether\tether.min.css" />
-    <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -916,7 +950,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Access\Index.cshtml" />
     <Content Include="Views\Unit\Index.cshtml" />
     <Content Include="Views\Toko\Index.cshtml" />
@@ -946,6 +979,9 @@
     <Content Include="Views\Window\EditPerbaikan.cshtml" />
     <Content Include="Views\Window\FPSEditDetailMutasiCreate.cshtml" />
     <Content Include="Views\Window\FPSEditDetailPerbaikanCreate.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ClientFPS.cshtml" />
+    <Content Include="Views\Approval\Index.cshtml" />
+    <Content Include="Views\Window\FPSCreateMutasi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

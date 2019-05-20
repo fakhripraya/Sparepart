@@ -12,36 +12,31 @@ namespace Sparepart.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class mastercabang
+    public partial class baheader
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public mastercabang()
+        public baheader()
         {
-            this.baheaders = new HashSet<baheader>();
-            this.btbsupplierdetails = new HashSet<btbsupplierdetail>();
-            this.fpsheaders = new HashSet<fpsheader>();
-            this.inventories = new HashSet<inventory>();
+            this.badetails = new HashSet<badetail>();
+            this.bkbdetails = new HashSet<bkbdetail>();
+            this.bkbheaders = new HashSet<bkbheader>();
         }
     
+        public int BAID { get; set; }
         public int CabangID { get; set; }
-        public int TokoID { get; set; }
-        public int UnitID { get; set; }
-        public string NamaCabang { get; set; }
+        public System.DateTime Tanggal { get; set; }
         public string UserInput { get; set; }
         public System.DateTime TanggalInput { get; set; }
         public string UserUpdate { get; set; }
-        public Nullable<System.DateTime> TanggalUpdate { get; set; }
-        public sbyte IsDelete { get; set; }
+        public System.DateTime TanggalUpdate { get; set; }
+        public string Approval { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<baheader> baheaders { get; set; }
+        public virtual ICollection<badetail> badetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<btbsupplierdetail> btbsupplierdetails { get; set; }
+        public virtual ICollection<bkbdetail> bkbdetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<fpsheader> fpsheaders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<inventory> inventories { get; set; }
-        public virtual mastertoko mastertoko { get; set; }
-        public virtual masterunit masterunit { get; set; }
+        public virtual ICollection<bkbheader> bkbheaders { get; set; }
+        public virtual mastercabang mastercabang { get; set; }
     }
 }
