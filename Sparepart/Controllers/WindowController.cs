@@ -56,7 +56,7 @@ namespace Sparepart.Controllers
             else return View();
         }
 
-        public ActionResult FPSDetail(int? FPSID)
+        public ActionResult FPSDetailWindow(int? FPSID)
         {
             fpsheader fps = Dbcontext.fpsheaders.Where(x => x.FPSID == FPSID).FirstOrDefault();
             if (FPSID != null)
@@ -79,8 +79,8 @@ namespace Sparepart.Controllers
                     var toko = Dbcontext.mastertokoes.Where(c => c.TokoID == fps.TokoID).FirstOrDefault();
                     var unit = Dbcontext.masterunits.Where(c => c.UnitID == fps.UnitID).FirstOrDefault();
                     FPSDetailViewModel head = new FPSDetailViewModel();
-                    head.NamaCabang = cabang.NamaCabang;
-                    head.NamaUnit = unit.NamaUnit;
+                    head.NamaCabang = cabang.NamaCabang; // FPS Perbaikan ada nama cabang
+                    head.NamaUnit = unit.NamaUnit; // FPS Perbaikan ada nama unit
                     head.NoTicket = fps.NoTicket;
                     head.NamaPemohon = fps.NamaPemohon;
                     head.NIKPemohon = fps.NIKPemohon;
@@ -98,7 +98,7 @@ namespace Sparepart.Controllers
                     var satuans = Dbcontext.mastersatuans.ToList();
                     ViewData["Satuan"] = satuans;
                     
-                    return PartialView("~/Views/Window/DetailMutasi.cshtml",head);
+                    return PartialView("~/Views/Window/FPSDetailMutasi.cshtml",head);
                 }
                 else if(fps.JenisFPS == "Perbaikan")
                 {
@@ -118,7 +118,7 @@ namespace Sparepart.Controllers
                     var toko = Dbcontext.mastertokoes.Where(c => c.TokoID == fps.TokoID).FirstOrDefault();
                     var unit = Dbcontext.masterunits.Where(c => c.UnitID == fps.UnitID).FirstOrDefault();
                     FPSDetailViewModel head = new FPSDetailViewModel();
-                    head.NamaToko = toko.NamaToko;
+                    head.NamaToko = toko.NamaToko; // FPS Perbaikan ada nama toko
                     head.NoTicket = fps.NoTicket;
                     head.NamaPemohon = fps.NamaPemohon;
                     head.NIKPemohon = fps.NIKPemohon;
@@ -136,20 +136,47 @@ namespace Sparepart.Controllers
                     var satuans = Dbcontext.mastersatuans.ToList();
                     ViewData["Satuan"] = satuans;
 
-                    return PartialView("~/Views/Window/DetailPerbaikan.cshtml", head);
+                    return PartialView("~/Views/Window/FPSDetailPerbaikan.cshtml", head);
                 }
                 else return View();
             }
             else return View();
         }
 
-        public ActionResult FPSEdit(/*[DataSourceRequest]DataSourceRequest request,*/int? FPSID)
+        public ActionResult FPSEditMasterWindow(int? FPSID)
         {
+            foreach (var delete in Dbcontext.fpsdetails.Where(p => p.DeleteCheck == 1))
+            {
+                if (delete != null)
+                {
+                    delete.DeleteCheck = 0;
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            Dbcontext.SaveChanges();
+
+            foreach (var detail in Dbcontext.fpsdetails.Where(p => p.FPSID == null))
+            {
+                if (detail != null)
+                {
+                    Dbcontext.fpsdetails.Remove(detail);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            Dbcontext.SaveChanges();
+
             fpsheader fps = Dbcontext.fpsheaders.Where(x => x.FPSID == FPSID).FirstOrDefault();
             if (FPSID != null)
             {
                 if (fps.JenisFPS == "Mutasi")
                 {
+
                     var cabang = Dbcontext.mastercabangs.Where(c => c.CabangID == fps.CabangID).FirstOrDefault();
                     var toko = Dbcontext.mastertokoes.Where(c => c.TokoID == fps.TokoID).FirstOrDefault();
                     var unit = Dbcontext.masterunits.Where(c => c.UnitID == fps.UnitID).FirstOrDefault();
@@ -173,7 +200,7 @@ namespace Sparepart.Controllers
                     var satuans = Dbcontext.mastersatuans.ToList();
                     ViewData["Satuan"] = satuans;
                     ViewBag.MyData = fps.FPSID;
-                    return PartialView("~/Views/Window/EditMutasi.cshtml", head);
+                    return PartialView("~/Views/Window/FPSEditMasterMutasi.cshtml", head);
                 }
                 else if (fps.JenisFPS == "Perbaikan")
                 {
@@ -199,33 +226,24 @@ namespace Sparepart.Controllers
                     var satuans = Dbcontext.mastersatuans.ToList();
                     ViewData["Satuan"] = satuans;
                     ViewBag.MyData = fps.FPSID;
-                    return PartialView("~/Views/Window/EditPerbaikan.cshtml", head);
+                    return PartialView("~/Views/Window/FPSEditMasterPerbaikan.cshtml", head);
                 }
                 else return View();
             }
             else return View();
         }
 
-        public ActionResult FPSEditDetailMutasiCreate()
+        public ActionResult FPSEditDetailMutasi()
         {
             return PartialView();
         }
 
-        public ActionResult FPSEditDetailPerbaikanCreate()
+        public ActionResult FPSEditDetailPerbaikan()
         {
             return PartialView();
         }
 
-        public ActionResult FPSDetailMutasi()
-        {
-            return PartialView();
-        }
-
-        public ActionResult FPSDetailPerbaikan()
-        {
-            return PartialView();
-        }
-        public ActionResult FPSCreateMutasi()
+        public ActionResult FPSCreateMasterMutasi()
         {
             foreach (var detail in Dbcontext.fpsdetails.Where(p => p.FPSID == null))
             {
@@ -253,6 +271,44 @@ namespace Sparepart.Controllers
             return PartialView();
         }
 
+        public ActionResult FPSCreateDetailMutasi()
+        {
+            return PartialView();
+        }
+
+        public ActionResult FPSCreateMasterPerbaikan()
+        {
+            foreach (var detail in Dbcontext.fpsdetails.Where(p => p.FPSID == null))
+            {
+                if (detail != null)
+                {
+                    Dbcontext.fpsdetails.Remove(detail);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            Dbcontext.SaveChanges();
+            var toko = Dbcontext.mastertokoes.ToList();
+            ViewData["Toko"] = toko;
+            var unit = Dbcontext.masterunits.ToList();
+            ViewData["Unit"] = unit;
+            var cabang = Dbcontext.mastercabangs.ToList();
+            ViewData["Cabang"] = cabang;
+            var barang = Dbcontext.masterbarangs.ToList();
+            ViewData["Barang"] = barang;
+            var satuan = Dbcontext.mastersatuans.ToList();
+            ViewData["Satuan"] = satuan;
+            return PartialView();
+        }
+
+        public ActionResult FPSCreateDetailPerbaikan()
+        {
+            return PartialView();
+        }
+
         public ActionResult BarangEdit(string KodeBarangTipe)
         {
             masterbarang barang = Dbcontext.masterbarangs.Where(x => x.KodeBarangTipe == KodeBarangTipe).FirstOrDefault();
@@ -269,6 +325,7 @@ namespace Sparepart.Controllers
             }
             else return View();
         }
+
         public ActionResult RoleDetail(int? RoleID)
         {
             masterrole role = Dbcontext.masterroles.Where(x => x.RoleID == RoleID).FirstOrDefault();
@@ -313,6 +370,7 @@ namespace Sparepart.Controllers
             }
             else return View();
         }
+
         public ActionResult UnitEdit(int? UnitID)
         {
             masterunit unit = Dbcontext.masterunits.Where(x => x.UnitID == UnitID).FirstOrDefault();

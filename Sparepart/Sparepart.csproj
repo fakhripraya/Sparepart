@@ -197,7 +197,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SatuanController.cs" />
     <Compile Include="Controllers\SJController.cs" />
     <Compile Include="Controllers\TokoController.cs" />
@@ -968,20 +967,18 @@
     <Content Include="Views\Window\KategoriEdit.cshtml" />
     <Content Include="Views\Window\SatuanEdit.cshtml" />
     <Content Include="Views\SJ\Index.cshtml" />
+    <Content Include="Views\Window\FPSCreateDetailMutasi.cshtml" />
+    <Content Include="Views\Window\FPSCreateDetailPerbaikan.cshtml" />
     <Content Include="Views\Window\FPSDetailMutasi.cshtml" />
-    <Content Include="Views\FPS\AfterDetailInsertMutasi.cshtml" />
     <Content Include="Views\Window\FPSDetailPerbaikan.cshtml" />
-    <Content Include="Views\FPS\AfterDetailInsertPerbaikan.cshtml" />
-    <Content Include="Views\Window\FPSDetail.cshtml" />
-    <Content Include="Views\Window\DetailMutasi.cshtml" />
-    <Content Include="Views\Window\DetailPerbaikan.cshtml" />
-    <Content Include="Views\Window\EditMutasi.cshtml" />
-    <Content Include="Views\Window\EditPerbaikan.cshtml" />
-    <Content Include="Views\Window\FPSEditDetailMutasiCreate.cshtml" />
-    <Content Include="Views\Window\FPSEditDetailPerbaikanCreate.cshtml" />
+    <Content Include="Views\Window\FPSEditMasterMutasi.cshtml" />
+    <Content Include="Views\Window\FPSEditMasterPerbaikan.cshtml" />
+    <Content Include="Views\Window\FPSEditDetailMutasi.cshtml" />
+    <Content Include="Views\Window\FPSEditDetailPerbaikan.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClientFPS.cshtml" />
     <Content Include="Views\Approval\Index.cshtml" />
-    <Content Include="Views\Window\FPSCreateMutasi.cshtml" />
+    <Content Include="Views\Window\FPSCreateMasterMutasi.cshtml" />
+    <Content Include="Views\Window\FPSCreateMasterPerbaikan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

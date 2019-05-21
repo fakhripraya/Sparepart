@@ -1,0 +1,90 @@
+﻿@model Sparepart.Models.FPSDetailCreateViewModel
+<form action="/FPS/Create_Window_Detail_Create" method="post" id="myFPSDetailformPerbaikan">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        <li>
+            @Html.Label("Nama Barang")
+            @(Html.Kendo().DropDownListFor(m => m.KodeBarangTipe)
+            .Name("Barang_CreateDetailPerbaikan")
+            .OptionLabel("Select Barang")
+            .DataTextField("NamaBarang")
+            .DataValueField("KodeBarangTipe")
+            .HtmlAttributes(new { id = "Barang_CreateDetailPerbaikan" })
+            .Filter(FilterType.Contains)
+            .DataSource(source =>
+            {
+                source.Read(read =>
+                {
+                    read.Action("GetBarang", "Barang")
+                    .Data("BarangData_CreateDetailPerbaikan");
+                });
+            })
+            )
+        </li>
+        <li>
+            @Html.Label("Quantity")
+            @Html.Kendo().NumericTextBoxFor(m => m.Quantity).Name("quantity").HtmlAttributes(new { style = "width: 50%;", placeholder = "0.00", required = "required", validationmessage = "Input Quantity" })
+        </li>
+        <li>
+            @Html.Label("Keterangan")
+            @Html.Kendo().TextBoxFor(m => m.Keterangan).Name("keterangan").HtmlAttributes(new { style = "width: 100%;", placeholder = "Keterangan", required = "required", validationmessage = "Input Keterangan" })
+        </li>
+        <li>
+            <input class="k-button k-primary" style="margin-top: 2em; float: left;" value="Insert" id="submit" type="submit">
+        </li>
+    </ul>
+</form>
+
+<script>
+    $(document).ready(function () {
+        
+        $('#myFPSDetailformPerbaikan').submit(function (event) {
+        var model = {
+            KodeBarangTipe: $("#Barang_CreateDetailPerbaikan").val(),
+            Quantity: $("#InputQuantity").val(),
+            Keterangan: $("#InputKeterangan").val(),
+        };
+        var token = $('input[name=__RequestVerificationToken]').val();
+        $.ajax({
+            type: "post",
+            headers: {
+                "__RequestVerificationToken": token
+            },
+            data: JSON.stringify(model),
+            url: '@Url.Action("Create_Window_Detail_Create", "FPS")',
+            dataType: "json",
+            contentType: "application/json",
+
+            success: function (response) {
+                if (response.success) {
+                    alert(response.responseText);
+                    $("#WindowCreateDetailPerbaikan").data("kendoWindow").close();
+                    $('#DetailGridPerbaikan').data("kendoGrid").dataSource.read();
+                    $('#DetailGridPerbaikan').data("kendoGrid").refresh();
+                } else {
+                    alert(response.responseText);
+                    location.reload(true);
+                }
+            },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+            
+        event.preventDefault();
+    });
+
+});
+
+    function BarangData_CreateDetailPerbaikan() {
+        return {
+            text: $("#Barang_CreateDetailPerbaikan").data("kendoDropDownList").filterInput.val()
+        };
+    }
+
+    function onGridDataBound(e) {
+        $('#masterbarang script').appendTo(document.body);
+    }
+
+</script>
+

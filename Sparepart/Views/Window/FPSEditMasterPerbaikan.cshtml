@@ -1,0 +1,147 @@
+﻿@model Sparepart.Models.fpsheader
+
+@*UPDATE FPS DETAIL WINDOW - PERBAIKAN*@
+    @(Html.Kendo().Window()
+    .Name("WindowEditDetailPerbaikan")
+    .Title("Add Item - Perbaikan")
+    .Content(
+
+    @<text>
+
+    </text>)
+    .Visible(false)
+    .Draggable()
+    .Resizable()
+    .Width(500)
+    .Height(400)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .Events(ev => ev.Close("onClose"))
+    )
+
+<form action="/FPS/Create_Mutasi" method="post">
+    <ul class="fieldlist">
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.FPSID)
+        <li>
+            @Html.Label("No Ticket")
+            @Html.Kendo().TextBoxFor(m => m.NoTicket).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+        </li>
+        <li>
+            @Html.Label("Nama Pemohon")
+            @Html.Kendo().TextBoxFor(m => m.NamaPemohon).HtmlAttributes(new { style = "width: 100%;", placeholder = "Pemohon", required = "required", validationmessage = "Input Pemohon" })
+        </li>
+        <li>
+            @Html.Label("NIK Pemohon")
+            @Html.Kendo().TextBoxFor(m => m.NIKPemohon).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+        </li>
+        <li>
+            @Html.Label("Toko")
+            @(Html.Kendo().DropDownListFor(m => m.TokoID)
+                .Name("Toko_EditMasterPerbaikan")
+                .DataTextField("NamaToko")
+                .DataValueField("TokoID")
+                .Filter(FilterType.Contains)
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("GetToko", "Toko")
+                        .Data("TokoData_EditMasterPerbaikan");
+                    });
+                })
+            )
+        </li>
+        <li>
+            @(Html.Kendo().Grid<Sparepart.Models.DetailPermintaanBarangViewModel>()
+            .Name("DetailGridPerbaikan_Edit")
+            .Columns(columns =>
+            {
+                columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "BarangPLU")
+                .Title("PLU");
+                columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "NamaBarang")
+                .Title("Barang");
+                columns.ForeignKey(p => p.SatuanID, (System.Collections.IEnumerable)ViewData["Satuan"], "SatuanID", "NamaSatuan")
+                .Title("Satuan");
+                columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "HargaSatuan")
+                .Title("Harga Satuan");
+                columns.Bound(p => p.Quantity);
+                columns.Bound(p => p.JumlahHarga);
+                columns.Bound(p => p.Keterangan);
+
+                columns.Command(commands =>
+                {
+                //commands.Edit();
+                commands.Destroy();
+
+                }).Title("Commands");
+            })
+                .ToolBar(toolbar =>
+                {
+                    toolbar.Template("<a class='k-button k-button-icontext' onclick='DetailEditWindowPerbaikan()' href='#'></span>Add Item</a>");
+                }
+            )
+                .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                .Sortable()
+                .Pageable(pageable => pageable
+                .Input(true)
+                .Numeric(true)
+                .Info(true)
+                .PreviousNext(true)
+                .Refresh(true)
+                .ButtonCount(5)
+                )
+                .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("Edit_Window_Detail_Read", "FPS", new { FPSID = @ViewBag.MyData }))
+                .PageSize(10)
+                .ServerOperation(false)
+                .Model(model =>
+                {
+                    model.Id(P => P.SeqFPSID);
+                    model.Field(P => P.SeqFPSID).Editable(false);
+                })
+                .Destroy(destroy => destroy.Action("Edit_Window_Detail_Destroy", "FPS"))
+                )
+
+            )
+        </li>
+        <li class="pull-left">
+            <input class="k-button k-primary" name="submitButton" id="btnSave" style="margin-top: 2em; float: left; padding-bottom: 5px;" value="Save" type="submit">
+        </li>
+    </ul>
+</form>
+<script>
+    
+    function DetailEditWindowPerbaikan() {
+
+        var myWin = $("#WindowEditDetailPerbaikan").kendoWindow({
+
+            modal: false,
+            width: "450px",
+            height: "250px",
+            resizable: true,
+            position: {
+                top: 400,
+                left: 650
+            },
+            title: "Add Item",
+            content: {
+                url: '@Url.Action("FPSEditDetailPerbaikan", "Window")'
+            }
+
+        });
+        myWin.data("kendoWindow").open().center();
+        return false;
+    }
+
+    function TokoData_EditMasterPerbaikan() {
+        return {
+            text: $("#Toko_EditMasterPerbaikan").data("kendoDropDownList").filterInput.val()
+        };
+    }
+
+    function onGridDataBound(e) {
+        $('#mastertoko script').appendTo(document.body);
+    }
+
+</script>

@@ -1,36 +1,51 @@
-﻿@model Sparepart.Models.FPSDetailCreateViewModel
-<form action="/FPS/Detail_Create_Mutasi" method="post" id="myFPSDetailform">
-    <ul class="fieldlist">
-        @Html.AntiForgeryToken()
-        <li>
-            @Html.Label("Nama Barang")
-            @(Html.Kendo().DropDownListFor(m => m.KodeBarangTipe)
-                                    .Name("barang")
-                                    .OptionLabel("Select Barang")
-                                    .DataTextField("NamaBarang")
-                                    .DataValueField("KodeBarangTipe")
-                                    .HtmlAttributes(new { id = "barang" })
-                                    .Filter(FilterType.Contains)
-                                    .DataSource(source =>
-                                    {
-                                        source.Read(read =>
-                                        {
-                                            read.Action("GetBarang", "Barang")
-                                                                .Data("barangdata");
-                                        });
-                                    })
-            )
-        </li>
-        <li>
-            @Html.Label("Quantity")
-            @Html.Kendo().NumericTextBoxFor(m => m.Quantity).Name("quantity").HtmlAttributes(new { style = "width: 50%;", placeholder = "0.00", required = "required", validationmessage = "Input Quantity" , id = "InputQuantity" })
-        </li>
-        <li>
-            @Html.Label("Keterangan")
-            @Html.Kendo().TextBoxFor(m => m.Keterangan).Name("keterangan").HtmlAttributes(new { style = "width: 100%;", placeholder = "Keterangan", required = "required", validationmessage = "Input Keterangan" , id = "InputKeterangan" })
-        </li>
-        <li>
-            <input class="k-button k-primary" style="margin-top: 2em; float: left;" value="Insert" id="submit" type="submit">
-        </li>
-    </ul>
-</form>
+﻿@model Sparepart.Models.FPSDetailViewModel
+<ul class="fieldlist">
+    @Html.AntiForgeryToken()
+    <li>
+        @Html.Label("No Ticket")
+        @Html.Kendo().TextBoxFor(m => m.NoTicket).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "No Ticket", required = "required", validationmessage = "Input No Ticket" })
+    </li>
+    <li>
+        @Html.Label("JenisFPS")
+        @Html.Kendo().TextBoxFor(m => m.JenisFPS).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+    </li>
+    <li>
+        @Html.Label("Nama Pemohon")
+        @Html.Kendo().TextBoxFor(m => m.NamaPemohon).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "Pemohon", required = "required", validationmessage = "Input Pemohon" })
+    </li>
+    <li>
+        @Html.Label("NIK Pemohon")
+        @Html.Kendo().TextBoxFor(m => m.NIKPemohon).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+    </li>
+    <li>
+        @Html.Label("Cabang")
+        @Html.Kendo().TextBoxFor(m => m.NamaCabang).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+    </li>
+    <li>
+        @Html.Label("Unit")
+        @Html.Kendo().TextBoxFor(m => m.NamaUnit).Enable(false).HtmlAttributes(new { style = "width: 100%;", placeholder = "NIK Pemohon", required = "required", validationmessage = "Input NIK Pemohon" })
+    </li>
+    <li>
+        @(Html.Kendo().Grid((IEnumerable<Sparepart.Models.DetailPermintaanBarangViewModel>)ViewBag.Detail)
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "BarangPLU")
+            .Title("PLU");
+            columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "NamaBarang")
+            .Title("Barang");
+            columns.ForeignKey(p => p.SatuanID, (System.Collections.IEnumerable)ViewData["Satuan"], "SatuanID", "NamaSatuan")
+            .Title("Satuan");
+            columns.ForeignKey(p => p.KodeBarangTipe, (System.Collections.IEnumerable)ViewData["Barang"], "KodeBarangTipe", "HargaSatuan")
+            .Title("Harga Satuan");
+            columns.Bound(p => p.Quantity).Width(100);
+            columns.Bound(p => p.JumlahHarga).Width(100);
+            columns.Bound(p => p.Keterangan).Width(100);
+        })
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        )
+    </li>
+</ul>
+
