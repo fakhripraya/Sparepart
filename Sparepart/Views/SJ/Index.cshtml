@@ -11,82 +11,76 @@
 </section>
 
 <section class="content container-fluid">
+
+    @*CREATE MASTER - SURAT JALAN*@
+    @(Html.Kendo().Window()
+    .Name("SJCreateMasterWindow")
+    .Title("Tambah Surat Jalan")
+    .Content(
+
+    @<text>
+    </text>)
+    .Visible(false)
+    .Modal(true)
+    .Draggable()
+    .Resizable()
+    .Width(700)
+    .Height(600)
+    .Actions(actions => actions.Pin().Minimize().Maximize().Close())
+    .Events(ev => ev.Close("onClose"))
+    )
+
+    @*MASTER GRID*@
     @(Html.Kendo().Grid<Sparepart.Models.SJCreateViewModel>()
-            .Name("grid")
-            .Columns(columns =>
-            {
-                columns.Bound(p => p.SJID);
-                columns.Bound(p => p.FPSID).Hidden(true);
-                columns.Bound(p => p.FPS).ClientTemplate("#=FPS.FPSID#").Sortable(false).Title("FPSID");
-                columns.Bound(p => p.JenisSJ).Hidden(true);
-                columns.Bound(p => p.Keterangan);
-                columns.Command(command => command.Destroy());
-            })
-            .ToolBar(toolBar =>
-            {
-                toolBar.Create();
-                toolBar.Save();
-            })
-            .Editable(editable => editable.Mode(GridEditMode.InCell))
-            .Sortable()
-            .Pageable(pageable => pageable
-            .Input(true)
-            .Numeric(true)
-            .Info(true)
-            .PreviousNext(true)
-            .Refresh(true)
-            .ButtonCount(5)
-            )
-            .Filterable()
-            .Scrollable()
-            .ClientDetailTemplateId("template")
-            .HtmlAttributes(new { style = "height:550px;" })
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Batch(true)
-                .PageSize(10)
-                .ServerOperation(false)
-                .Events(events => events.Error("error_handler"))
-                .Model(model =>
-                {
-                    model.Id(p => p.SJID);
-                    model.Field(p => p.SJID).Editable(false);
-                    model.Field(p => p.JenisSJ).Editable(false);
-                    model.Field(p => p.FPSID).Editable(false);
-                    model.Field(p => p.FPS).DefaultValue(
-                        ViewData["defaultFPS"] as Sparepart.Models.FPSViewModel);
-                })
-                .Read(read => read.Action("Read", "SJ"))
-                .Create(create => create.Action("Create", "SJ"))
-                .Update(update => update.Action("Update", "SJ"))
-                .Destroy(destroy => destroy.Action("Destroy", "SJ"))
-            )
-            .Events(events => events.DataBound("dataBound"))
+                    .Name("MasterGrid")
+                    .Columns(columns =>
+                    {
+                        columns.Bound(p => p.SJID);
+                        columns.Bound(p => p.FPSID).Hidden(true);
+                        columns.Bound(p => p.FPS).ClientTemplate("#=FPS.FPSID#").Sortable(false).Title("FPSID");
+                        columns.Bound(p => p.JenisSJ).Hidden(true);
+                        columns.Bound(p => p.Keterangan);
+            //columns.Command(command => command.Destroy());
+        })
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template("<a class='k-button k-button-icontext k-grid-add' href='#' id='crsuratjalan'>Tambah Surat Jalan</a>");
+                    })
+                    .Sortable()
+                    .Pageable(pageable => pageable
+                    .Input(true)
+                    .Numeric(true)
+                    .Info(true)
+                    .PreviousNext(true)
+                    .Refresh(true)
+                    .ButtonCount(5)
+                    )
+                    .Filterable()
+                    .ClientDetailTemplateId("template")
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Batch(true)
+                        .PageSize(10)
+                        .ServerOperation(false)
+                        .Events(events => events.Error("error_handler"))
+                        .Model(model =>
+                        {
+                            model.Id(p => p.SJID);
+                            model.Field(p => p.SJID).Editable(false);
+                            model.Field(p => p.JenisSJ).Editable(false);
+                            model.Field(p => p.FPSID).Editable(false);
+                            model.Field(p => p.FPS).DefaultValue(
+                                ViewData["defaultFPS"] as Sparepart.Models.FPSViewModel);
+                        })
+                        .Read(read => read.Action("Read", "SJ"))
+                    )
+                    .Events(events => events.DataBound("dataBound"))
     )
 </section>
 
-<script type="text/javascript">
-    function error_handler(e) {
-        if (e.errors) {
-            var message = "Errors:\n";
-            $.each(e.errors, function (key, value) {
-                if ('errors' in value) {
-                    $.each(value.errors, function () {
-                        message += this + "\n";
-                    });
-                }
-            });
-            alert(message);
-        }
-    }
-    function dataBound() {
-        this.expandRow(this.tbody.find("tr.k-master-row").first());
-    }
-
-</script>
 <script id="template" type="text/kendo-tmpl">
     @(Html.Kendo().Grid<Sparepart.Models.DetailPermintaanBarangViewModel>()
-                    .Name("Detailgrid_#=FPSID#" + DateTime.Now.Ticks) // template expression, to be evaluated in the master context
+                    .Name("DetailGrid_#=FPSID#")
                     .Columns(columns =>
                     {
                         columns.Bound(p => p.Quantity);
@@ -110,4 +104,57 @@
                     .Filterable()
                     .ToClientTemplate()
     )
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#SJCreateMasterWindow").data("kendoWindow").close();
+    });
+
+    function onClose() {
+        $("#crsuratjalan").show();
+    }
+
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    function dataBound() {
+        this.expandRow(this.tbody.find("tr.k-master-row").first());
+    }
+
+    $(document).ready(function () {
+        $("#crsuratjalan").bind("click", function () {
+            var myWin = $("#SJCreateMasterWindow").kendoWindow({
+
+                modal: true,
+                width: "450px",
+                height: "250px",
+                resizable: true,
+                position: {
+                    top: 400,
+                    left: 650
+                },
+                title: "Surat Jalan",
+                content: {
+                    url: '@Url.Action("SJCreateMasterWindow", "Window")'
+                }
+
+            });
+            myWin.data("kendoWindow").open().center();
+            return false;
+        });
+    });
+
 </script>

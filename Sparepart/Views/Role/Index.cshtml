@@ -1,0 +1,138 @@
+﻿@model Sparepart.Models.masterrole
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+       Master Role
+    </h1>
+</section>
+
+<section class="content container-fluid">
+
+
+    <div id="modalWindow">
+        <h3 class="text-center">Delete this record?</h3>
+        <div class="pull-left">
+            <button id="yes" class="k-button">Yes</button>
+        </div>
+        <div class="pull-right">
+            <button id="no" class="k-button">No</button>
+        </div>
+    </div>
+
+
+    @(Html.Kendo().Grid<Sparepart.Models.masterrole>()
+                                .Name("grid")
+                                .Columns(columns =>
+                                        {
+                                            columns.Bound(u => u.RoleID).Width(100);
+                                            columns.Bound(u => u.NamaRole).Width(200);
+                                            columns.Command(commands =>
+                                            {
+                                                commands.Edit();
+                                                commands.Custom("Delete").Click("openWindow");
+
+                                            }).Title("Commands").Width(200);
+                                        })
+                                .ToolBar(toolbar =>
+                                        {
+                                            toolbar.Create().Text("Tambahkan Role");
+                                        }
+                                )
+                                .Editable(editable => editable.Mode(GridEditMode.InLine).DisplayDeleteConfirmation(false))
+                                .Sortable()
+                                .Pageable(pageable => pageable
+                                  .Input(true)
+                                  .Numeric(true)
+                                  .Info(true)
+                                  .PreviousNext(true)
+                                  .Refresh(true)
+                                  .ButtonCount(5)
+                                  )
+
+                                .DataSource(dataSource => dataSource
+                                    .Ajax()
+                                    .Events(events => events
+                                    .Error("grid_error")
+                                    )
+                                    .Read(read => read.Action("Roles_Read", "Role"))
+                                    .PageSize(10)
+                                    .ServerOperation(false)
+                                    .Model(model =>
+                                    {
+                                        model.Id(u => u.RoleID);
+                                        model.Field(u => u.RoleID).Editable(false);
+                                    })
+                                    .Create(create => create.Action("Roles_Create", "Role"))
+                                    .Update(update => update.Action("Roles_Update", "Role"))
+                                    .Destroy(destroy => destroy.Action("Roles_Destroy", "Role"))
+                                )
+
+    )
+
+</section>
+
+@*toolbar.Template("<a class='k-button k-button-icontext' onclick='customCommand()' href='#'></span>Cutom Command</a>");*@
+
+<script>
+
+    function grid_error(e) {
+        if (e.errors) {
+            var message = "There are some errors:\n";
+            // Create a message containing all errors.
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            // Display the message.
+            alert(message);
+            // Cancel the changes.
+            var grid = $("#grid").data("kendoGrid");
+            grid.cancelChanges();
+        }
+    }
+
+
+    var wnd;
+    $(document).ready(function () {
+        wnd = $("#modalWindow").kendoWindow({
+            title: "confirmation",
+            modal: true,
+            visible: false,
+            resizable: false,
+            width: 300
+        }).data("kendoWindow");
+    });
+
+    function check(f) {
+        var e, i = 0, checked = false;
+        while (e = f.elements[i++]) { if (e.type == 'checkbox' && e.checked) checked = true };
+        if (!checked) alert('Please pick one');
+        return checked;
+    }
+
+    function openWindow(e) {
+        e.preventDefault();
+
+        var grid = this;
+        var row = $(e.currentTarget).closest("tr");
+        wnd.center().open();
+
+        $("#yes").click(function () {
+            grid.removeRow(row);
+            wnd.close();
+        });
+
+        $("#no").click(function () {
+            wnd.close();
+        });
+    }
+
+
+</script>

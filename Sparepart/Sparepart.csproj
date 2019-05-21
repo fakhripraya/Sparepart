@@ -187,7 +187,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="AntiForgeryAttributeClass.cs" />
     <Compile Include="Controllers\AccessController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApprovalController.cs" />
@@ -197,6 +196,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SatuanController.cs" />
     <Compile Include="Controllers\SJController.cs" />
     <Compile Include="Controllers\TokoController.cs" />
@@ -209,6 +209,7 @@
     <Compile Include="Models\aks.cs">
       <DependentUpon>SparepartDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AntiForgeryAttributeClass.cs" />
     <Compile Include="Models\badetail.cs">
       <DependentUpon>SparepartDbModel.tt</DependentUpon>
     </Compile>
@@ -979,6 +980,7 @@
     <Content Include="Views\Approval\Index.cshtml" />
     <Content Include="Views\Window\FPSCreateMasterMutasi.cshtml" />
     <Content Include="Views\Window\FPSCreateMasterPerbaikan.cshtml" />
+    <Content Include="Views\Window\SJCreateMasterWindow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

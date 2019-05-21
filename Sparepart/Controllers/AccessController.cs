@@ -94,14 +94,16 @@ namespace Sparepart.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateAccess(int[] AksesIDs,CreateRoleViewModel role)
         {
-            string rolename = Request.Form["rolename"];
             string id = System.Web.HttpContext.Current.User.Identity.GetUserId();
             masteruser user = Dbcontext.masterusers.Where(x => x.UserID == id).FirstOrDefault();
-            var sel = Dbcontext.masterroles.Where(x => x.NamaRole == rolename).FirstOrDefault();
-            if (sel != null)
+            var sel = Dbcontext.masterroles.Where(x => x.NamaRole == role.NamaRole && x.IsDelete == 0).FirstOrDefault();
+            if (AksesIDs.Length == 1)
             {
-                return RedirectToAction("Index");
-                //return Json(new { success = true, responseText = "Role" + " " + rolename + " " + "Already been registered!" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, responseText = "Silahkan centang salah satu menu." }, JsonRequestBehavior.AllowGet);
+            }
+            else if (sel != null && sel.IsDelete == 0)
+            {
+                return Json(new { success = true, responseText = "Role" + " " + role.NamaRole+ " " + "Already been registered!" }, JsonRequestBehavior.AllowGet);
             }
             else 
             {
@@ -109,7 +111,7 @@ namespace Sparepart.Controllers
                 {
                     masterrole entity = new masterrole();
                     entity.RoleID = role.RoleID;
-                    entity.NamaRole = rolename;
+                    entity.NamaRole = role.NamaRole;
                     entity.UserInput = user.NamaUser;
                     entity.TanggalInput = DateTime.Now;
                     entity.IsDelete = 0;
@@ -118,22 +120,24 @@ namespace Sparepart.Controllers
                     role.RoleID = entity.RoleID;
                 }
 
-                foreach (int akses in AksesIDs)
+                for (int i = 0; i < AksesIDs.Length; i++)
                 {
-                    aks aksmodel = new aks();
-                    hakaks selected = Dbcontext.hakakses.Where(x => x.AksesID == akses).FirstOrDefault();
-                    aksmodel.AksesID = selected.AksesID;
-                    aksmodel.RoleID = role.RoleID;
-                    aksmodel.NamaAkses = selected.NamaMenu;
+                    if (AksesIDs[i] > 0)
+                    {
+                        var ID = AksesIDs[i];
+                        aks aksmodel = new aks();
+                        hakaks selected = Dbcontext.hakakses.Where(x => x.AksesID == ID).FirstOrDefault();
+                        aksmodel.AksesID = selected.AksesID;
+                        aksmodel.RoleID = role.RoleID;
+                        aksmodel.NamaAkses = selected.NamaMenu;
 
-                    Dbcontext.akses.Add(aksmodel);
-                    Dbcontext.SaveChanges();
+                        Dbcontext.akses.Add(aksmodel);
+                        Dbcontext.SaveChanges();
+                    }
                 }
-                return RedirectToAction("Index");
-                //return Json(new { success = true, responseText = "Sucessfully create a role." }, JsonRequestBehavior.AllowGet);
+                
+                return Json(new { success = true, responseText = "Sucessfully create a role." }, JsonRequestBehavior.AllowGet);
             }
-            //return RedirectToAction("Index");
-            //return Json(JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

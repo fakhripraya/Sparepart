@@ -309,6 +309,24 @@ namespace Sparepart.Controllers
             return PartialView();
         }
 
+        public ActionResult SJCreateMasterWindow()
+        {
+            foreach (var detail in Dbcontext.sjdetails.Where(p => p.SJID == null))
+            {
+                if (detail != null)
+                {
+                    Dbcontext.sjdetails.Remove(detail);
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+
+            Dbcontext.SaveChanges();
+            return PartialView();
+        }
+
         public ActionResult BarangEdit(string KodeBarangTipe)
         {
             masterbarang barang = Dbcontext.masterbarangs.Where(x => x.KodeBarangTipe == KodeBarangTipe).FirstOrDefault();
